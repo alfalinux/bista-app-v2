@@ -14,7 +14,6 @@ const CreateOrderPage = () => {
     layanan: "",
     cabangAsal: "",
     tujuan: "",
-    cabangTujuan: "",
     cabangCoveran: "",
     pembayaran: "",
     paket: [],

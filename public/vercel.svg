@@ -1,1 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 283 64"><path fill="black" d="M141 16c-11 0-19 7-19 18s9 18 20 18c7 0 13-3 16-7l-7-5c-2 3-6 4-9 4-5 0-9-3-10-7h28v-3c0-11-8-18-19-18zm-9 15c1-4 4-7 9-7s8 3 9 7h-18zm117-15c-11 0-19 7-19 18s9 18 20 18c6 0 12-3 16-7l-8-5c-2 3-5 4-8 4-5 0-9-3-11-7h28l1-3c0-11-8-18-19-18zm-10 15c2-4 5-7 10-7s8 3 9 7h-19zm-39 3c0 6 4 10 10 10 4 0 7-2 9-5l8 5c-3 5-9 8-17 8-11 0-19-7-19-18s8-18 19-18c8 0 14 3 17 8l-8 5c-2-3-5-5-9-5-6 0-10 4-10 10zm83-29v46h-9V5h9zM37 0l37 64H0L37 0zm92 5-27 48L74 5h10l18 30 17-30h10zm59 12v10l-3-1c-6 0-10 4-10 10v15h-9V17h9v9c0-5 6-9 13-9z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="283"
+   height="64"
+   viewBox="0 0 283 64"
+   fill="none"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="vercel.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8">
+    <rect
+       x="51.210926"
+       y="259.26416"
+       width="571.23663"
+       height="110.94285"
+       id="rect1118" />
+    <rect
+       x="51.210926"
+       y="259.26416"
+       width="571.23663"
+       height="110.94285"
+       id="rect1120" />
+    <rect
+       x="51.210926"
+       y="259.26416"
+       width="571.23663"
+       height="110.94285"
+       id="rect2999" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.4342024"
+     inkscape:cx="145.37697"
+     inkscape:cy="41.137846"
+     inkscape:window-width="1330"
+     inkscape:window-height="742"
+     inkscape:window-x="36"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <g
+     id="g976"
+     transform="translate(-2.7055877,0.71989868)">
+    <g
+       id="g4953"
+       transform="matrix(0.37663435,0,0,0.37663435,-375.59597,-235.87719)"
+       inkscape:export-filename="/home/admin/Pictures/bista-header-500.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <circle
+         style="opacity:1;fill:#ff0000;stroke-width:0.197997"
+         id="circle1814"
+         cx="1090.9313"
+         cy="709.328"
+         r="69.342644" />
+      <path
+         id="path1816"
+         style="opacity:1;fill:#ffffff;stroke-width:0.126084"
+         d="m 1083.9993,662.23512 -43.9622,2.9e-4 a 69.342645,69.342645 0 0 0 -18.4486,47.09268 69.342645,69.342645 0 0 0 14.4635,42.3334 h 34.3198 a 20.55901,20.55901 0 0 0 0,0.18379 20.55901,20.55901 0 0 0 20.5584,20.55989 20.55901,20.55901 0 0 0 20.5599,-20.55989 20.55901,20.55901 0 0 0 0,-0.18379 h 14.0323 v -35.11762 l -19.9893,-26.89891 v -0.002 h -21.5338 z m -0.01,37.7251 h 16.3452 l 12.3241,16.58365 h -28.6693 z m 6.9339,41.90461 a 9.9812417,9.9812417 0 0 1 9.9816,9.98045 9.9812417,9.9812417 0 0 1 -9.9816,9.98194 9.9812417,9.9812417 0 0 1 -9.9808,-9.98194 9.9812417,9.9812417 0 0 1 9.9808,-9.98045 z" />
+      <text
+         xml:space="preserve"
+         transform="matrix(4.0518137,0,0,4.0080006,804.95454,-420.56576)"
+         id="text1108"
+         style="font-weight:bold;font-size:26.6667px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';white-space:pre;shape-inside:url(#rect1118);fill:#000000"><tspan
+           x="51.210938"
+           y="283.93037"
+           id="tspan1079"><tspan
+             style="font-weight:900;font-family:'Alegreya Sans';-inkscape-font-specification:'Alegreya Sans Heavy'"
+             id="tspan1077">B</tspan></tspan></text>
+      <text
+         xml:space="preserve"
+         transform="matrix(4.0518137,0,0,4.0080006,809.92155,-369.7645)"
+         id="text1114"
+         style="font-weight:bold;font-size:26.6667px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';white-space:pre;shape-inside:url(#rect1120);fill:#000000"><tspan
+           x="51.210938"
+           y="283.93037"
+           id="tspan1083"><tspan
+             style="font-weight:900;font-family:'Alegreya Sans';-inkscape-font-specification:'Alegreya Sans Heavy'"
+             id="tspan1081">C</tspan></tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       transform="matrix(1.3652521,0,0,1.3504892,3.0257134,-340.51452)"
+       id="text2997"
+       style="font-weight:bold;font-size:26.6667px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';white-space:pre;shape-inside:url(#rect2999);fill:#000000"
+       inkscape:export-filename="/home/admin/Pictures/bista-header-500.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         x="51.210938"
+         y="283.93037"
+         id="tspan1087"><tspan
+           style="font-weight:900;font-family:'Alegreya Sans';-inkscape-font-specification:'Alegreya Sans Heavy'"
+           id="tspan1085">BISTA CARGO</tspan></tspan></text>
+  </g>
+</svg>

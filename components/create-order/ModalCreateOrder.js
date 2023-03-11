@@ -1,3 +1,4 @@
+import { DocumentCheckIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
 
 const ModalCreateOrder = (props) => {
@@ -23,9 +24,13 @@ const ModalCreateOrder = (props) => {
     },
     {
       name: "Total Berat Dikenakan",
-      value: `${data.paket
-        .reduce((a, b) => a + Number(b.beratDikenakan), 0)
-        .toLocaleString("id-ID", { maximumFractionDigits: 5 })} Kg`,
+      value: `${
+        data.paket.reduce((a, b) => a + Number(b.beratDikenakan), 0) < 10
+          ? 10
+          : data.paket
+              .reduce((a, b) => a + Number(b.beratDikenakan), 0)
+              .toLocaleString("id-ID", { maximumFractionDigits: 5 })
+      } Kg`,
     },
     { name: "Keterangan Paket", value: data.paket.map((d) => d.keterangan).join(", ") },
     {
@@ -82,8 +87,8 @@ const ModalCreateOrder = (props) => {
   };
 
   return (
-    <div className="w-full h-screen fixed inset-0 p-4 z-20 bg-black/80 flex items-start justify-center">
-      <div className="w-96 max-h-[90%] mx-auto p-4 rounded-md bg-zinc-100 overflow-y-scroll scrollbar overflow-x-hidden text-sm">
+    <div className="w-full h-[100dvh] fixed inset-0 p-4 z-20 bg-black/80 flex items-start justify-center">
+      <div className="w-96 h-full mx-auto p-4 rounded-md bg-zinc-100 overflow-y-scroll sm:scrollbar overflow-x-hidden text-sm">
         <table className="table-auto border-separate border-spacing-y-1">
           <tbody>
             {detail.map((item, index) => (
@@ -99,16 +104,18 @@ const ModalCreateOrder = (props) => {
               <td colSpan="3">
                 <div className="flex gap-4 mt-4">
                   <button
-                    className="w-full px-4 py-2 rounded-md shadow-md bg-sky-500 hover:bg-sky-600 text-white font-semibold"
+                    className="w-full px-4 py-3 rounded-md shadow-md bg-sky-500 hover:bg-sky-600 text-white font-semibold flex items-center justify-center gap-1"
                     onClick={createResiHandler}
                   >
-                    Create Resi
+                    <DocumentCheckIcon className="h-5" />
+                    <p>Create Resi</p>
                   </button>
                   <button
-                    className="w-full px-4 py-2 rounded-md shadow-md bg-yellow-500 hover:bg-yellow-600 text-white font-semibold"
+                    className="w-full px-4 py-3 rounded-md shadow-md bg-yellow-500 hover:bg-yellow-600 text-white font-semibold flex items-center justify-center gap-1"
                     onClick={props.closeModal}
                   >
-                    Edit Data
+                    <PencilSquareIcon className="h-5" />
+                    <p>Edit Data</p>
                   </button>
                 </div>
               </td>

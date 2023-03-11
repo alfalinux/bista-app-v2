@@ -218,7 +218,7 @@ const CreateOrderContainer = (props) => {
         <button
           type="submit"
           disabled={!allFieldsIsValid}
-          className="bg-black px-4 py-2 mb-16 md:mb-4 font-semibold text-sm text-white rounded-lg border-[1px] border-zinc-300 shadow-lg shadow-black/10 hover:bg-red-500 focus:bg-red-500 disabled:cursor-not-allowed disabled:bg-zinc-300 disabled:text-zinc-400 md:col-span-2 xl:col-span-2"
+          className="bg-black px-4 py-2 md:mb-4 font-semibold text-sm text-white rounded-lg border-[1px] border-zinc-300 shadow-lg shadow-black/10 hover:bg-red-500 focus:bg-red-500 disabled:cursor-not-allowed disabled:bg-zinc-300 disabled:text-zinc-400 md:col-span-2 xl:col-span-2"
         >
           Create Order
         </button>

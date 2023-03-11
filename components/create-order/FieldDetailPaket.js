@@ -310,29 +310,29 @@ const FieldDetailPaket = (props) => {
               )
             ) : null}
           </section>
-          <div className="w-full flex flex-wrap gap-2 items-center justify-end">
+          <div className="w-full flex flex-wrap gap-2 items-center justify-between sm:justify-end">
             <button
-              className={`w-28 flex items-center justify-center gap-1 bg-yellow-500 hover:bg-yellow-600 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
+              className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-yellow-500 hover:bg-yellow-600 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
               disabled={!verified}
               onClick={handleSimpan}
             >
-              <PencilSquareIcon className="h-5" />
+              <PencilSquareIcon className="h-5 hidden sm:block" />
               <p>Edit</p>
             </button>
             <button
-              className={`w-28 flex items-center justify-center gap-1 bg-red-500 hover:bg-red-600 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
+              className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-red-500 hover:bg-red-600 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
               onClick={handleHapus}
             >
-              <TrashIcon className="h-5" />
+              <TrashIcon className=" h-5 hidden sm:block" />
               <p>Hapus</p>
             </button>
             <button
-              className={`w-28 flex items-center justify-center gap-1 bg-green-500 hover:bg-green-600
+              className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-green-500 hover:bg-green-600
               } font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
               onClick={handleSimpan}
               disabled={!Object.values(isValid).every((value) => value) || verified}
             >
-              <CheckBadgeIcon className="h-5" />
+              <CheckBadgeIcon className="h-5 hidden sm:block" />
               <p>Simpan</p>
             </button>
           </div>

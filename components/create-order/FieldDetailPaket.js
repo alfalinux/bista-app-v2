@@ -56,6 +56,7 @@ const FieldDetailPaket = (props) => {
   };
 
   const handleSimpan = (e) => {
+    e.preventDefault();
     if (!verified) {
       setVerified(true);
       setShowDetail(false);
@@ -67,7 +68,27 @@ const FieldDetailPaket = (props) => {
   };
 
   const handleHapus = (e) => {
-    setInitPaket((prevState) => prevState.filter((d) => d.id !== id));
+    e.preventDefault();
+    Swal.fire({
+      title: `Paket#${index + 1} | ID-${id}`,
+      text: `yakin mau dihapus?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0ea5e9",
+      cancelButtonColor: "#ef4444",
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batalkan",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setInitPaket((prevState) => prevState.filter((d) => d.id !== id));
+        Swal.fire({
+          title: "Terhapus!",
+          text: `Paket#${index + 1} | ID-${id} sudah dihapus!`,
+          icon: "success",
+          confirmButtonColor: "#22c55e",
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -300,28 +321,7 @@ const FieldDetailPaket = (props) => {
             </button>
             <button
               className={`w-28 flex items-center justify-center gap-1 bg-red-500 hover:bg-red-600 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
-              onClick={(e) =>
-                Swal.fire({
-                  title: `Paket#${index + 1} | ID-${id}`,
-                  text: `yakin mau dihapus?`,
-                  icon: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#0ea5e9",
-                  cancelButtonColor: "#ef4444",
-                  confirmButtonText: "Ya, hapus!",
-                  cancelButtonText: "Batalkan",
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    handleHapus();
-                    Swal.fire({
-                      title: "Terhapus!",
-                      text: `Paket#${index + 1} | ID-${id} sudah dihapus!`,
-                      icon: "success",
-                      confirmButtonColor: "#22c55e",
-                    });
-                  }
-                })
-              }
+              onClick={handleHapus}
             >
               <TrashIcon className="h-5" />
               <p>Hapus</p>

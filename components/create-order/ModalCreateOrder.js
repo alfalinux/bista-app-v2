@@ -28,20 +28,40 @@ const ModalCreateOrder = (props) => {
         .toLocaleString("id-ID", { maximumFractionDigits: 5 })} Kg`,
     },
     { name: "Keterangan Paket", value: data.paket.map((d) => d.keterangan).join(", ") },
-    { name: "Ongkir per-Kilo", value: `Rp. ${Number(data.ongkirPerkilo).toLocaleString("id-ID")} ,-` },
-    { name: "Subtotal Ongkir", value: `Rp. ${Number(data.subtotalOngkir).toLocaleString("id-ID")} ,-` },
+    {
+      name: "Ongkir per-Kilo",
+      value: `Rp. ${Number(data.ongkirPerkilo).toLocaleString("id-ID", { maximumFractionDigits: 0 })} ,-`,
+    },
+    {
+      name: "Subtotal Ongkir",
+      value: `Rp. ${Number(data.subtotalOngkir).toLocaleString("id-ID", { maximumFractionDigits: 0 })} ,-`,
+    },
     {
       name: "Diskon",
       value: `${Number(data.diskon).toLocaleString("id-ID", { maximumFractionDigits: 5 })} %`,
     },
     {
       name: "Ongkir Setelah Diskon",
-      value: `Rp. ${Number(data.ongkirSetelahDiskon).toLocaleString("id-ID")} ,-`,
+      value: `Rp. ${Number(data.ongkirSetelahDiskon).toLocaleString("id-ID", {
+        maximumFractionDigits: 0,
+      })} ,-`,
     },
-    { name: "Biaya Packing", value: `Rp. ${Number(data.biayaPacking).toLocaleString("id-ID")} ,-` },
-    { name: "Biaya Surat", value: `Rp. ${Number(data.biayaSurat).toLocaleString("id-ID")} ,-` },
-    { name: "Biaya Asuransi", value: `Rp. ${Number(data.biayaAsuransi).toLocaleString("id-ID")} ,-` },
-    { name: "Total Ongkir", value: `Rp. ${Number(data.grandTotal).toLocaleString("id-ID")} ,-` },
+    {
+      name: "Biaya Packing",
+      value: `Rp. ${Number(data.biayaPacking).toLocaleString("id-ID", { maximumFractionDigits: 0 })} ,-`,
+    },
+    {
+      name: "Biaya Surat",
+      value: `Rp. ${Number(data.biayaSurat).toLocaleString("id-ID", { maximumFractionDigits: 0 })} ,-`,
+    },
+    {
+      name: "Biaya Asuransi",
+      value: `Rp. ${Number(data.biayaAsuransi).toLocaleString("id-ID", { maximumFractionDigits: 0 })} ,-`,
+    },
+    {
+      name: "Total Ongkir",
+      value: `Rp. ${Number(data.grandTotal).toLocaleString("id-ID", { maximumFractionDigits: 0 })} ,-`,
+    },
   ];
 
   const createResiHandler = () => {

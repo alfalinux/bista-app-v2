@@ -48,13 +48,11 @@ const CreateOrderContainer = (props) => {
     initialValues.biayaSurat,
   ]);
 
-  console.log(showResi);
-
   return (
     <>
       <form
         onSubmit={onSubmit}
-        className="w-full overflow-hidden px-4 flex flex-col gap-4 md:grid md:grid-cols-2 lg:flex lg:flex-col xl:grid xl:grid-cols-2"
+        className="w-full lg:overflow-hidden px-4 flex flex-col gap-4 md:grid md:grid-cols-2 lg:flex lg:flex-col xl:grid xl:grid-cols-2"
       >
         {/* --DETAIL PENGIRIM-- */}
         <fieldset className="bg-white border-[1px] border-zinc-300 shadow-lg shadow-black/10 rounded-md p-4 text-sm text-zinc-600 flex flex-col gap-4">

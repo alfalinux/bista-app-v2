@@ -1,6 +1,7 @@
 import {
   RectangleGroupIcon,
   RocketLaunchIcon,
+  ComputerDesktopIcon,
   ArrowDownOnSquareStackIcon,
   TruckIcon,
   PrinterIcon,
@@ -8,10 +9,21 @@ import {
 } from "@heroicons/react/24/outline";
 import LeftMenuButton from "../utils/LeftMenuButton";
 import React from "react";
+import HeadMenuButton from "../utils/HeadMenuButton";
 
 const LeftMenu = (props) => {
   const menus = [
     { name: "Beranda", link: "/", icon: RectangleGroupIcon },
+    {
+      name: "Monitoring",
+      link: "",
+      icon: ComputerDesktopIcon,
+      submenu: [
+        { name: "Resi Aktif", link: "/monitoring/resi-aktif" },
+        { name: "Manifest Aktif", link: "/monitoring/manifest-aktif" },
+        { name: "Surat Jalan Aktif", link: "/monitoring/surat-jalan-aktif" },
+      ],
+    },
     {
       name: "Outgoing",
       link: "",
@@ -67,19 +79,42 @@ const LeftMenu = (props) => {
   ];
 
   return (
-    <div
-      className={`relative w-64 h-full overflow-hidden flex-col gap-1 bg-white border-r-[1px] border-zinc-200`}
-    >
-      <div className="bg-white/80 w-64">
-        <img className="w-48 p-4 ml-2" src="/images/bista-header-color.png" alt="logo bista cargo" />
-      </div>
-
-      <div className="absolute top-0 left-0 w-64 h-5/6 mt-14  overflow-y-scroll overflow-x-hidden scrollbar">
+    <>
+      {/* Desktop Menu */}
+      <div
+        className={`hidden lg:block pb-8 overflow-y-scroll overflow-x-hidden scrollbar bg-white ${
+          props.showMenuDesktop ? "w-80" : "w-0"
+        } duration-500 ease-in-out`}
+      >
         {menus?.map((menu, index) => (
           <LeftMenuButton key={index} menu={menu} />
         ))}
       </div>
-    </div>
+
+      {/* Mobile Menu */}
+      <div className={`lg:hidden relative`}>
+        <div
+          className={`absolute h-[100dvh] bg-black/30 z-10 ${
+            props.showMenuMobile ? "w-[100dvw]" : "w-0"
+          } duration-500 ease-in-out`}
+        >
+          <div
+            className={`w-80 h-full pb-20 overflow-y-scroll overflow-x-hidden scrollbar flex flex-col justify-between bg-white ${
+              props.showMenuMobile ? "translate-x-0" : "-translate-x-full"
+            } duration-500 ease-in-out`}
+          >
+            <section>
+              {menus?.map((menu, index) => (
+                <LeftMenuButton key={index} menu={menu} />
+              ))}
+            </section>
+            <section>
+              <HeadMenuButton style="lg:hidden flex flex-col-reverse gap-2 mt-4" />
+            </section>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

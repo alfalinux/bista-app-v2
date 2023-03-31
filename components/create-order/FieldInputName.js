@@ -41,7 +41,7 @@ const FieldInputName = (props) => {
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
-        className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none disabled:bg-black/10 capitalize ${
+        className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-transparent disabled:bg-black/10 capitalize ${
           isTouched && !isValid
             ? "bg-red-100 focus:ring-1 focus:ring-red-500 border-red-300 "
             : "bg-white focus:ring-1  focus:ring-black border-zinc-300"

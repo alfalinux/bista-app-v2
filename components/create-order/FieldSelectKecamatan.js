@@ -86,9 +86,9 @@ const FieldSelectKecamatan = (props) => {
       tujuan: e.value,
       ongkirPerkilo:
         initialValues.layanan === "cargo"
-          ? e.value.cargo
+          ? Number(e.value.cargo)
           : initialValues.layanan === "express"
-          ? e.value.express
+          ? Number(e.value.express)
           : "",
       subtotalOngkir:
         initialValues.layanan === "cargo" && initialValues.paket

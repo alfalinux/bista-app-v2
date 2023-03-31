@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body className="max-w-screen-2xl lg:overflow-hidden mx-auto bg-zinc-100 border shadow-sm">
+      <body className="max-w-screen-2xl overflow-hidden mx-auto bg-gray-100 border shadow-sm">
         <Main />
         <NextScript />
       </body>

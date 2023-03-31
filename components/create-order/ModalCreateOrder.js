@@ -1,7 +1,12 @@
 import { DocumentCheckIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import Swal from "sweetalert2";
+import generateNoResi from "../../helpers/generateNoResi";
 
 const ModalCreateOrder = (props) => {
+  const router = useRouter();
+  const [postedData, setPostedData] = useState("");
   const { data } = props;
   const detail = [
     { name: "Nama Pengirim", value: data.namaPengirim },
@@ -70,20 +75,31 @@ const ModalCreateOrder = (props) => {
   ];
 
   const createResiHandler = () => {
-    Swal.fire({
-      title: "Pastikan data sudah sesuai",
-      text: "Resi yang sudah di create tidak dapat dibatalkan!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Create Resi!",
-      cancelButtonText: "Batalkan",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      }
-    });
+    const tglTransaksi = new Date().toISOString();
+    const noResi = generateNoResi("BKU", "CSO");
+    fetch("/api/data-resi/post-resi", {
+      method: "POST",
+      body: JSON.stringify({
+        ...data,
+        tglTransaksi: tglTransaksi,
+        noResi: noResi,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${noResi}`,
+          text: `${data.message}`,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        router.replace(`/reprint/reprint-resi?noResi=${noResi}`);
+      });
   };
 
   return (
@@ -120,6 +136,14 @@ const ModalCreateOrder = (props) => {
                 </div>
               </td>
             </tr>
+            <tr>
+              <td colSpan="3">
+                <p className="text-xs text-red-500">
+                  Cek dan konfirmasi kembali data inputan, karena setelah klik tombol "Create Resi" data akan
+                  diproses dan tidak dapat dibatalkan!
+                </p>
+              </td>
+            </tr>
           </tfoot>
         </table>
       </div>
@@ -128,3 +152,55 @@ const ModalCreateOrder = (props) => {
 };
 
 export default ModalCreateOrder;
+
+// const createResiHandler = () => {
+//   Swal.fire({
+//     title: "Pastikan data sudah sesuai",
+//     text: "Resi yang sudah di create tidak dapat dibatalkan!",
+//     icon: "warning",
+//     showCancelButton: true,
+//     confirmButtonColor: "#3085d6",
+//     cancelButtonColor: "#d33",
+//     confirmButtonText: "Create Resi!",
+//     cancelButtonText: "Batalkan",
+//     showLoaderOnConfirm: true,
+//     preConfirm: () => {
+//       const tglTransaksi = new Date().toISOString();
+//       const noResi = generateNoResi("BKU", "CSO");
+//       return fetch("/api/data-resi/post-resi", {
+//         method: "POST",
+//         body: JSON.stringify({
+//           ...data,
+//           tglTransaksi: tglTransaksi,
+//           noResi: noResi,
+//         }),
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       })
+//         .then((response) => {
+//           if (!response.ok) {
+//             throw new Error(response.statusText);
+//           }
+//           return response.json();
+//         })
+//         .then((data) => setPostedData(noResi))
+//         .catch((error) => {
+//           Swal.showValidationMessage(`Request failed: ${error}`);
+//         });
+//     },
+//     allowOutsideClick: () => !Swal.isLoading(),
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       Swal.fire({
+//         title: "Sukses",
+//         text: `Resi berhasil di create dengan nomor ${postedData}`,
+//         icon: "success",
+//         showCancelButton: false,
+//         showConfirmButton: true,
+//         showCloseButton: false,
+//       });
+//       router.replace(`/reprint/reprint-resi?noResi=${postedData}`);
+//     }
+//   });
+// };

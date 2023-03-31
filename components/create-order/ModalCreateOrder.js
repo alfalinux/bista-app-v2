@@ -6,7 +6,6 @@ import generateNoResi from "../../helpers/generateNoResi";
 
 const ModalCreateOrder = (props) => {
   const router = useRouter();
-  const [postedData, setPostedData] = useState("");
   const { data } = props;
   const detail = [
     { name: "Nama Pengirim", value: data.namaPengirim },

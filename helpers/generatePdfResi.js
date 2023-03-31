@@ -142,8 +142,9 @@ const generatePdfResi = (data) => {
         { content: Number(data.paket.length).toLocaleString("id-ID") + " Koli" },
         {
           content:
-            Number(data.paket.reduce((acc, curr) => acc + curr.beratDikenakan, 0)).toLocaleString("id-ID") +
-            " Kg",
+            Number(data.paket.reduce((acc, curr) => acc + curr.beratDikenakan, 0))
+              .toFixed(2)
+              .toLocaleString("id-ID") + " Kg",
         },
         { content: "Rp. " + Number(data.ongkirPerkilo).toLocaleString("id-ID") },
       ],
@@ -167,18 +168,45 @@ const generatePdfResi = (data) => {
         { content: "Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
         { content: "Pembayaran", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-        { content: "Keterangan Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        {
+          content: "Keterangan Paket",
+          styles: { fontStyle: "bold", cellWidth: 28.5 },
+        },
         { content: "", styles: { fontStyle: "bold" } },
       ],
       [
-        { content: data.namaPengirim, colSpan: 2 },
-        { content: data.namaPenerima, colSpan: 2 },
+        {
+          content: `${
+            data.namaPengirim.length > 30 ? data.namaPengirim.substring(0, 30) + "..." : data.namaPengirim
+          }\n${
+            data.alamatPengirim.length > 100
+              ? data.alamatPengirim.substring(0, 100) + "..."
+              : data.alamatPengirim
+          }`,
+          colSpan: 2,
+        },
+        {
+          content: `${
+            data.namaPenerima.length > 30 ? data.namaPenerima.substring(0, 30) + "..." : data.namaPenerima
+          }\n${
+            data.alamatPenerima.length > 100
+              ? data.alamatPenerima.substring(0, 100) + "..."
+              : data.alamatPenerima
+          }`,
+          colSpan: 2,
+        },
         { content: data.pembayaran.toUpperCase() },
-        { content: data.paket[0].keterangan, colSpan: 2, rowSpan: 2 },
-      ],
-      [
-        { content: data.alamatPengirim, colSpan: 2 },
-        { content: data.alamatPenerima, colSpan: 2 },
+        {
+          content:
+            data.paket.map((d) => d.keterangan).join(", ").length > 150
+              ? data.paket
+                  .map((d) => d.keterangan)
+                  .join(", ")
+                  .substring(0, 150) + "..."
+              : data.paket.map((d) => d.keterangan).join(", "),
+          colSpan: 2,
+          rowSpan: 2,
+        },
       ],
     ],
   });
@@ -285,429 +313,533 @@ const generatePdfResi = (data) => {
     body: [
       [
         { content: "Subtotal Ongkir", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-        { content: "Rp. " + Number(data.subtotalOngkir).toLocaleString("id-Id") },
+        { content: "Rp. " + parseInt(data.subtotalOngkir).toLocaleString("id-Id") },
       ],
       [
-        { content: "Diskon", styles: { fontStyle: "bold" } },
-        { content: Number(data.diskon).toLocaleString("id-Id") + " %" },
+        {
+          content: `Diskon ${
+            Number(data.diskon) === 0 ? "" : Number(data.diskon).toFixed(2).toLocaleString("id-Id") + "%"
+          }`,
+          styles: { fontStyle: "bold" },
+        },
+        {
+          content: `Rp. ${(parseInt(data.subtotalOngkir) - parseInt(data.ongkirSetelahDiskon)).toLocaleString(
+            "id-Id"
+          )}`,
+        },
       ],
       [
         { content: "Ongkir + Diskon", styles: { fontStyle: "bold" } },
-        { content: "Rp. " + Number(data.ongkirSetelahDiskon).toLocaleString("id-Id") },
+        { content: "Rp. " + parseInt(data.ongkirSetelahDiskon).toLocaleString("id-Id") },
       ],
       [
         { content: "Biaya Packing", styles: { fontStyle: "bold" } },
-        { content: "Rp. " + Number(data.biayaPacking).toLocaleString("id-Id") },
+        { content: "Rp. " + parseInt(data.biayaPacking).toLocaleString("id-Id") },
       ],
       [
         { content: "Biaya Surat", styles: { fontStyle: "bold" } },
-        { content: "Rp. " + Number(data.biayaSurat).toLocaleString("id-Id") },
+        { content: "Rp. " + parseInt(data.biayaSurat).toLocaleString("id-Id") },
       ],
       [
         { content: "Biaya Asuransi", styles: { fontStyle: "bold" } },
-        { content: "Rp. " + Number(data.biayaAsuransi).toLocaleString("id-Id") },
+        { content: "Rp. " + parseInt(data.biayaAsuransi).toLocaleString("id-Id") },
       ],
       [{ content: "", styles: { fontStyle: "bold" } }, { content: "" }],
       [
         { content: "Total Ongkir", styles: { fontStyle: "bold" } },
-        { content: "Rp. " + Number(data.grandTotal).toLocaleString("id-Id"), styles: { fontStyle: "bold" } },
+        {
+          content: "Rp. " + parseInt(data.grandTotal).toLocaleString("id-Id"),
+          styles: { fontStyle: "bold" },
+        },
       ],
     ],
   });
 
-  //   // Hal 2 - Baris Pertama |Tgl|Cab|Koli|Kilo|Ongkir
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: 124,
-  //     margin: 5,
-  //     tableWidth: "auto",
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "Tanggal", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Cabang Asal", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Cabang Tujuan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Kecamatan Tujuan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Jumlah Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Berat Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Ongkir Per-Kilo", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         generateDate(data.tglTransaksi),
-  //         data.cabangAsal.toUpperCase(),
-  //         data.cabangTujuan.toUpperCase(),
-  //         data.tujuan.kec,
-  //         Number(data.jumlahBarang).toLocaleString("id-ID") + " Koli",
-  //         Number(data.beratBarang).toLocaleString("id-ID") + " Kg",
-  //         "Rp. " + Number(data.ongkirPerkilo).toLocaleString("id-ID"),
-  //       ],
-  //     ],
-  //   });
+  // Hal 2 - Baris Pertama |Tgl|Cab|Koli|Kilo|Ongkir
+  doc.autoTable({
+    theme: "plain",
+    startY: 124,
+    margin: 5,
+    tableWidth: "auto",
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "Tanggal", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Asal", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Tujuan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Jumlah Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Berat Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Ongkir Per-Kilo", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: generateDate(data.tglTransaksi) },
+        { content: data.cabangAsal.toUpperCase() },
+        {
+          content: `${data.tujuan.kec.toUpperCase()} - ${data.tujuan.ibukota.toUpperCase()} - ${data.tujuan.prov.toUpperCase()}`,
+          colSpan: 2,
+        },
+        { content: Number(data.paket.length).toLocaleString("id-ID") + " Koli" },
+        {
+          content:
+            Number(data.paket.reduce((acc, curr) => acc + curr.beratDikenakan, 0))
+              .toFixed(2)
+              .toLocaleString("id-ID") + " Kg",
+        },
+        { content: "Rp. " + Number(data.ongkirPerkilo).toLocaleString("id-ID") },
+      ],
+    ],
+  });
 
-  //   // Hal 2 - Baris Kedua |Pengirim|Penerima|Pembayaran|Keterangan
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: doc.lastAutoTable.finalY + 2,
-  //     margin: 5,
-  //     tableWidth: "auto",
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "Pengirim", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Pembayaran", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Keterangan Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: data.namaPengirim, colSpan: 2 },
-  //         { content: data.namaPenerima, colSpan: 2 },
-  //         { content: data.pembayaran.toUpperCase() },
-  //         { content: data.keteranganBarang, colSpan: 2, rowSpan: 2 },
-  //       ],
-  //       [
-  //         { content: data.alamatPengirim, colSpan: 2 },
-  //         { content: data.alamatPenerima, colSpan: 2 },
-  //       ],
-  //     ],
-  //   });
+  // Hal 2 - Baris Kedua |Pengirim|Penerima|Pembayaran|Keterangan
+  doc.autoTable({
+    theme: "plain",
+    startY: doc.lastAutoTable.finalY + 2,
+    margin: 5,
+    tableWidth: "auto",
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "Pengirim", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Pembayaran", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        {
+          content: "Keterangan Paket",
+          styles: { fontStyle: "bold", cellWidth: 28.5 },
+        },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        {
+          content: `${
+            data.namaPengirim.length > 30 ? data.namaPengirim.substring(0, 30) + "..." : data.namaPengirim
+          }\n${
+            data.alamatPengirim.length > 100
+              ? data.alamatPengirim.substring(0, 100) + "..."
+              : data.alamatPengirim
+          }`,
+          colSpan: 2,
+        },
+        {
+          content: `${
+            data.namaPenerima.length > 30 ? data.namaPenerima.substring(0, 30) + "..." : data.namaPenerima
+          }\n${
+            data.alamatPenerima.length > 100
+              ? data.alamatPenerima.substring(0, 100) + "..."
+              : data.alamatPenerima
+          }`,
+          colSpan: 2,
+        },
+        { content: data.pembayaran.toUpperCase() },
+        {
+          content:
+            data.paket.map((d) => d.keterangan).join(", ").length > 150
+              ? data.paket
+                  .map((d) => d.keterangan)
+                  .join(", ")
+                  .substring(0, 150) + "..."
+              : data.paket.map((d) => d.keterangan).join(", "),
+          colSpan: 2,
+          rowSpan: 2,
+        },
+      ],
+    ],
+  });
 
-  //   // Hal 2 - Baris Ketiga |No Telp|Layanan
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: doc.lastAutoTable.finalY + 2,
-  //     margin: 5,
-  //     tableWidth: "auto",
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "No Telp. Pengirim", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "No Telp. Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Layanan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: data.nohpPengirim, colSpan: 2 },
-  //         { content: data.nohpPenerima, colSpan: 2 },
-  //         { content: data.layanan.toUpperCase() },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //     ],
-  //   });
+  // Hal 2 - Baris Ketiga |No Telp|Layanan
+  doc.autoTable({
+    theme: "plain",
+    startY: doc.lastAutoTable.finalY + 2,
+    margin: 5,
+    tableWidth: "auto",
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "No Telp. Pengirim", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "No Telp. Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Layanan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: data.nohpPengirim, colSpan: 2 },
+        { content: data.nohpPenerima, colSpan: 2 },
+        { content: data.layanan.toUpperCase() },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+    ],
+  });
 
-  //   // Hal 2 - Baris Keempat | Tanda Tangan
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: 171,
-  //     margin: 5,
-  //     tableWidth: "auto",
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "Ttd. Petugas,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Ttd. Pengirim,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Ttd. Penerima,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: "________________", styles: { fontStyle: "bold" } },
-  //         { content: "________________", styles: { fontStyle: "bold" } },
-  //         { content: "________________", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //     ],
-  //   });
+  // Hal 2 - Baris Keempat | Tanda Tangan
+  doc.autoTable({
+    theme: "plain",
+    startY: 171,
+    margin: 5,
+    tableWidth: "auto",
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "Ttd. Petugas,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Ttd. Pengirim,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Ttd. Penerima,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: "________________", styles: { fontStyle: "bold" } },
+        { content: "________________", styles: { fontStyle: "bold" } },
+        { content: "________________", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+    ],
+  });
 
-  //   // Hal 2 - Baris Kelima | Detail Biaya
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: 159,
-  //     margin: { top: 10, right: 5, left: 148, bottom: 5 },
-  //     tableWidth: 57,
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "Subtotal Ongkir", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Rp. " + Number(data.subtotalOngkir).toLocaleString("id-Id") },
-  //       ],
-  //       [
-  //         { content: "Diskon", styles: { fontStyle: "bold" } },
-  //         { content: Number(data.diskon).toLocaleString("id-Id") + " %" },
-  //       ],
-  //       [
-  //         { content: "Ongkir + Diskon", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.ongkirSetelahDiskon).toLocaleString("id-Id") },
-  //       ],
-  //       [
-  //         { content: "Biaya Packing", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.biayaPacking).toLocaleString("id-Id") },
-  //       ],
-  //       [
-  //         { content: "Biaya Surat", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.biayaSurat).toLocaleString("id-Id") },
-  //       ],
-  //       [
-  //         { content: "Biaya Asuransi", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.biayaAsuransi).toLocaleString("id-Id") },
-  //       ],
-  //       [{ content: "", styles: { fontStyle: "bold" } }, { content: "" }],
-  //       [
-  //         { content: "Total Ongkir", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.grandTotal).toLocaleString("id-Id"), styles: { fontStyle: "bold" } },
-  //       ],
-  //     ],
-  //   });
+  // Hal 2 - Baris Kelima | Detail Biaya
+  doc.autoTable({
+    theme: "plain",
+    startY: 159,
+    margin: { top: 10, right: 5, left: 148, bottom: 5 },
+    tableWidth: 57,
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "Subtotal Ongkir", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Rp. " + parseInt(data.subtotalOngkir).toLocaleString("id-Id") },
+      ],
+      [
+        {
+          content: `Diskon ${
+            Number(data.diskon) === 0 ? "" : Number(data.diskon).toFixed(2).toLocaleString("id-Id") + "%"
+          }`,
+          styles: { fontStyle: "bold" },
+        },
+        {
+          content: `Rp. ${(parseInt(data.subtotalOngkir) - parseInt(data.ongkirSetelahDiskon)).toLocaleString(
+            "id-Id"
+          )}`,
+        },
+      ],
+      [
+        { content: "Ongkir + Diskon", styles: { fontStyle: "bold" } },
+        { content: "Rp. " + parseInt(data.ongkirSetelahDiskon).toLocaleString("id-Id") },
+      ],
+      [
+        { content: "Biaya Packing", styles: { fontStyle: "bold" } },
+        { content: "Rp. " + parseInt(data.biayaPacking).toLocaleString("id-Id") },
+      ],
+      [
+        { content: "Biaya Surat", styles: { fontStyle: "bold" } },
+        { content: "Rp. " + parseInt(data.biayaSurat).toLocaleString("id-Id") },
+      ],
+      [
+        { content: "Biaya Asuransi", styles: { fontStyle: "bold" } },
+        { content: "Rp. " + parseInt(data.biayaAsuransi).toLocaleString("id-Id") },
+      ],
+      [{ content: "", styles: { fontStyle: "bold" } }, { content: "" }],
+      [
+        { content: "Total Ongkir", styles: { fontStyle: "bold" } },
+        {
+          content: "Rp. " + parseInt(data.grandTotal).toLocaleString("id-Id"),
+          styles: { fontStyle: "bold" },
+        },
+      ],
+    ],
+  });
 
-  //   // Hal 3 - Baris Pertama |Tgl|Cab|Koli|Kilo|Ongkir
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: 223,
-  //     margin: 5,
-  //     tableWidth: "auto",
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "Tanggal", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Cabang Asal", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Cabang Tujuan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Kecamatan Tujuan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Jumlah Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Berat Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Ongkir Per-Kilo", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         generateDate(data.tglTransaksi),
-  //         data.cabangAsal.toUpperCase(),
-  //         data.cabangTujuan.toUpperCase(),
-  //         data.tujuan.kec,
-  //         Number(data.jumlahBarang).toLocaleString("id-ID") + " Koli",
-  //         Number(data.beratBarang).toLocaleString("id-ID") + " Kg",
-  //         "Rp. " + Number(data.ongkirPerkilo).toLocaleString("id-ID"),
-  //       ],
-  //     ],
-  //   });
+  // Hal 3 - Baris Pertama |Tgl|Cab|Koli|Kilo|Ongkir
+  doc.autoTable({
+    theme: "plain",
+    startY: 223,
+    margin: 5,
+    tableWidth: "auto",
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "Tanggal", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Asal", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Tujuan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Jumlah Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Berat Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Ongkir Per-Kilo", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: generateDate(data.tglTransaksi) },
+        { content: data.cabangAsal.toUpperCase() },
+        {
+          content: `${data.tujuan.kec.toUpperCase()} - ${data.tujuan.ibukota.toUpperCase()} - ${data.tujuan.prov.toUpperCase()}`,
+          colSpan: 2,
+        },
+        { content: Number(data.paket.length).toLocaleString("id-ID") + " Koli" },
+        {
+          content:
+            Number(data.paket.reduce((acc, curr) => acc + curr.beratDikenakan, 0))
+              .toFixed(2)
+              .toLocaleString("id-ID") + " Kg",
+        },
+        { content: "Rp. " + Number(data.ongkirPerkilo).toLocaleString("id-ID") },
+      ],
+    ],
+  });
 
-  //   // Hal 3 - Baris Kedua |Pengirim|Penerima|Pembayaran|Keterangan
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: doc.lastAutoTable.finalY + 2,
-  //     margin: 5,
-  //     tableWidth: "auto",
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "Pengirim", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Pembayaran", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Keterangan Paket", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: data.namaPengirim, colSpan: 2 },
-  //         { content: data.namaPenerima, colSpan: 2 },
-  //         { content: data.pembayaran.toUpperCase() },
-  //         { content: data.keteranganBarang, colSpan: 2, rowSpan: 2 },
-  //       ],
-  //       [
-  //         { content: data.alamatPengirim, colSpan: 2 },
-  //         { content: data.alamatPenerima, colSpan: 2 },
-  //       ],
-  //     ],
-  //   });
+  // Hal 3 - Baris Kedua |Pengirim|Penerima|Pembayaran|Keterangan
+  doc.autoTable({
+    theme: "plain",
+    startY: doc.lastAutoTable.finalY + 2,
+    margin: 5,
+    tableWidth: "auto",
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "Pengirim", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Pembayaran", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        {
+          content: "Keterangan Paket",
+          styles: { fontStyle: "bold", cellWidth: 28.5 },
+        },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        {
+          content: `${
+            data.namaPengirim.length > 30 ? data.namaPengirim.substring(0, 30) + "..." : data.namaPengirim
+          }\n${
+            data.alamatPengirim.length > 100
+              ? data.alamatPengirim.substring(0, 100) + "..."
+              : data.alamatPengirim
+          }`,
+          colSpan: 2,
+        },
+        {
+          content: `${
+            data.namaPenerima.length > 30 ? data.namaPenerima.substring(0, 30) + "..." : data.namaPenerima
+          }\n${
+            data.alamatPenerima.length > 100
+              ? data.alamatPenerima.substring(0, 100) + "..."
+              : data.alamatPenerima
+          }`,
+          colSpan: 2,
+        },
+        { content: data.pembayaran.toUpperCase() },
+        {
+          content:
+            data.paket.map((d) => d.keterangan).join(", ").length > 150
+              ? data.paket
+                  .map((d) => d.keterangan)
+                  .join(", ")
+                  .substring(0, 150) + "..."
+              : data.paket.map((d) => d.keterangan).join(", "),
+          colSpan: 2,
+          rowSpan: 2,
+        },
+      ],
+    ],
+  });
 
-  //   // Hal 3 - Baris Ketiga |No Telp|Layanan
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: doc.lastAutoTable.finalY + 2,
-  //     margin: 5,
-  //     tableWidth: "auto",
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "No Telp. Pengirim", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "No Telp. Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Layanan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: data.nohpPengirim, colSpan: 2 },
-  //         { content: data.nohpPenerima, colSpan: 2 },
-  //         { content: data.layanan.toUpperCase() },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //     ],
-  //   });
+  // Hal 3 - Baris Ketiga |No Telp|Layanan
+  doc.autoTable({
+    theme: "plain",
+    startY: doc.lastAutoTable.finalY + 2,
+    margin: 5,
+    tableWidth: "auto",
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "No Telp. Pengirim", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "No Telp. Penerima", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Layanan", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: data.nohpPengirim, colSpan: 2 },
+        { content: data.nohpPenerima, colSpan: 2 },
+        { content: data.layanan.toUpperCase() },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+    ],
+  });
 
-  //   // Hal 3 - Baris Keempat | Tanda Tangan
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: 270,
-  //     margin: 5,
-  //     tableWidth: "auto",
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "Ttd. Petugas,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Ttd. Pengirim,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Ttd. Penerima,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //       [
-  //         { content: "________________", styles: { fontStyle: "bold" } },
-  //         { content: "________________", styles: { fontStyle: "bold" } },
-  //         { content: "________________", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //         { content: "", styles: { fontStyle: "bold" } },
-  //       ],
-  //     ],
-  //   });
+  // Hal 3 - Baris Keempat | Tanda Tangan
+  doc.autoTable({
+    theme: "plain",
+    startY: 270,
+    margin: 5,
+    tableWidth: "auto",
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "Ttd. Petugas,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Ttd. Pengirim,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Ttd. Penerima,", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+      [
+        { content: "________________", styles: { fontStyle: "bold" } },
+        { content: "________________", styles: { fontStyle: "bold" } },
+        { content: "________________", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+        { content: "", styles: { fontStyle: "bold" } },
+      ],
+    ],
+  });
 
-  //   // Hal 3 - Baris Kelima | Detail Biaya
-  //   doc.autoTable({
-  //     theme: "plain",
-  //     startY: 258,
-  //     margin: { top: 10, right: 5, left: 148, bottom: 5 },
-  //     tableWidth: 57,
-  //     styles: {
-  //       cellPadding: 0.2,
-  //       fontSize: 8,
-  //     },
-  //     body: [
-  //       [
-  //         { content: "Subtotal Ongkir", styles: { fontStyle: "bold", cellWidth: 28.5 } },
-  //         { content: "Rp. " + Number(data.subtotalOngkir).toLocaleString("id-Id") },
-  //       ],
-  //       [
-  //         { content: "Diskon", styles: { fontStyle: "bold" } },
-  //         { content: Number(data.diskon).toLocaleString("id-Id") + " %" },
-  //       ],
-  //       [
-  //         { content: "Ongkir + Diskon", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.ongkirSetelahDiskon).toLocaleString("id-Id") },
-  //       ],
-  //       [
-  //         { content: "Biaya Packing", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.biayaPacking).toLocaleString("id-Id") },
-  //       ],
-  //       [
-  //         { content: "Biaya Surat", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.biayaSurat).toLocaleString("id-Id") },
-  //       ],
-  //       [
-  //         { content: "Biaya Asuransi", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.biayaAsuransi).toLocaleString("id-Id") },
-  //       ],
-  //       [{ content: "", styles: { fontStyle: "bold" } }, { content: "" }],
-  //       [
-  //         { content: "Total Ongkir", styles: { fontStyle: "bold" } },
-  //         { content: "Rp. " + Number(data.grandTotal).toLocaleString("id-Id"), styles: { fontStyle: "bold" } },
-  //       ],
-  //     ],
-  //   });
+  // Hal 3 - Baris Kelima | Detail Biaya
+  doc.autoTable({
+    theme: "plain",
+    startY: 258,
+    margin: { top: 10, right: 5, left: 148, bottom: 5 },
+    tableWidth: 57,
+    styles: {
+      cellPadding: 0.2,
+      fontSize: 8,
+    },
+    body: [
+      [
+        { content: "Subtotal Ongkir", styles: { fontStyle: "bold", cellWidth: 28.5 } },
+        { content: "Rp. " + parseInt(data.subtotalOngkir).toLocaleString("id-Id") },
+      ],
+      [
+        {
+          content: `Diskon ${
+            Number(data.diskon) === 0 ? "" : Number(data.diskon).toFixed(2).toLocaleString("id-Id") + "%"
+          }`,
+          styles: { fontStyle: "bold" },
+        },
+        {
+          content: `Rp. ${(parseInt(data.subtotalOngkir) - parseInt(data.ongkirSetelahDiskon)).toLocaleString(
+            "id-Id"
+          )}`,
+        },
+      ],
+      [
+        { content: "Ongkir + Diskon", styles: { fontStyle: "bold" } },
+        { content: "Rp. " + parseInt(data.ongkirSetelahDiskon).toLocaleString("id-Id") },
+      ],
+      [
+        { content: "Biaya Packing", styles: { fontStyle: "bold" } },
+        { content: "Rp. " + parseInt(data.biayaPacking).toLocaleString("id-Id") },
+      ],
+      [
+        { content: "Biaya Surat", styles: { fontStyle: "bold" } },
+        { content: "Rp. " + parseInt(data.biayaSurat).toLocaleString("id-Id") },
+      ],
+      [
+        { content: "Biaya Asuransi", styles: { fontStyle: "bold" } },
+        { content: "Rp. " + parseInt(data.biayaAsuransi).toLocaleString("id-Id") },
+      ],
+      [{ content: "", styles: { fontStyle: "bold" } }, { content: "" }],
+      [
+        { content: "Total Ongkir", styles: { fontStyle: "bold" } },
+        {
+          content: "Rp. " + parseInt(data.grandTotal).toLocaleString("id-Id"),
+          styles: { fontStyle: "bold" },
+        },
+      ],
+    ],
+  });
 
   // Eksekusi PDF ke new Window
 

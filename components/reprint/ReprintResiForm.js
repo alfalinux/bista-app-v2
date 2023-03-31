@@ -1,3 +1,4 @@
+import generatePdfLabel from "@/helpers/generatePdfLabel";
 import generatePdfResi from "@/helpers/generatePdfResi";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
@@ -102,7 +103,12 @@ const ReprintResiForm = (props) => {
                 >
                   Reprint Resi
                 </button>
-                <button className="p-2 text-sm text-white bg-green-500 rounded-md">Reprint Label</button>
+                <button
+                  className="p-2 text-sm text-white bg-green-500 rounded-md"
+                  onClick={() => generatePdfLabel(props.dataResi.data)}
+                >
+                  Reprint Label
+                </button>
                 <button className="p-2 text-sm text-white bg-orange-500 rounded-md">Reprint Struk</button>
               </div>
             </div>

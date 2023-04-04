@@ -1,9 +1,8 @@
 import generatePdfLabel from "@/helpers/generatePdfLabel";
 import generatePdfResi from "@/helpers/generatePdfResi";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ReprintResiForm = (props) => {
   const router = useRouter();

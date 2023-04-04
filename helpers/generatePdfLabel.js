@@ -200,7 +200,7 @@ const generatePdfLabel = (data) => {
       body: [[{ content: "Tgl Transaksi: " + generateDate(data.tglTransaksi) }]],
     });
   } else {
-    for (let i = 1; i <= data.jumlahBarang; i++) {
+    for (let i = 1; i <= data.paket.length; i++) {
       i > 1 ? doc.addPage([80, 100], "p") : null;
       i > 1 ? doc.setPage(i) : null;
       doc.addImage(imglogo, "PNG", 2, 2, 38.4, 7.36);
@@ -218,7 +218,7 @@ const generatePdfLabel = (data) => {
           halign: "right",
           valign: "top",
         },
-        body: [[{ content: i + " of " + data.jumlahBarang, styles: { fontStyle: "bold" } }]],
+        body: [[{ content: i + " of " + data.paket.length, styles: { fontStyle: "bold" } }]],
       });
 
       // No Resi dan tujuan
@@ -236,7 +236,7 @@ const generatePdfLabel = (data) => {
         body: [
           [
             {
-              content: "To: " + data.cabangTujuan.toUpperCase(),
+              content: "To: " + data.tujuan.ibukota.toUpperCase(),
               styles: { fontStyle: "bold" },
             },
           ],
@@ -253,18 +253,26 @@ const generatePdfLabel = (data) => {
           cellPadding: 1,
           fontSize: 8,
           halign: "center",
-          valign: "top",
+          valign: "middle",
           fillColor: "eaeaea",
         },
         body: [
           [
             { content: data.layanan.toUpperCase(), styles: { fontStyle: "bold" } },
             {
-              content: Number(data.jumlahBarang).toLocaleString("id-ID") + " Koli",
+              content: `Actual\n${
+                Number(data.paket[i - 1].beratAktual)
+                  .toFixed(2)
+                  .toLocaleString("id-ID") + " Kg"
+              }`,
               styles: { fontStyle: "bold" },
             },
             {
-              content: Number(data.beratBarang).toLocaleString("id-ID") + " Kg",
+              content: `Incharge\n${
+                Number(data.paket[i - 1].beratDikenakan)
+                  .toFixed(2)
+                  .toLocaleString("id-ID") + " Kg"
+              }`,
               styles: { fontStyle: "bold" },
             },
             { content: data.pembayaran.toUpperCase(), styles: { fontStyle: "bold" } },
@@ -285,8 +293,22 @@ const generatePdfLabel = (data) => {
           valign: "top",
         },
         body: [
-          [{ content: "Pengirim: " + data.namaPengirim, styles: { fontStyle: "bold" } }],
-          [{ content: data.alamatPengirim }],
+          [
+            {
+              content: `Pengirim: ${
+                data.namaPengirim.length > 33 ? data.namaPengirim.substring(0, 33) + "..." : data.namaPengirim
+              }`,
+              styles: { fontStyle: "bold" },
+            },
+          ],
+          [
+            {
+              content:
+                data.alamatPengirim.length > 110
+                  ? data.alamatPengirim.substring(0, 110) + "..."
+                  : data.alamatPengirim,
+            },
+          ],
           [{ content: "No. Telp/Hp : " + data.nohpPengirim }],
         ],
       });
@@ -304,8 +326,22 @@ const generatePdfLabel = (data) => {
           valign: "top",
         },
         body: [
-          [{ content: "Penerima: " + data.namaPenerima, styles: { fontStyle: "bold" } }],
-          [{ content: data.alamatPenerima }],
+          [
+            {
+              content: `Penerima: ${
+                data.namaPenerima.length > 33 ? data.namaPenerima.substring(0, 33) + "..." : data.namaPenerima
+              }`,
+              styles: { fontStyle: "bold" },
+            },
+          ],
+          [
+            {
+              content:
+                data.alamatPenerima.length > 110
+                  ? data.alamatPenerima.substring(0, 110) + "..."
+                  : data.alamatPenerima,
+            },
+          ],
           [{ content: "No. Telp/Hp : " + data.nohpPenerima }],
         ],
       });
@@ -322,7 +358,17 @@ const generatePdfLabel = (data) => {
           halign: "left",
           valign: "top",
         },
-        body: [[{ content: "Keterangan: " + data.keteranganBarang }]],
+        body: [
+          [
+            {
+              content: `Keterangan: ${
+                data.paket[i - 1].keterangan.length > 110
+                  ? data.paket[i - 1].keterangan.substring(0, 110) + "..."
+                  : data.paket[i - 1].keterangan
+              }`,
+            },
+          ],
+        ],
       });
 
       // footer tgl transaksi

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Headbar from "./layout/Headbar";
 import LeftMenu from "./layout/LeftMenu";
-import TopNav from "./layout/TopNav";
 
 const Layout = (props) => {
   const [showMenuDesktop, setShowMenuDesktop] = useState(true);

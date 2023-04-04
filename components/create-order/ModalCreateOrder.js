@@ -1,6 +1,5 @@
 import { DocumentCheckIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import Swal from "sweetalert2";
 import generateNoResi from "../../helpers/generateNoResi";
 

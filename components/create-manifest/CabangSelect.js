@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const CabangSelect = () => {
+const CabangSelect = (props) => {
   const router = useRouter();
   const [cabangAsal, setCabangAsal] = useState("");
   const [coveranArea, setCoveranArea] = useState("");
@@ -16,10 +16,14 @@ const CabangSelect = () => {
   const coveranAreaChange = (e) => {
     setCoveranArea(e.target.value);
     setCabangTujuan("");
+    props.coveranSelected(e.target.value);
+    props.tujuanSelected("");
   };
   const cabangTujuanChange = (e) => {
     setCabangTujuan(e.target.value);
+    props.tujuanSelected(e.target.value);
   };
+
   return (
     <form className="w-full p-4 bg-gray-900 flex flex-col gap-4">
       {/* Select Cabang Asal */}
@@ -40,8 +44,8 @@ const CabangSelect = () => {
           onChange={cabangAsalChange}
         >
           <option value=""></option>
-          <option value="jakarta">Jakarta</option>
-          <option value="surabaya">Surabaya</option>
+          <option value="jakarta">JAKARTA</option>
+          <option value="surabaya">SURABAYA</option>
         </select>
       </div>
 
@@ -63,8 +67,12 @@ const CabangSelect = () => {
           onChange={coveranAreaChange}
         >
           <option value=""></option>
-          <option value="jakarta">Jakarta</option>
-          <option value="surabaya">Surabaya</option>
+          {props.coveran &&
+            props.coveran.map((data, index) => (
+              <option value={data} key={index}>
+                {data.toUpperCase()}
+              </option>
+            ))}
         </select>
       </div>
 
@@ -86,8 +94,12 @@ const CabangSelect = () => {
           onChange={cabangTujuanChange}
         >
           <option value=""></option>
-          <option value="jakarta">Jakarta</option>
-          <option value="surabaya">Surabaya</option>
+          {props.tujuan &&
+            props.tujuan.map((data, index) => (
+              <option value={data} key={index}>
+                {data.toUpperCase()}
+              </option>
+            ))}
         </select>
       </div>
     </form>

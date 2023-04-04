@@ -137,8 +137,8 @@ const ModalCreateOrder = (props) => {
             <tr>
               <td colSpan="3">
                 <p className="text-xs text-red-500">
-                  Cek dan konfirmasi kembali data inputan, karena setelah klik tombol "Create Resi" data akan
-                  diproses dan tidak dapat dibatalkan!
+                  Cek dan konfirmasi kembali data inputan, karena setelah klik tombol &quotCreate Resi&quot
+                  data akan diproses dan tidak dapat dibatalkan!
                 </p>
               </td>
             </tr>

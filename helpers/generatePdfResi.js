@@ -141,10 +141,7 @@ const generatePdfResi = (data) => {
         },
         { content: Number(data.paket.length).toLocaleString("id-ID") + " Koli" },
         {
-          content:
-            Number(data.paket.reduce((acc, curr) => acc + curr.beratDikenakan, 0))
-              .toFixed(2)
-              .toLocaleString("id-ID") + " Kg",
+          content: Number(data.beratPaketDikenakan).toFixed(2).toLocaleString("id-ID") + " Kg",
         },
         { content: "Rp. " + Number(data.ongkirPerkilo).toLocaleString("id-ID") },
       ],
@@ -384,10 +381,7 @@ const generatePdfResi = (data) => {
         },
         { content: Number(data.paket.length).toLocaleString("id-ID") + " Koli" },
         {
-          content:
-            Number(data.paket.reduce((acc, curr) => acc + curr.beratDikenakan, 0))
-              .toFixed(2)
-              .toLocaleString("id-ID") + " Kg",
+          content: Number(data.beratPaketDikenakan).toFixed(2).toLocaleString("id-ID") + " Kg",
         },
         { content: "Rp. " + Number(data.ongkirPerkilo).toLocaleString("id-ID") },
       ],
@@ -627,10 +621,7 @@ const generatePdfResi = (data) => {
         },
         { content: Number(data.paket.length).toLocaleString("id-ID") + " Koli" },
         {
-          content:
-            Number(data.paket.reduce((acc, curr) => acc + curr.beratDikenakan, 0))
-              .toFixed(2)
-              .toLocaleString("id-ID") + " Kg",
+          content: Number(data.beratPaketDikenakan).toFixed(2).toLocaleString("id-ID") + " Kg",
         },
         { content: "Rp. " + Number(data.ongkirPerkilo).toLocaleString("id-ID") },
       ],

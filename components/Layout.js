@@ -26,7 +26,9 @@ const Layout = (props) => {
         <LeftMenu showMenuDesktop={showMenuDesktop} showMenuMobile={showMenuMobile} />
         <div className="w-full h-full bg-white">
           <div className="absolute z-10 w-full -translate-y-2 h-2 bg-transparent shadow-[0px_4px_6px_0px_rgba(0,0,0,0.1)]"></div>
-          <main className={`w-full h-full overflow-y-scroll py-4 bg-gray-100`}>{props.children}</main>
+          <main className={`w-full h-full overflow-x-hidden overflow-y-scroll py-4 bg-gray-100`}>
+            {props.children}
+          </main>
         </div>
       </div>
     </div>

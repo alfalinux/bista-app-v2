@@ -4,40 +4,31 @@ import { useState } from "react";
 const CabangSelect = (props) => {
   const router = useRouter();
   const [cabangAsal, setCabangAsal] = useState("");
-  const [coveranArea, setCoveranArea] = useState("");
   const [cabangTujuan, setCabangTujuan] = useState("");
 
   const cabangAsalChange = (e) => {
+    props.isLoading(true);
     setCabangAsal(e.target.value);
     router.replace(`${router.pathname}?cabangAsal=${e.target.value}`);
-    setCoveranArea("");
     setCabangTujuan("");
-  };
-  const coveranAreaChange = (e) => {
-    setCoveranArea(e.target.value);
-    setCabangTujuan("");
-    props.coveranSelected(e.target.value);
-    props.tujuanSelected("");
+    props.onSelectedTujuan("");
+    props.onResetCheckedResi();
   };
   const cabangTujuanChange = (e) => {
     setCabangTujuan(e.target.value);
-    props.tujuanSelected(e.target.value);
+    props.onSelectedTujuan(e.target.value);
+    props.onResetCheckedResi();
   };
 
   return (
-    <form className="w-full p-4 bg-gray-900 flex flex-col gap-4">
+    <form className="w-full p-4 bg-white flex flex-col gap-4 border-[1px] border-gray-300 shadow-md rounded-lg">
       {/* Select Cabang Asal */}
       <div className="w-full flex gap-2 items-center">
-        <label
-          className="w-52 text-base text-gray-100"
-          htmlFor="cabangAsal"
-          id="cabangAsal"
-          name="cabangAsal"
-        >
+        <label className="w-52 text-sm text-gray-800" htmlFor="cabangAsal">
           Cabang Asal
         </label>
         <select
-          className="w-full p-1 text-base text-gray-900"
+          className="w-full p-2 text-sm text-gray-800 bg-gray-100 rounded-md"
           name="cabangAsal"
           id="cabangAsal"
           value={cabangAsal}
@@ -49,45 +40,13 @@ const CabangSelect = (props) => {
         </select>
       </div>
 
-      {/* Select Coveran Area */}
-      <div className="w-full flex gap-2 items-center">
-        <label
-          className="w-52 text-base text-gray-100"
-          htmlFor="coveranArea"
-          id="coveranArea"
-          name="coveranArea"
-        >
-          Coveran Area
-        </label>
-        <select
-          className="w-full p-1 text-base text-gray-900"
-          name="coveranArea"
-          id="coveranArea"
-          value={coveranArea}
-          onChange={coveranAreaChange}
-        >
-          <option value=""></option>
-          {props.coveran &&
-            props.coveran.map((data, index) => (
-              <option value={data} key={index}>
-                {data.toUpperCase()}
-              </option>
-            ))}
-        </select>
-      </div>
-
       {/* Select Cabang Tujuan */}
       <div className="w-full flex gap-2 items-center">
-        <label
-          className="w-52 text-base text-gray-100"
-          htmlFor="cabangTujuan"
-          id="cabangTujuan"
-          name="cabangTujuan"
-        >
-          Cabang Tujuan
+        <label className="w-52 text-sm text-gray-800" htmlFor="cabangTujuan">
+          Kota Tujuan
         </label>
         <select
-          className="w-full p-1 text-base text-gray-900"
+          className="w-full p-2 text-sm text-gray-800 bg-gray-100 rounded-md"
           name="cabangTujuan"
           id="cabangTujuan"
           value={cabangTujuan}

@@ -17,6 +17,7 @@ const CreateOrderPage = () => {
     cabangCoveran: "",
     pembayaran: "",
     paket: [],
+    beratPaketDikenakan: "",
     ongkirPerkilo: "",
     subtotalOngkir: "",
     diskon: "0",

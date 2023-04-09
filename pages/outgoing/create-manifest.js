@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 const CreateManifestPage = (props) => {
   return (
     <Layout>
-      <CreateManifestForm dataResi={props.data} />
+      <CreateManifestForm dataResi={props.data} cabangAsal={props.cabangAsal ? props.cabangAsal : ""} />
     </Layout>
   );
 };
@@ -17,7 +17,8 @@ export async function getServerSideProps(context) {
 
   const response = await fetch(`http://${hostName}/api/data-resi/belum-manifest/${cabangAsal}`);
   const data = await response.json();
+
   return {
-    props: { data: data },
+    props: { data: data, cabangAsal: cabangAsal ? cabangAsal : "" },
   };
 }

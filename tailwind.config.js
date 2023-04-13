@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "bg-login": "url('/images/bg-login.jpg')",
+      },
       keyframes: {
         lefttoright: {
           "0%": { transform: "translateX(-100%)" },

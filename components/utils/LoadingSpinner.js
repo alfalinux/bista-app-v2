@@ -13,7 +13,7 @@ const LoadingSpinner = ({ size, color }) => {
             ? "h-10 w-10"
             : "h-6 w-6"
         } ${
-          color === "gray" ? "stroke-gray-500" : color === "red" ? "stroke-red-500" : "stroke-gray-500"
+          color === "gray" ? "stroke-gray-500" : color === "red" ? "stroke-red-500" : "stroke-white"
         } animate-spin`}
         viewBox="0 0 256 256"
       >
@@ -101,7 +101,7 @@ const LoadingSpinner = ({ size, color }) => {
             : size === "xl"
             ? "text-xl"
             : "text-base"
-        } ${color === "gray" ? "text-gray-500" : color === "red" ? "text-red-500" : "text-gray-500"}`}
+        } ${color === "gray" ? "text-gray-500" : color === "red" ? "text-red-500" : "text-white"}`}
       >
         Loading...
       </span>

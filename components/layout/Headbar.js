@@ -42,7 +42,7 @@ const Headbar = (props) => {
           <ClipboardDocumentIcon className="h-6" />
           <p>Halaman {pathArray}</p>
         </div>
-        <HeadMenuButton style="hidden lg:flex items-center ml-auto" />
+        <HeadMenuButton style="hidden lg:flex items-center ml-auto" user={props.dataUser} />
       </div>
     </header>
   );

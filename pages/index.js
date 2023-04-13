@@ -1,6 +1,8 @@
 import Layout from "@/components/Layout";
+import { useSession } from "next-auth/react";
 
 const HomePage = () => {
+  const { data: session, status } = useSession();
   return (
     <Layout>
       <div className="w-full text-justify p-4">

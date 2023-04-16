@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { BellAlertIcon, ChevronDownIcon, EnvelopeIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
+import { themeContext } from "@/pages/_app";
+import { useTheme } from "next-themes";
 
 const HeadMenuButton = (props) => {
   const [darkmode, setDarkMode] = useState(false);
+  const { theme, setTheme } = useTheme();
   const [showUserMenu, setShowUserMenu] = useState(false);
+
   const darkmodeHandler = (e) => {
     setDarkMode(!darkmode);
+    setTheme(darkmode ? "dark" : "light");
   };
   const userMenuHandler = (e) => {
     setShowUserMenu(!showUserMenu);

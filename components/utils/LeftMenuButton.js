@@ -17,19 +17,15 @@ const LeftMenuButton = ({ menu }) => {
       {/* Main Menu */}
       <Link href={menu?.link} className="outline-black/50">
         <div
-          className={`flex items-center gap-2 mx-2 px-4 py-3 mt-2 rounded-lg cursor-pointer text-md text-zinc-600 hover:bg-zinc-800 hover:text-zinc-100 duration-200 ${
-            router.pathname.startsWith("/" + menu.name.toLowerCase())
-              ? "bg-zinc-800 text-zinc-100"
-              : ""
+          className={`flex items-center gap-2 mx-2 px-4 py-3 mt-2 rounded-lg cursor-pointer text-md text-gray-500 hover:bg-zinc-800 hover:text-zinc-100 duration-200 ${
+            router.pathname.startsWith("/" + menu.name.toLowerCase()) ? "bg-zinc-800 text-zinc-100" : ""
           }`}
           onClick={() => setShowsubmenu(!showSubmenu)}
         >
           <div>{React.createElement(menu.icon, { height: "24px" })}</div>
           <h2>{menu.name}</h2>
           {menu?.submenu && (
-            <ChevronRightIcon
-              className={`h-4 ml-auto duration-200 ${showSubmenu ? "rotate-90" : ""}`}
-            />
+            <ChevronRightIcon className={`h-4 ml-auto duration-200 ${showSubmenu ? "rotate-90" : ""}`} />
           )}
         </div>
       </Link>
@@ -42,11 +38,7 @@ const LeftMenuButton = ({ menu }) => {
         style={{ transitionDelay: `300ms` }}
       >
         {menu.submenu?.map((data, index) => (
-          <Link
-            href={data.link}
-            key={index}
-            className={`${showSubmenu ? "" : "pointer-events-none"}`}
-          >
+          <Link href={data.link} key={index} className={`${showSubmenu ? "" : "pointer-events-none"}`}>
             <div
               className={`p-1 flex items-center gap-2 cursor-pointer  duration-200 ${
                 showSubmenu
@@ -62,9 +54,7 @@ const LeftMenuButton = ({ menu }) => {
               >
                 {data.name}
               </h2>
-              {router.pathname === data.link ? (
-                <ShieldCheckIcon className="h-5 text-red-500" />
-              ) : null}
+              {router.pathname === data.link ? <ShieldCheckIcon className="h-5 text-red-500" /> : null}
             </div>
           </Link>
         ))}

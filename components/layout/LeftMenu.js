@@ -82,7 +82,7 @@ const LeftMenu = (props) => {
     <>
       {/* Desktop Menu */}
       <div
-        className={`hidden lg:block pb-8 overflow-y-scroll overflow-x-hidden scrollbar bg-white ${
+        className={`hidden lg:block pb-8 overflow-y-scroll overflow-x-hidden scrollbar bg-white dark:bg-gray-800 ${
           props.showMenuDesktop ? "w-80" : "w-0"
         } duration-500 ease-in-out`}
       >

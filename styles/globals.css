@@ -7,19 +7,22 @@
     @apply border-[1px] border-zinc-300 rounded-sm px-1 py-2 text-sm focus:outline-none focus:ring-1 bg-white focus:ring-blue-300;
   }
   .scrollbar::-webkit-scrollbar {
-    width: 8px;
+    @apply w-2;
   }
   .scrollbar::-webkit-scrollbar-track {
-    border-radius: 100vh;
+    @apply border-[3px] border-solid border-transparent bg-transparent;
+    /* border-radius: 100vh;
     background-color: transparent;
-    border: solid 3px transparent;
+    border: solid 3px transparent; */
   }
   .scrollbar::-webkit-scrollbar-thumb {
-    background-color: lightgray;
-    border: 2px solid white;
+    @apply bg-gray-300 border-2 border-solid border-white dark:border-gray-800 dark:bg-gray-500 dark:hover:bg-gray-600;
+    /* background-color: lightgray;
+    border: 2px solid white; */
   }
   .scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: darkgray;
+    @apply bg-gray-500;
+    /* background-color: darkgray; */
   }
 
   .login__input {

@@ -75,7 +75,7 @@ const ContainerDetailPaket = (props) => {
         <FieldDetailPaket key={idx} index={idx} id={val.id} setInitPaket={setInitPaket} />
       ))}
       <button
-        className="w-40 px-4 py-2 flex items-center justify-center gap-1 bg-sky-500 font-semibold text-white rounded-md self-end hover:bg-sky-600 disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed"
+        className="w-40 px-4 py-2 flex items-center justify-center gap-1 bg-sky-500 font-semibold text-white rounded-md self-end hover:bg-sky-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-100 dark:disabled:text-gray-600 disabled:cursor-not-allowed"
         onClick={addChangeHandler}
         disabled={!initPaket.every((data) => data.verified)}
       >
@@ -83,7 +83,7 @@ const ContainerDetailPaket = (props) => {
         <p>Tambah Paket</p>
       </button>
       {initPaket.some((d) => d.verified) ? (
-        <div className="w-full border-t-2 border-dashed border-zinc-300">
+        <div className="w-full border-t-2 border-dashed border-gray-300">
           <table className="table-auto border border-white/0 border-separate border-spacing-x-2">
             <tbody>
               <tr>

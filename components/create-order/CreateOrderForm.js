@@ -55,8 +55,8 @@ const CreateOrderContainer = (props) => {
         className="w-full lg:overflow-hidden px-4 flex flex-col gap-4 md:grid md:grid-cols-2 lg:flex lg:flex-col xl:grid xl:grid-cols-2"
       >
         {/* --DETAIL PENGIRIM-- */}
-        <fieldset className="bg-white border-[1px] border-zinc-300 shadow-lg shadow-black/10 rounded-md p-4 text-sm text-zinc-600 flex flex-col gap-4">
-          <legend className="font-bold bg-black rounded-md px-2 py-1 text-white">Data Pengirim</legend>
+        <fieldset className="bg-white dark:bg-gray-800 border-[1px] border-gray-300 dark:border-gray-900 shadow-lg shadow-black/10 dark:shadow-black/30 rounded-md p-4 text-sm text-gray-600 dark:text-gray-200 flex flex-col gap-4">
+          <legend className="font-bold bg-gray-800 rounded-md px-3 py-2 text-gray-100">Data Pengirim</legend>
 
           <FieldInputPhone
             id="nohpPengirim"
@@ -87,8 +87,8 @@ const CreateOrderContainer = (props) => {
         </fieldset>
 
         {/* --DETAIL PENERIMA-- */}
-        <fieldset className="bg-white border-[1px] border-zinc-300 shadow-lg shadow-black/10 rounded-md p-4 text-sm text-zinc-600 flex flex-col gap-4">
-          <legend className="font-bold bg-black rounded-md px-2 py-1 text-white">Data Penerima</legend>
+        <fieldset className="bg-white dark:bg-gray-800 border-[1px] border-gray-300 dark:border-gray-900 shadow-lg shadow-black/10 dark:shadow-black/30 rounded-md p-4 text-sm text-gray-600 dark:text-gray-200 flex flex-col gap-4">
+          <legend className="font-bold bg-gray-800 rounded-md px-3 py-2 text-gray-100">Data Penerima</legend>
 
           <FieldInputPhone
             id="nohpPenerima"
@@ -119,8 +119,8 @@ const CreateOrderContainer = (props) => {
         </fieldset>
 
         {/* --DETAIL LAYANAN-- */}
-        <fieldset className="bg-white border-[1px] border-zinc-300 shadow-lg shadow-black/10 rounded-md p-4 text-sm text-zinc-600 flex flex-col gap-4 md:col-span-2 md:grid md:grid-cols-2 lg:flex lg:flex-col xl:col-span-2 xl:grid xl:grid-cols-2">
-          <legend className="font-bold bg-black rounded-md px-2 py-1 text-white">Detail Layanan</legend>
+        <fieldset className="bg-white dark:bg-gray-800 border-[1px] border-gray-300 dark:border-gray-900 shadow-lg shadow-black/10 dark:shadow-black/30 rounded-md p-4 text-sm text-gray-600 dark:text-gray-200 flex flex-col gap-4 md:col-span-2 md:grid md:grid-cols-2 lg:flex lg:flex-col xl:col-span-2 xl:grid xl:grid-cols-2">
+          <legend className="font-bold bg-gray-800 rounded-md px-3 py-2 text-gray-100">Detail Layanan</legend>
 
           <FieldSelectLayanan
             id="layanan"
@@ -160,8 +160,8 @@ const CreateOrderContainer = (props) => {
         </fieldset>
 
         {/* --DETAIL PAKET-- */}
-        <fieldset className="w-full bg-white border-[1px] border-zinc-300 shadow-lg shadow-black/10 rounded-md p-4 text-sm text-zinc-600 flex flex-col gap-4 md:col-span-2 xl:col-span-2">
-          <legend className="font-bold bg-black rounded-md px-2 py-1 text-white">Detail Paket</legend>
+        <fieldset className="w-full bg-white dark:bg-gray-800 border-[1px] border-gray-300 dark:border-gray-900 shadow-lg shadow-black/10 dark:shadow-black/30 rounded-md p-4 text-sm text-gray-600 dark:text-gray-200 flex flex-col gap-4 md:col-span-2 xl:col-span-2">
+          <legend className="font-bold bg-gray-800 rounded-md px-3 py-2 text-gray-100">Detail Paket</legend>
 
           <ContainerDetailPaket
             meta={{
@@ -173,8 +173,8 @@ const CreateOrderContainer = (props) => {
         </fieldset>
 
         {/* --DETAIL BIAYA-- */}
-        <fieldset className="bg-white border-[1px] border-zinc-300 shadow-lg shadow-black/10 rounded-md p-4 text-sm text-zinc-600 flex flex-col gap-4 md:grid md:grid-cols-2 md:col-span-2 lg:flex lg:flex-col xl:grid xl:grid-cols-2 xl:col-span-2">
-          <legend className="font-bold bg-black rounded-md px-2 py-1 text-white">Detail Biaya</legend>
+        <fieldset className="bg-white dark:bg-gray-800 border-[1px] border-gray-300 dark:border-gray-900 shadow-lg shadow-black/10 dark:shadow-black/30 rounded-md p-4 text-sm text-gray-600 dark:text-gray-200 flex flex-col gap-4 md:grid md:grid-cols-2 md:col-span-2 lg:flex lg:flex-col xl:grid xl:grid-cols-2 xl:col-span-2">
+          <legend className="font-bold bg-gray-800 rounded-md px-3 py-2 text-gray-100">Detail Biaya</legend>
           <FieldDisplayRupiah
             value={initialValues.ongkirPerkilo}
             label="Ongkir per-Kg"
@@ -218,7 +218,7 @@ const CreateOrderContainer = (props) => {
         <button
           type="submit"
           disabled={!allFieldsIsValid}
-          className="bg-black px-4 py-2 md:mb-4 font-semibold text-sm text-white rounded-lg border-[1px] border-zinc-300 shadow-lg shadow-black/10 hover:bg-red-500 focus:bg-red-500 disabled:cursor-not-allowed disabled:bg-zinc-300 disabled:text-zinc-400 md:col-span-2 xl:col-span-2"
+          className="bg-gray-800 px-4 py-2 font-semibold text-sm text-white rounded-lg border-[1px] border-gray-300 dark:border-gray-600 shadow-lg shadow-black/10 dark:shadow-black/30 hover:bg-red-500 focus:bg-red-500 disabled:cursor-not-allowed disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-400 dark:disabled:text-gray-600 md:col-span-2 xl:col-span-2"
         >
           Create Order
         </button>

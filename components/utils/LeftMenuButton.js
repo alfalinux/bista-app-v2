@@ -11,7 +11,6 @@ const LeftMenuButton = ({ menu }) => {
   useEffect(() => {
     router.pathname.startsWith("/" + menu.name.toLowerCase()) ? setShowsubmenu(true) : null;
   }, []);
-
   return (
     <div>
       {/* Main Menu */}
@@ -48,8 +47,8 @@ const LeftMenuButton = ({ menu }) => {
               style={{ transitionDelay: `${index + 2}00ms` }}
             >
               <h2
-                className={`hover:text-[#ff0000] duration-100 ${
-                  router.pathname === data.link ? "font-bold text-[#ff0000]" : ""
+                className={`hover:text-gray-200 duration-100 ${
+                  router.pathname === data.link ? "font-bold text-red-600" : ""
                 }`}
               >
                 {data.name}

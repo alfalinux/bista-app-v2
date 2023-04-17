@@ -38,8 +38,10 @@ const FieldInputBiaya = (props) => {
         {label}
       </label>
       <div
-        className={`w-full text-sm rounded-md border-[1px] overflow-hidden px-2 flex gap-1 items-center ${
-          isTouched && !isValid ? "bg-red-100 border-red-300" : "bg-white border-zinc-300"
+        className={`w-full text-sm text-gray-800 dark:text-gray-200 rounded-md border-[1px] overflow-hidden px-2 flex gap-1 items-center ${
+          isTouched && !isValid
+            ? "bg-red-100 dark:bg-red-900 border-red-300 dark:border-red-600"
+            : "bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-700"
         }`}
       >
         <span>Rp.</span>
@@ -55,7 +57,7 @@ const FieldInputBiaya = (props) => {
         <span>,-</span>
       </div>
       {isTouched && !isValid ? (
-        <div className="flex gap-1 items-center text-[10px] text-red-500 mt-1">
+        <div className="flex gap-1 items-center text-[10px] text-red-600 mt-1">
           <ExclamationCircleIcon className="h-5" />
           <p>Wajib diisi, tidak boleh dikosongkan</p>
         </div>

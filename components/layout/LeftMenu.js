@@ -94,12 +94,12 @@ const LeftMenu = (props) => {
       {/* Mobile Menu */}
       <div className={`lg:hidden relative`}>
         <div
-          className={`absolute h-[100dvh] bg-black/30 z-10 ${
+          className={`absolute h-[100dvh] bg-black/30 dark:bg-black/80 z-10 ${
             props.showMenuMobile ? "w-[100dvw]" : "w-0"
           } duration-500 ease-in-out`}
         >
           <div
-            className={`w-80 h-full pb-20 overflow-y-scroll overflow-x-hidden scrollbar flex flex-col justify-between bg-white ${
+            className={`w-80 h-full pb-20 overflow-y-scroll overflow-x-hidden scrollbar flex flex-col justify-between bg-white dark:bg-black ${
               props.showMenuMobile ? "translate-x-0" : "-translate-x-full"
             } duration-500 ease-in-out`}
           >

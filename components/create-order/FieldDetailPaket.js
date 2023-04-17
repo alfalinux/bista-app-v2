@@ -123,7 +123,7 @@ const FieldDetailPaket = (props) => {
   return (
     <div>
       <header
-        className={`w-full bg-zinc-500 px-4 py-2 flex gap-4 items-center justify-start font-semibold text-white ${
+        className={`w-full bg-gray-500 dark:bg-gray-700 px-4 py-2 flex gap-4 items-center justify-start font-semibold text-white ${
           showDetail ? "rounded-t-md" : "rounded-lg"
         }`}
       >
@@ -142,14 +142,14 @@ const FieldDetailPaket = (props) => {
           </div>
         )}
         <ChevronDownIcon
-          className={`h-4 hover:bg-zinc-600 hover:cursor-pointer ml-auto transition-all duration-200 ${
+          className={`h-4 hover:bg-gray-600 hover:cursor-pointer ml-auto transition-all duration-200 ${
             showDetail ? "rotate-180" : "rotate-0"
           }`}
           onClick={() => setShowDetail(!showDetail)}
         />
       </header>
       {showDetail ? (
-        <main className="w-full flex flex-col gap-4 p-4 border-[1px] border-zinc-300 rounded-b-md">
+        <main className="w-full flex flex-col gap-4 p-4 border-[1px] border-gray-300 dark:border-gray-700 rounded-b-md">
           <section className="w-full flex flex-col">
             <label htmlFor="beratAktual" className="font-semibold text-sm">
               Berat Aktual (Kg)
@@ -163,15 +163,15 @@ const FieldDetailPaket = (props) => {
               onChange={handleChange}
               onBlur={handleBlur}
               onWheel={(e) => e.target.blur()}
-              className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 disabled:bg-zinc-200 disabled:cursor-not-allowed disabled:text-zinc-400 ${
+              className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                 isValid.beratAktual
-                  ? "bg-white border-zinc-300 focus:ring-black"
-                  : "bg-red-100 border-red-300 focus:ring-red-300"
+                  ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
+                  : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
               }`}
               disabled={verified}
             />
             {isValid.beratAktual ? null : (
-              <p className="text-[10px] text-red-500">wajib diisi dengan nilai lebih besar dari nol</p>
+              <p className="text-[10px] text-red-600">wajib diisi dengan nilai lebih besar dari nol</p>
             )}
           </section>
           <section className="w-full">
@@ -189,18 +189,18 @@ const FieldDetailPaket = (props) => {
                   onChange={handleVolumeChange}
                   onBlur={handleBlur}
                   onWheel={(e) => e.target.blur()}
-                  className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 disabled:bg-zinc-200 disabled:cursor-not-allowed disabled:text-zinc-400 ${
+                  className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                     isValid.panjang
-                      ? "bg-white border-zinc-300 focus:ring-black"
-                      : "bg-red-100 border-red-300 focus:ring-red-300"
+                      ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
+                      : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
                 {isValid.panjang ? null : (
-                  <p className="text-[10px] text-red-500">wajib diisi dengan nilai lebih besar dari nol</p>
+                  <p className="text-[10px] text-red-600">wajib diisi dengan nilai lebih besar dari nol</p>
                 )}
               </div>
-              <XMarkIcon className="h-4 mt-2 text-zinc-500" />
+              <XMarkIcon className="h-4 mt-2 text-gray-500" />
               <div className="w-[30%]">
                 <input
                   type="number"
@@ -211,18 +211,18 @@ const FieldDetailPaket = (props) => {
                   onChange={handleVolumeChange}
                   onBlur={handleBlur}
                   onWheel={(e) => e.target.blur()}
-                  className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 disabled:bg-zinc-200 disabled:cursor-not-allowed disabled:text-zinc-400 ${
+                  className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                     isValid.lebar
-                      ? "bg-white border-zinc-300 focus:ring-black"
-                      : "bg-red-100 border-red-300 focus:ring-red-300"
+                      ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
+                      : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
                 {isValid.lebar ? null : (
-                  <p className="text-[10px] text-red-500">wajib diisi dengan nilai lebih besar dari nol</p>
+                  <p className="text-[10px] text-red-600">wajib diisi dengan nilai lebih besar dari nol</p>
                 )}
               </div>
-              <XMarkIcon className="h-4 mt-2 text-zinc-500" />
+              <XMarkIcon className="h-4 mt-2 text-gray-500" />
               <div className="w-[30%]">
                 <input
                   type="number"
@@ -233,15 +233,15 @@ const FieldDetailPaket = (props) => {
                   onChange={handleVolumeChange}
                   onBlur={handleBlur}
                   onWheel={(e) => e.target.blur()}
-                  className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 disabled:bg-zinc-200 disabled:cursor-not-allowed disabled:text-zinc-400 ${
+                  className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                     isValid.tinggi
-                      ? "bg-white border-zinc-300 focus:ring-black"
-                      : "bg-red-100 border-red-300 focus:ring-red-300"
+                      ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
+                      : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
                 {isValid.tinggi ? null : (
-                  <p className="text-[10px] text-red-500">wajib diisi dengan nilai lebih besar dari nol</p>
+                  <p className="text-[10px] text-red-600">wajib diisi dengan nilai lebih besar dari nol</p>
                 )}
               </div>
             </div>
@@ -252,7 +252,7 @@ const FieldDetailPaket = (props) => {
               id="konversi"
               value={detailPaket.volume.konversi}
               onChange={handleVolumeChange}
-              className="bg-white border-[1px] border-zinc-300 p-2 rounded-md disabled:bg-zinc-200 disabled:cursor-not-allowed disabled:text-zinc-400"
+              className="bg-white dark:bg-gray-600 border-[1px] border-gray-300 dark:border-gray-700 p-2 rounded-md disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400"
               disabled={verified}
             >
               <option value="4000">Konversi 4000</option>
@@ -261,9 +261,7 @@ const FieldDetailPaket = (props) => {
             </select>
             <ArrowsRightLeftIcon className="h-5" />
             <p
-              className={`w-fit h-10 flex self-center items-center px-2 text-sm rounded-md border-[1px] bg-black/10 capitalize ${
-                verified ? "text-zinc-400" : "text-zinc-900"
-              }`}
+              className={`w-fit h-10 flex self-center items-center px-2 text-sm rounded-md cursor-not-allowed capitalize border-gray-300 border-[1px] dark:border-gray-600 bg-gray-200 dark:bg-gray-800 text-gray-400`}
             >
               {detailPaket.volume.berat.toLocaleString("id-ID", { maximumFractionDigits: 2 })} Kg
             </p>
@@ -272,9 +270,7 @@ const FieldDetailPaket = (props) => {
             <div className="w-full flex flex-col">
               <h3 className="font-semibold text-sm">Berat Dikenakan</h3>
               <p
-                className={`w-full h-10 flex items-center px-2 text-sm rounded-md border-[1px] bg-black/10 capitalize ${
-                  verified ? "text-zinc-400" : "text-zinc-900"
-                }`}
+                className={`w-full h-10 flex items-center px-2 text-sm rounded-md bg-black/10 cursor-not-allowed capitalize border-gray-300 border-[1px] dark:border-gray-600 bg-gray-200 dark:bg-gray-800 text-gray-400`}
               >
                 {detailPaket.beratDikenakan.toLocaleString("id-ID", { maximumFractionDigits: 2 })} Kg
               </p>
@@ -291,12 +287,12 @@ const FieldDetailPaket = (props) => {
               value={detailPaket.keterangan}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 disabled:bg-zinc-200 disabled:cursor-not-allowed disabled:text-zinc-400 first-letter:${
+              className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 first-letter:${
                 touchedFields.keterangan
                   ? isValid.keterangan
-                    ? "bg-white border-zinc-300 focus:ring-black"
-                    : "bg-red-100 border-red-300 focus:ring-red-300"
-                  : "bg-white border-zinc-300 focus:ring-black"
+                    ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
+                    : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
+                  : "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
               }`}
               placeholder="Ketik isi paket / jenis barang"
               autoComplete="off"
@@ -304,7 +300,7 @@ const FieldDetailPaket = (props) => {
             />
             {touchedFields.keterangan ? (
               isValid.keterangan ? null : (
-                <p className="text-[10px] text-red-500">
+                <p className="text-[10px] text-red-600">
                   wajib diisi, tidak boleh kosong (maksimal 30 karakter)
                 </p>
               )
@@ -312,7 +308,7 @@ const FieldDetailPaket = (props) => {
           </section>
           <div className="w-full flex flex-wrap gap-2 items-center justify-between sm:justify-end">
             <button
-              className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-yellow-500 hover:bg-yellow-600 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
+              className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-yellow-500 hover:bg-yellow-600 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-100 dark:disabled:text-gray-600 disabled:cursor-not-allowed`}
               disabled={!verified}
               onClick={handleSimpan}
             >
@@ -320,7 +316,7 @@ const FieldDetailPaket = (props) => {
               <p>Edit</p>
             </button>
             <button
-              className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-red-500 hover:bg-red-600 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
+              className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-red-600 hover:bg-red-700 font-semibold text-white px-4 py-2 rounded-md  disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-100 dark:disabled:text-gray-600 disabled:cursor-not-allowed`}
               onClick={handleHapus}
             >
               <TrashIcon className=" h-5 hidden sm:block" />
@@ -328,7 +324,7 @@ const FieldDetailPaket = (props) => {
             </button>
             <button
               className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-green-500 hover:bg-green-600
-              } font-semibold text-white px-4 py-2 rounded-md  disabled:bg-zinc-300 disabled:text-zinc-100 disabled:cursor-not-allowed`}
+              } font-semibold text-white px-4 py-2 rounded-md disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-100 dark:disabled:text-gray-600 disabled:cursor-not-allowed`}
               onClick={handleSimpan}
               disabled={!Object.values(isValid).every((value) => value) || verified}
             >

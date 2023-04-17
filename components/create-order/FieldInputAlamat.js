@@ -42,17 +42,17 @@ const FieldInputAlamat = (props) => {
         rows="3"
         onChange={handleChange}
         onBlur={handleBlur}
-        className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none disabled:bg-black/10 capitalize ${
+        className={`px-2 py-1.5 text-sm text-gray-600 dark:text-gray-200 rounded-md border-[1px] focus:outline-none disabled:bg-gray-200 capitalize ${
           isTouched && !isValid
-            ? "bg-red-100 focus:ring-1 focus:ring-red-500 border-red-300 "
-            : "bg-white focus:ring-1  focus:ring-black border-zinc-300"
+            ? "bg-red-100 dark:bg-red-900 focus:ring-1 focus:ring-red-600 border-red-600 "
+            : "bg-white dark:bg-gray-700 focus:ring-1  focus:ring-black dark:focus:ring-gray-200 border-gray-200 dark:border-gray-700 focus:border-black dark:focus:border-gray-200"
         }`}
         spellCheck={false}
         autoComplete="off"
         placeholder="Ketik Alamat Lengkap"
       />
       {isTouched && !isValid ? (
-        <div className="flex gap-1 items-center text-[10px] text-red-500 mt-1">
+        <div className="flex gap-1 items-center text-[10px] text-red-600 mt-1">
           <ExclamationCircleIcon className="h-5" />
           <p>Wajib diisi maksimal 150 karakter</p>
         </div>

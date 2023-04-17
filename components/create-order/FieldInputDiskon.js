@@ -50,7 +50,9 @@ const FieldInputDiskon = (props) => {
       <div className={`w-full flex items-center gap-4`}>
         <div
           className={`w-[40%] md:w-fit text-sm rounded-md border-[1px] overflow-hidden px-2 flex gap-1 items-center ${
-            isTouched && !isValid ? "bg-red-100 border-red-300" : "bg-white border-zinc-300"
+            isTouched && !isValid
+              ? "bg-red-100 dark:bg-red-900 border-red-300 dark:border-red-600"
+              : "bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-700"
           }`}
         >
           <input
@@ -66,7 +68,7 @@ const FieldInputDiskon = (props) => {
           <span>%</span>
         </div>
         <ArrowsRightLeftIcon className="h-5" />
-        <div className={`w-[40%] md:w-fit text-sm rounded-md border-[1px] px-2 py-1.5 bg-zinc-200`}>
+        <div className={`w-[40%] md:w-fit text-sm rounded-md border-[1px] px-2 py-1.5 bg-gray-200`}>
           <p>
             Rp.{" "}
             {isValid
@@ -77,7 +79,7 @@ const FieldInputDiskon = (props) => {
         </div>
       </div>
       {isTouched && !isValid ? (
-        <div className="flex gap-1 items-center text-[10px] text-red-500 mt-1">
+        <div className="flex gap-1 items-center text-[10px] text-red-600 mt-1">
           <ExclamationCircleIcon className="h-5" />
           <p>Wajib diisi, range nilai 0% s/d 100%</p>
         </div>

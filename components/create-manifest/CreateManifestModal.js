@@ -58,7 +58,12 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
           <label htmlFor="isKonsol" className="text-base">
             Konsolidasi Paket?
           </label>
-          <select name="isKonsol" id="isKonsol" className="p-2" onChange={isKonsolSelectHandler}>
+          <select
+            name="isKonsol"
+            id="isKonsol"
+            className="p-2 dark:text-gray-200"
+            onChange={isKonsolSelectHandler}
+          >
             <option value="false">Tidak</option>
             <option value="true">Ya</option>
           </select>
@@ -85,7 +90,7 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
           >
             Proses
           </button>
-          <button className="bg-gray-500 text-white text-base w-24 py-2 rounded-md" onClick={onCloseModal}>
+          <button className="bg-red-500 text-white text-base w-24 py-2 rounded-md" onClick={onCloseModal}>
             Batalkan
           </button>
         </div>

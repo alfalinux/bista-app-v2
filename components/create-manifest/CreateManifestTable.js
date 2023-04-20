@@ -31,7 +31,7 @@ const CreateManifestTable = ({ dataResi, tujuan, onCheckedResi, onCheckedAllResi
     <div className="w-full mt-4 mb-4 shadow-md">
       {filteredData.length > 0 && (
         <table className="w-full table-auto">
-          <thead className="bg-gray-200 text-gray-800 text-sm border border-gray-300">
+          <thead className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm border border-gray-300">
             <tr>
               <th className="p-2 border border-gray-300">No</th>
               <th className="p-2 border border-gray-300">No Resi</th>
@@ -53,43 +53,43 @@ const CreateManifestTable = ({ dataResi, tujuan, onCheckedResi, onCheckedAllResi
             {filteredData.map((data, index) => (
               <tr key={index}>
                 <td
-                  className={`text-gray-900 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
-                    (index + 1) % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  className={`text-gray-900 dark:text-gray-200 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
+                    (index + 1) % 2 === 0 ? "bg-gray-100 dark:bg-gray-600" : "bg-white dark:bg-gray-500"
                   }`}
                 >
                   {index + 1}
                 </td>
                 <td
-                  className={`text-gray-900 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
-                    (index + 1) % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  className={`text-gray-900 dark:text-gray-200 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
+                    (index + 1) % 2 === 0 ? "bg-gray-100 dark:bg-gray-600" : "bg-white dark:bg-gray-500"
                   }`}
                 >
                   {data.noResi}
                 </td>
                 <td
-                  className={`text-gray-900 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
-                    (index + 1) % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  className={`text-gray-900 dark:text-gray-200 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
+                    (index + 1) % 2 === 0 ? "bg-gray-100 dark:bg-gray-600" : "bg-white dark:bg-gray-500"
                   }`}
                 >
                   {data.cabangAsal.toUpperCase()}
                 </td>
                 <td
-                  className={`text-gray-900 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
-                    (index + 1) % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  className={`text-gray-900 dark:text-gray-200 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
+                    (index + 1) % 2 === 0 ? "bg-gray-100 dark:bg-gray-600" : "bg-white dark:bg-gray-500"
                   }`}
                 >
                   {data.tujuan.cov.toUpperCase()}
                 </td>
                 <td
-                  className={`text-gray-900 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
-                    (index + 1) % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  className={`text-gray-900 dark:text-gray-200 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
+                    (index + 1) % 2 === 0 ? "bg-gray-100 dark:bg-gray-600" : "bg-white dark:bg-gray-500"
                   }`}
                 >
                   {data.tujuan.ibukota.toUpperCase()}
                 </td>
                 <td
-                  className={`text-gray-900 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
-                    (index + 1) % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  className={`text-gray-900 dark:text-gray-200 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
+                    (index + 1) % 2 === 0 ? "bg-gray-100 dark:bg-gray-600" : "bg-white dark:bg-gray-500"
                   }`}
                 >
                   <input

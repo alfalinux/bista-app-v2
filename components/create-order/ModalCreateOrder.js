@@ -102,7 +102,7 @@ const ModalCreateOrder = (props) => {
 
   return (
     <div className="w-full h-[100dvh] fixed inset-0 p-4 z-20 bg-black/80 flex items-start justify-center">
-      <div className="w-96 h-full mx-auto p-4 rounded-md bg-zinc-100 overflow-y-scroll sm:scrollbar overflow-x-hidden text-sm">
+      <div className="w-96 h-full mx-auto p-4 rounded-md bg-gray-100 dark:bg-gray-700 overflow-y-scroll sm:scrollbar overflow-x-hidden text-sm">
         <table className="table-auto border-separate border-spacing-y-1">
           <tbody>
             {detail.map((item, index) => (
@@ -136,7 +136,7 @@ const ModalCreateOrder = (props) => {
             </tr>
             <tr>
               <td colSpan="3">
-                <p className="text-xs text-red-500">
+                <p className="text-sm text-red-600">
                   Cek dan konfirmasi kembali data inputan, karena setelah klik tombol &quotCreate Resi&quot
                   data akan diproses dan tidak dapat dibatalkan!
                 </p>

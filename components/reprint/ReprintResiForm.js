@@ -31,7 +31,7 @@ const ReprintResiForm = (props) => {
       <form
         type="submit"
         onSubmit={cariResiHandler}
-        className="w-full p-4 bg-white rounded-md shadow-md flex items-center gap-4 "
+        className="w-full p-4 bg-white dark:bg-gray-800 rounded-md shadow-md flex items-center gap-4 "
       >
         <input
           type="text"
@@ -40,13 +40,13 @@ const ReprintResiForm = (props) => {
           onChange={changeHandler}
           onBlur={blurHandler}
           value={inputNoResi}
-          className="w-full h-12 px-2 rounded-md border-[1px] focus:outline-transparent focus:ring focus:ring-zinc-500 text-sm font-semibold text-gray-500"
+          className="w-full h-12 px-2 rounded-md border-[1px] focus:border-transparent focus:outline-gray-700 text-sm font-semibold text-gray-500 dark:text-gray-200"
           autoComplete="off"
           spellCheck={false}
           placeholder="Ketik nomor resi..."
         />
         <button
-          className={`w-fit sm:w-40 h-12 bg-red-500 px-2 flex items-center justify-center rounded-md text-sm font-semibold text-white disabled:bg-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed`}
+          className={`w-fit sm:w-40 h-12 bg-red-600 hover:bg-red-700 px-2 flex items-center justify-center rounded-md text-sm font-semibold text-white disabled:bg-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed`}
           disabled={!isValid}
         >
           <MagnifyingGlassIcon className="h-6" />
@@ -55,60 +55,72 @@ const ReprintResiForm = (props) => {
       </form>
 
       {!isValid && isTouched ? (
-        <p className="text-red-500 text-xs mt-2">* Ketik nomor resi yang valid</p>
+        <p className="text-red-600 text-xs mt-2">* Ketik nomor resi yang valid</p>
       ) : null}
 
       {props.dataResi.noResi ? (
-        <div className="w-full overflow-hidden mt-4 bg-white rounded-lg shadow-md">
+        <div className="w-full overflow-hidden mt-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
           <div className="w-full flex flex-col items-start justify-center">
             <div className="w-full flex justify-start">
-              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-100 text-right p-2 bg-gray-800 ">
+              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
                 Nomor Resi
               </h3>
-              <p className="w-2/3 text-sm text-gray-800 text-left p-2">{props.dataResi.noResi}</p>
+              <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2">
+                {props.dataResi.noResi}
+              </p>
             </div>
             <div className="w-full flex justify-start">
-              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-100 text-right p-2 bg-gray-800 ">
+              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
                 Tgl Transaksi
               </h3>
-              <p className="w-2/3 text-sm text-gray-800 text-left p-2">{props.dataResi.tglTransaksi}</p>
+              <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2">
+                {props.dataResi.tglTransaksi}
+              </p>
             </div>
             <div className="w-full flex justify-start">
-              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-100 text-right p-2 bg-gray-800 ">
+              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
                 Nama Pengirim
               </h3>
-              <p className="w-2/3 text-sm text-gray-800 text-left p-2">{props.dataResi.namaPengirim}</p>
+              <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2">
+                {props.dataResi.namaPengirim}
+              </p>
             </div>
             <div className="w-full flex justify-start">
-              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-100 text-right p-2 bg-gray-800 ">
+              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
                 Nama Penerima
               </h3>
-              <p className="w-2/3 text-sm text-gray-800 text-left p-2">{props.dataResi.namaPenerima}</p>
+              <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2">
+                {props.dataResi.namaPenerima}
+              </p>
             </div>
             <div className="w-full flex justify-start">
-              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-100 text-right p-2 bg-gray-800 ">
+              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
                 Tujuan
               </h3>
-              <p className="w-2/3 text-sm text-gray-800 text-left p-2">{props.dataResi.tujuan}</p>
+              <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2">
+                {props.dataResi.tujuan}
+              </p>
             </div>
             <div className="w-full h-36 sm:h-14 flex items-center">
-              <h3 className="w-1/3 h-full font-semibold whitespace-nowrap text-sm text-gray-100 text-right p-2 bg-gray-800">
+              <h3 className="w-1/3 h-full font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900">
                 Actions
               </h3>
               <div className="w-2/3 h-full p-2 flex flex-col sm:flex-row gap-2 justify-start">
                 <button
-                  className="p-2 text-sm text-white bg-blue-500 rounded-md"
+                  className="p-2 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-md"
                   onClick={() => generatePdfResi(props.dataResi.data)}
                 >
                   Reprint Resi
                 </button>
                 <button
-                  className="p-2 text-sm text-white bg-green-500 rounded-md"
+                  className="p-2 text-sm text-white bg-green-500 hover:bg-green-600 rounded-md"
                   onClick={() => generatePdfLabel(props.dataResi.data)}
                 >
                   Reprint Label
                 </button>
-                <button className="p-2 text-sm text-white bg-orange-500 rounded-md">Reprint Struk</button>
+                <button className="p-2 text-sm text-white bg-orange-500 hover:bg-orange-600 rounded-md">
+                  Reprint Struk
+                </button>
               </div>
             </div>
           </div>

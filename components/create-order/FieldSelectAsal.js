@@ -36,12 +36,12 @@ const FieldSelectAsal = (props) => {
             ? "#7f1d1d"
             : "#fee2e2"
           : modeTheme === "dark"
-          ? "#334155"
+          ? "#374151"
           : "#fff"
       }`,
       borderColor: state.isFocused
         ? `transparent`
-        : `${isTouched && !isValid ? "#dc2626" : modeTheme === "dark" ? "#334155" : "#cbd5e1"}`,
+        : `${isTouched && !isValid ? "#dc2626" : modeTheme === "dark" ? "#374151" : "#cbd5e1"}`,
       boxShadow: state.isFocused
         ? `${
             isTouched && !isValid
@@ -55,7 +55,7 @@ const FieldSelectAsal = (props) => {
     }),
     menu: (styles) => ({
       ...styles,
-      backgroundColor: `${modeTheme === "dark" ? "#334155" : "#fff"}`,
+      backgroundColor: `${modeTheme === "dark" ? "#374151" : "#fff"}`,
     }),
     option: (styles, state) => ({
       ...styles,

@@ -21,14 +21,14 @@ const CabangSelect = (props) => {
   };
 
   return (
-    <form className="w-full p-4 bg-white flex flex-col gap-4 border-[1px] border-gray-300 shadow-md rounded-lg">
+    <form className="w-full p-4 bg-white dark:bg-gray-800 flex flex-col gap-4 border-[1px] border-gray-300 shadow-md rounded-lg">
       {/* Select Cabang Asal */}
       <div className="w-full flex gap-2 items-center">
-        <label className="w-52 text-sm text-gray-800" htmlFor="cabangAsal">
+        <label className="w-52 text-sm text-gray-800 dark:text-gray-200" htmlFor="cabangAsal">
           Cabang Asal
         </label>
         <select
-          className="w-full p-2 text-sm text-gray-800 bg-gray-100 rounded-md"
+          className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md"
           name="cabangAsal"
           id="cabangAsal"
           value={cabangAsal}
@@ -42,11 +42,11 @@ const CabangSelect = (props) => {
 
       {/* Select Cabang Tujuan */}
       <div className="w-full flex gap-2 items-center">
-        <label className="w-52 text-sm text-gray-800" htmlFor="cabangTujuan">
+        <label className="w-52 text-sm text-gray-800 dark:text-gray-200" htmlFor="cabangTujuan">
           Kota Tujuan
         </label>
         <select
-          className="w-full p-2 text-sm text-gray-800 bg-gray-100 rounded-md"
+          className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md"
           name="cabangTujuan"
           id="cabangTujuan"
           value={cabangTujuan}

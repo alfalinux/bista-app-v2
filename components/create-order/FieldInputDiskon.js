@@ -68,7 +68,9 @@ const FieldInputDiskon = (props) => {
           <span>%</span>
         </div>
         <ArrowsRightLeftIcon className="h-5" />
-        <div className={`w-[40%] md:w-fit text-sm rounded-md border-[1px] px-2 py-1.5 bg-gray-200`}>
+        <div
+          className={`w-[40%] md:w-fit text-sm dark:text-gray-500 rounded-md border-[1px] dark:border-gray-600 px-2 py-1.5 bg-gray-200 dark:bg-gray-800`}
+        >
           <p>
             Rp.{" "}
             {isValid

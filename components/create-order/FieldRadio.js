@@ -25,7 +25,7 @@ const FieldRadio = (props) => {
       </label>
       <section className="flex flex-col">
         <div className="flex gap-4">
-          <div className="flex px-2 items-center rounded-full hover:bg-zinc-100">
+          <div className="flex px-2 items-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
             <input
               type="radio"
               id="cash"
@@ -38,7 +38,7 @@ const FieldRadio = (props) => {
               Cash
             </label>
           </div>
-          <div className="flex px-2 items-center rounded-full hover:bg-zinc-100">
+          <div className="flex px-2 items-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
             <input
               type="radio"
               id="cod"
@@ -51,7 +51,7 @@ const FieldRadio = (props) => {
               COD
             </label>
           </div>
-          <div className="flex px-2 rounded-full hover:bg-zinc-100">
+          <div className="flex px-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
             <input
               type="radio"
               id="top"
@@ -66,7 +66,7 @@ const FieldRadio = (props) => {
           </div>
         </div>
         {initialValues.tujuan && !isValid ? (
-          <div className="flex gap-1 items-center text-[10px] text-red-500 ml-1.5">
+          <div className="flex gap-1 items-center text-[10px] text-red-600 ml-1.5">
             <ExclamationCircleIcon className="h-5" />
             <p>Wajib pilih metode pembayaran</p>
           </div>

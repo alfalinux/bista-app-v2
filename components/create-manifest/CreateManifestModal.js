@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => {
+const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan, resetForm }) => {
   const [isKonsol, setIsKonsol] = useState(false);
   const [konsolidasi, setKonsolidasi] = useState(1);
 
@@ -21,6 +21,7 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
 
   const prosesButtonHandler = () => {
     onCloseModal();
+    resetForm();
     Swal.fire({
       icon: "success",
       title: "Berhasil",

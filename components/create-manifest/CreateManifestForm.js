@@ -22,6 +22,7 @@ const CreateManifestForm = ({ dataResi, cabangAsal }) => {
   };
 
   const resetCheckedResiHandler = () => setCheckedResi([]);
+  const resetCabangTujuanHandler = () => setCabangTujuanSelected("");
 
   useEffect(() => {
     setIsLoading(false);
@@ -35,7 +36,6 @@ const CreateManifestForm = ({ dataResi, cabangAsal }) => {
 
   const tujuanSelectedHandler = (e) => setCabangTujuanSelected(e);
 
-  console.log(checkedResi);
   return (
     <div className="w-full overflow-scroll lg:overflow-hidden px-4">
       <CabangSelect
@@ -63,6 +63,7 @@ const CreateManifestForm = ({ dataResi, cabangAsal }) => {
           cabangAsal={cabangAsal}
           tujuan={cabangTujuanSelected}
           checkedResi={checkedResi}
+          resetForm={resetCabangTujuanHandler}
         />
       ) : null}
     </div>

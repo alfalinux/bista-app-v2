@@ -4,12 +4,12 @@ import HeadMenuButton from "../utils/HeadMenuButton";
 import { useTheme } from "next-themes";
 
 const Headbar = (props) => {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const router = useRouter();
   const pathArray =
     router.pathname === "/" ? "Beranda" : router.pathname.split("/").slice(-1).join("").replaceAll("-", " ");
   return (
-    <header className="sticky top-0 w-full h-14 flex items-center bg-white dark:bg-gray-800">
+    <header className="sticky top-0 w-full h-14 flex items-center bg-white dark:bg-gray-800 duration-500 ease-in-out">
       <div className={`hidden lg:block ${props.showMenuDesktop ? "w-80" : "w-0"} duration-500 ease-in-out`}>
         <img
           className="h-8 ml-4"
@@ -43,7 +43,7 @@ const Headbar = (props) => {
         </div>
 
         {/* Navigation Page */}
-        <div className="flex items-center gap-1 font-semibold text-sm text-gray-500 capitalize">
+        <div className="flex items-center gap-1 font-semibold text-sm text-gray-600 dark:text-gray-200 capitalize">
           <ClipboardDocumentIcon className="h-6" />
           <p>Halaman {pathArray}</p>
         </div>

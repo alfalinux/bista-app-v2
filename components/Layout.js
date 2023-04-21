@@ -39,7 +39,7 @@ const Layout = (props) => {
             <div className="w-full h-full bg-white">
               <div className="absolute w-full -translate-y-2 h-2 bg-transparent shadow-[0px_4px_6px_0px_rgba(0,0,0,0.1)]"></div>
               <main
-                className={`w-full h-full overflow-x-hidden overflow-y-scroll py-4 bg-gray-100 dark:bg-gray-700`}
+                className={`w-full h-full overflow-x-hidden overflow-y-scroll py-4 bg-gray-100 dark:bg-gray-700 duration-500 ease-in-out`}
               >
                 {props.children}
               </main>

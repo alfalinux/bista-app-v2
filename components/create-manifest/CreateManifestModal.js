@@ -1,34 +1,74 @@
+import generateNoManifest from "@/helpers/generateNoManifest";
 import {
   CubeIcon,
   DocumentDuplicateIcon,
   QuestionMarkCircleIcon,
   ScaleIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan, resetForm }) => {
   const [isKonsol, setIsKonsol] = useState(false);
   const [konsolidasi, setKonsolidasi] = useState(1);
+  const [dataCabangAsal, setDataCabangAsal] = useState({});
+
+  useEffect(() => {
+    fetch("/api/data-cabang")
+      .then((response) => response.json())
+      .then((data) => setDataCabangAsal(data.find((obj) => obj.cab === cabangAsal)));
+  }, [cabangAsal]);
 
   const isKonsolSelectHandler = (e) => {
     setIsKonsol(e.target.value);
   };
-
   const konsolidasiChangeHandler = (e) => {
     setKonsolidasi(e.target.value);
   };
 
   const prosesButtonHandler = () => {
-    onCloseModal();
-    resetForm();
-    Swal.fire({
-      icon: "success",
-      title: "Berhasil",
-      text: "Manifest telah dicreate!",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    const dataCabang = {
+      asal: dataCabangAsal.cab,
+      asalTlc: dataCabangAsal.tlc,
+      coveran: dataResi[0].tujuan.cov,
+      coveranTlc: dataResi[0].tujuan.covTlc,
+      tujuan: dataResi[0].tujuan.ibukota,
+      tujuanTlc: dataResi[0].tujuan.tlc,
+    };
+    const noManifest = generateNoManifest(dataCabang.asalTlc, dataCabang.tujuanTlc);
+    const tgl = new Date().toISOString();
+
+    const submitManifest = {
+      noManifest: noManifest,
+      tglManifest: tgl,
+      cabangAsal: dataCabang.asal,
+      cabangAsalTlc: dataCabang.asalTlc,
+      cabangTujuan: dataCabang.tujuan,
+      cabangTujuanTlc: dataCabang.tujuanTlc,
+      coveranArea: dataCabang.coveran,
+      coveranAreaTlc: dataCabang.coveranTlc,
+      jumlahResi: dataResi.length,
+      jumlahPaket: dataResi.map((d) => d.paket).length,
+      jumlahBerat: dataResi
+        .map((d) => d.paket.map((d) => d.beratAktual).reduce((a, b) => a + Number(b), 0))
+        .reduce((a, b) => a + Number(b), 0),
+      jumlahVolume: dataResi
+        .map((d) => d.paket.map((x) => x.volume.berat).reduce((a, b) => a + b, 0))
+        .reduce((a, b) => a + b, 0),
+      konsolidasi: isKonsol,
+      // petugasInput: data.nama,
+      dataResi: dataResi,
+    };
+    console.log(submitManifest);
+    // onCloseModal();
+    // resetForm();
+    // Swal.fire({
+    //   icon: "success",
+    //   title: "Berhasil",
+    //   text: "Manifest telah dicreate!",
+    //   showConfirmButton: false,
+    //   timer: 1500,
+    // });
   };
 
   return (

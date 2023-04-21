@@ -16,9 +16,18 @@ const HeadMenuButton = (props) => {
     setShowUserMenu(!showUserMenu);
   };
 
+  const userMenu = (
+    <ul className="flex flex-col gap-2 pt-2 select-none border-[1px] border-transparent border-t-red-800">
+      <li className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150">Profile</li>
+      <li className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150">Ganti Password</li>
+      <li className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150">Logout</li>
+    </ul>
+  );
+
   return (
     <div className={`${props.style} bottom-0`}>
-      <div className="flex items-center justify-center">
+      {/* Tombol Darkmode - Notif - Email */}
+      <div className="flex items-center justify-center order-3 lg:order-1">
         <div
           className="w-8 h-8 mr-4 flex items-center justify-center rounded-lg text-gray-500 bg-gray-200 hover:bg-red-600 hover:text-gray-100 hover:cursor-pointer transition-all duration-200"
           onClick={darkmodeHandler}
@@ -32,23 +41,35 @@ const HeadMenuButton = (props) => {
           <EnvelopeIcon className="h-5" />
         </div>
       </div>
-      <div className="relative min-w-max h-14 px-4 bg-red-600 text-white text-sm font-semibold flex items-center justify-center gap-2">
+
+      {/* Field User Login */}
+      <div
+        className={`relative min-w-max px-4 bg-red-600 text-white text-sm font-semibold flex items-center justify-center gap-2 h-14 order-1 lg:order-2`}
+      >
         <UserCircleIcon className="h-10" />
         <p>{props.user.nama}</p>
-        <ChevronDownIcon className="h-4" onClick={userMenuHandler} />
+        <ChevronDownIcon
+          className={`h-4 ${showUserMenu ? "rotate-180" : ""} transition-transform duration-200`}
+          onClick={userMenuHandler}
+        />
+
+        {/* Menu USer Login HEad Bar*/}
         <div
-          className={`absolute top-14 left-0 bg-red-600 w-full ${
-            showUserMenu ? "h-auto p-4" : "h-0 px-4"
-          } transition-all`}
+          className={`hidden lg:block lg:absolute lg:top-14 lg:left-0 bg-red-600 w-full mb-2 ${
+            showUserMenu ? "h-auto px-4 pb-4" : "h-0 px-4"
+          } transition-all order-2`}
         >
-          {showUserMenu ? (
-            <ul className="flex flex-col gap-2 select-none">
-              <li className="hover:text-gray-800 hover:cursor-pointer duration-150">Profile</li>
-              <li className="hover:text-gray-800 hover:cursor-pointer duration-150">Ganti Password</li>
-              <li className="hover:text-gray-800 hover:cursor-pointer duration-150">Logout</li>
-            </ul>
-          ) : null}
+          {showUserMenu ? userMenu : null}
         </div>
+      </div>
+
+      {/* Menu USer Login LEft MEnu */}
+      <div
+        className={`lg:hidden bg-red-600 w-full mb-2 ${
+          showUserMenu ? "h-auto px-4 pb-4" : "h-0 px-4"
+        } transition-all order-2`}
+      >
+        {showUserMenu ? userMenu : null}
       </div>
     </div>
   );

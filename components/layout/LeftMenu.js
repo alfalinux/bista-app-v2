@@ -109,7 +109,7 @@ const LeftMenu = (props) => {
               ))}
             </section>
             <section>
-              <HeadMenuButton style="lg:hidden flex flex-col-reverse gap-2 mt-4" user={props.dataUser} />
+              <HeadMenuButton style="lg:hidden flex flex-col mt-4" user={props.dataUser} />
             </section>
           </div>
         </div>

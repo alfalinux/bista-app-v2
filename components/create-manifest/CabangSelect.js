@@ -1,8 +1,12 @@
+import listCabang from "@/helpers/listCabang";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CabangSelect = (props) => {
+  const { data } = useSession();
   const router = useRouter();
+  const listCabangAsal = listCabang();
   const [cabangAsal, setCabangAsal] = useState("");
   const [cabangTujuan, setCabangTujuan] = useState("");
 
@@ -20,6 +24,11 @@ const CabangSelect = (props) => {
     props.onResetCheckedResi();
   };
 
+  useEffect(() => {
+    if (!router.query.cabangAsal) {
+      setCabangAsal("");
+    }
+  }, [router]);
   return (
     <form className="w-full p-4 bg-white dark:bg-gray-800 flex flex-col gap-4 border-[1px] border-gray-300 shadow-md rounded-lg">
       {/* Select Cabang Asal */}
@@ -34,9 +43,21 @@ const CabangSelect = (props) => {
           value={cabangAsal}
           onChange={cabangAsalChange}
         >
-          <option value=""></option>
-          <option value="jakarta">JAKARTA</option>
-          <option value="surabaya">SURABAYA</option>
+          {data.posisiDesc === "direktur" ? (
+            <>
+              <option value=""></option>
+              {listCabangAsal.map((data, index) => (
+                <option key={index} value={data.cab}>
+                  {data.cab.toUpperCase()}
+                </option>
+              ))}
+            </>
+          ) : (
+            <>
+              <option value=""></option>
+              <option value={data.cabangDesc}>{data.cabangDesc.toUpperCase()}</option>
+            </>
+          )}
         </select>
       </div>
 

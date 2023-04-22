@@ -1,16 +1,21 @@
 import generateNoManifest from "@/helpers/generateNoManifest";
+import generatePdfManifest from "@/helpers/generatePdfManifest";
 import {
   CubeIcon,
   DocumentDuplicateIcon,
   QuestionMarkCircleIcon,
   ScaleIcon,
+  ArchiveBoxIcon,
 } from "@heroicons/react/24/outline";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
-const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan, resetForm }) => {
+const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => {
+  const router = useRouter();
+  const { data } = useSession();
   const [isKonsol, setIsKonsol] = useState(false);
-  const [konsolidasi, setKonsolidasi] = useState(1);
   const [dataCabangAsal, setDataCabangAsal] = useState({});
 
   useEffect(() => {
@@ -21,9 +26,6 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan, reset
 
   const isKonsolSelectHandler = (e) => {
     setIsKonsol(e.target.value);
-  };
-  const konsolidasiChangeHandler = (e) => {
-    setKonsolidasi(e.target.value);
   };
 
   const prosesButtonHandler = () => {
@@ -56,19 +58,19 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan, reset
         .map((d) => d.paket.map((x) => x.volume.berat).reduce((a, b) => a + b, 0))
         .reduce((a, b) => a + b, 0),
       konsolidasi: isKonsol,
-      // petugasInput: data.nama,
+      petugasInput: data.nama,
       dataResi: dataResi,
     };
-    console.log(submitManifest);
-    // onCloseModal();
-    // resetForm();
-    // Swal.fire({
-    //   icon: "success",
-    //   title: "Berhasil",
-    //   text: "Manifest telah dicreate!",
-    //   showConfirmButton: false,
-    //   timer: 1500,
-    // });
+    // console.log(submitManifest);
+    onCloseModal();
+    router.push("/outgoing/create-manifest");
+    Swal.fire({
+      icon: "success",
+      title: "Berhasil",
+      text: "Manifest telah dicreate!",
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => generatePdfManifest(submitManifest));
   };
 
   return (
@@ -84,15 +86,36 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan, reset
         <div className="flex gap-2 text-gray-600 text-base">
           <div className="flex items-center gap-1">
             <DocumentDuplicateIcon className="h-5" />
-            <p>{dataResi.length} Resi</p>
-          </div>
-          <div className="flex items-center gap-1">
-            <ScaleIcon className="h-5" />
-            <p>{dataResi.reduce((acc, total) => acc + total.beratPaketDikenakan, 0)} Kg</p>
+            <p>{dataResi.length.toLocaleString("id-ID")} Resi</p>
           </div>
           <div className="flex items-center gap-1">
             <CubeIcon className="h-5" />
-            <p>{dataResi.reduce((acc, total) => acc + total.paket.length, 0)} Koli</p>
+            <p>{dataResi.reduce((acc, total) => acc + total.paket.length, 0).toLocaleString("id-ID")} Koli</p>
+          </div>
+          <div className="flex items-center gap-1">
+            <ScaleIcon className="h-5" />
+            <p>
+              {dataResi
+                .map((d) => d.paket.map((d) => d.beratAktual).reduce((total, obj) => total + Number(obj), 0))
+                .reduce((total, obj) => total + Number(obj), 0)
+                .toLocaleString("id-ID", { maximumFractionDigits: 3 })}{" "}
+              Kg
+            </p>
+          </div>
+          <div className="flex items-center gap-1">
+            <ArchiveBoxIcon className="h-5" />
+            <p>
+              {dataResi
+                .map((d) =>
+                  d.paket
+                    .map((d) => d.volume)
+                    .map((d) => (Number(d.panjang) * Number(d.lebar) * Number(d.tinggi)) / 1000000)
+                    .reduce((total, obj) => total + Number(obj), 0)
+                )
+                .reduce((total, obj) => total + Number(obj), 0)
+                .toLocaleString("id-Id", { maximumFractionDigits: 3, minimumFractionDigits: 3 })}{" "}
+              CbM
+            </p>
           </div>
         </div>
         <div className="flex gap-2 items-center justify-center text-gray-600">
@@ -109,29 +132,18 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan, reset
             <option value="true">Ya</option>
           </select>
         </div>
-        {isKonsol == "true" ? (
-          <div className="flex gap-2 items-center justify-center py-2 w-44 rounded-md border-2 border-blue-200">
-            <input
-              type="number"
-              id="konsolidasi"
-              value={konsolidasi}
-              onChange={konsolidasiChangeHandler}
-              className="w-10 bg-transparent text-gray-600 font-semibold text-base text-right focus:outline-none"
-            />
-            <label htmlFor="konsolidasi" className="w-10 text-gray-600">
-              Koli
-            </label>
-          </div>
-        ) : null}
 
         <div className="w-full flex items-center justify-center gap-4 mt-4">
           <button
-            className="bg-blue-500 text-white text-base w-24 py-2 rounded-md"
+            className="bg-blue-500 hover:bg-blue-600 text-white text-base w-24 py-2 rounded-md"
             onClick={prosesButtonHandler}
           >
             Proses
           </button>
-          <button className="bg-red-500 text-white text-base w-24 py-2 rounded-md" onClick={onCloseModal}>
+          <button
+            className="bg-red-600 hover:bg-red-700 text-white text-base w-24 py-2 rounded-md"
+            onClick={onCloseModal}
+          >
             Batalkan
           </button>
         </div>

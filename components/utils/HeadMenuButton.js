@@ -2,6 +2,8 @@ import { useState } from "react";
 import { BellAlertIcon, ChevronDownIcon, EnvelopeIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "next-themes";
+import Swal from "sweetalert2";
+import { signOut } from "next-auth/react";
 
 const HeadMenuButton = (props) => {
   const [darkmode, setDarkMode] = useState(false);
@@ -16,11 +18,39 @@ const HeadMenuButton = (props) => {
     setShowUserMenu(!showUserMenu);
   };
 
+  const onLogoutHandler = () => {
+    Swal.fire({
+      title: "Logout",
+      text: "Apakah Anda mau keluar dari aplikasi?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3b82f6",
+      confirmButtonText: "Ya, keluar",
+      cancelButtonColor: "#dc2626",
+      cancelButtonText: "Tidak jadi",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOut({ callbackUrl: "/auth/login" });
+        Swal.fire({
+          title: "Berhasil",
+          text: "Anda sudah keluar dari aplikasi",
+          icon: "success",
+          showConfirmButton: false,
+        });
+      }
+    });
+  };
+
   const userMenu = (
     <ul className="flex flex-col gap-2 pt-2 select-none border-[1px] border-transparent border-t-red-800">
       <li className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150">Profile</li>
       <li className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150">Ganti Password</li>
-      <li className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150">Logout</li>
+      <li
+        className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150"
+        onClick={onLogoutHandler}
+      >
+        Logout
+      </li>
     </ul>
   );
 

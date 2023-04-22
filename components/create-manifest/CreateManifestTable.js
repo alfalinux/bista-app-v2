@@ -25,7 +25,7 @@ const CreateManifestTable = ({ dataResi, tujuan, onCheckedResi, onCheckedAllResi
       item.checked = false;
     }
     setIsCheckedAll(false);
-  }, [tujuan]);
+  }, [tujuan, dataResi]);
 
   return (
     <div className="w-full mt-4 mb-4 shadow-md">

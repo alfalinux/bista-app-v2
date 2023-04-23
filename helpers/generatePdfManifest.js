@@ -19,273 +19,299 @@ const generatePdfManifest = (data) => {
 
   const doc = new jsPDF("p", "mm", [105, 148]);
 
-  if (data.konsolidasi <= 1) {
-    doc.addImage(imglogo, "PNG", 5, 5, 38.4, 7.36);
-    doc.addImage(imgbarcode, "PNG", 7.5, 28, 90, 30);
+  // if (data.konsolidasi <= 1) {
+  doc.addImage(imglogo, "PNG", 5, 5, 38.4, 7.36);
+  doc.addImage(imgbarcode, "PNG", 7.5, 28, 90, 30);
 
-    // Koli ke dari Jlh Koli
-    doc.autoTable({
-      theme: "plain",
-      startY: 5,
-      margin: { top: 2, right: 5, left: 2, bottom: 2 },
-      tableWidth: "95",
-      styles: {
-        cellPadding: 0.1,
-        fontSize: 16,
-        halign: "right",
-        valign: "top",
-      },
-      body: [[{ content: 1 + " of " + data.konsolidasi, styles: { fontStyle: "bold" } }]],
-    });
+  // isKonsol?
+  doc.autoTable({
+    theme: "plain",
+    startY: 5,
+    margin: { top: 2, right: 5, left: 2, bottom: 2 },
+    tableWidth: "95",
+    styles: {
+      cellPadding: 0.1,
+      fontSize: 12,
+      halign: "right",
+      valign: "top",
+    },
+    body: [[{ content: data.konsolidasi ? "Konsolidasi" : "", styles: { fontStyle: "bold" } }]],
+  });
 
-    // title
-    doc.autoTable({
-      theme: "plain",
-      startY: 15,
-      margin: { top: 2, right: 2, left: 2, bottom: 0 },
-      tableWidth: "95",
-      styles: {
-        cellPadding: 0.5,
-        fontSize: 8,
-        halign: "center",
-        valign: "center",
-      },
-      body: [
-        [
-          {
-            content: "MANIFEST PEMBERANGKATAN",
-            styles: { fontStyle: "bold" },
-          },
-        ],
+  // title
+  doc.autoTable({
+    theme: "plain",
+    startY: 15,
+    margin: { top: 2, right: 2, left: 2, bottom: 0 },
+    tableWidth: "95",
+    styles: {
+      cellPadding: 0.5,
+      fontSize: 10,
+      halign: "center",
+      valign: "center",
+    },
+    body: [
+      [
+        {
+          content: "MANIFEST PEMBERANGKATAN",
+          styles: { fontStyle: "bold" },
+        },
       ],
-    });
+    ],
+  });
 
-    // asal dan tujuan
-    doc.autoTable({
-      theme: "plain",
-      startY: doc.lastAutoTable.finalY,
-      margin: { top: 2, right: 2, left: 2, bottom: 2 },
-      tableWidth: "95",
-      styles: {
-        cellPadding: 0.5,
-        fontSize: 16,
-        halign: "center",
-        valign: "center",
-      },
-      body: [
-        [
-          {
-            content: data.cabangAsal.toUpperCase() + " - " + data.cabangTujuan.toUpperCase(),
-            styles: { fontStyle: "bold" },
-          },
-        ],
+  // asal dan tujuan
+  doc.autoTable({
+    theme: "plain",
+    startY: doc.lastAutoTable.finalY,
+    margin: { top: 2, right: 2, left: 2, bottom: 2 },
+    tableWidth: "95",
+    styles: {
+      cellPadding: 0.5,
+      fontSize: 16,
+      halign: "center",
+      valign: "center",
+    },
+    body: [
+      [
+        {
+          content: data.cabangAsal.toUpperCase() + " - " + data.cabangTujuan.toUpperCase(),
+          styles: { fontStyle: "bold" },
+        },
       ],
-    });
+    ],
+  });
 
-    // BOX JLH RESI DAN BERAT
-    doc.autoTable({
-      theme: "grid",
-      startY: 60,
-      margin: { top: 2, right: 5, left: 5, bottom: 2 },
-      tableWidth: "95",
-      styles: {
-        cellPadding: 1,
-        fontSize: 12,
-        halign: "center",
-        valign: "top",
-        fillColor: "eaeaea",
-      },
-      body: [
-        [
-          {
-            content: "Total Resi: " + data.dataResi.length,
-            styles: { fontStyle: "bold" },
-          },
-          {
-            content: "Total Berat: " + data.jumlahBerat + " Kg",
-            styles: { fontStyle: "bold" },
-          },
-        ],
+  // BOX JLH RESI DAN BERAT
+  doc.autoTable({
+    theme: "grid",
+    startY: 60,
+    margin: { top: 2, right: 5, left: 5, bottom: 2 },
+    tableWidth: "95",
+    styles: {
+      cellPadding: 1,
+      fontSize: 10,
+      halign: "center",
+      valign: "middle",
+      fillColor: "#e5e7eb",
+    },
+    body: [
+      [
+        {
+          content: "Jlh Resi",
+          styles: { fillColor: "#d1d5db" },
+        },
+        {
+          content: "Jlh Paket",
+          styles: { fillColor: "#d1d5db" },
+        },
+        {
+          content: "Berat",
+          styles: { fillColor: "#d1d5db" },
+        },
+        {
+          content: "Volume",
+          styles: { fillColor: "#d1d5db" },
+        },
       ],
-    });
-
-    //   Detail List No Resi
-    doc.autoTable({
-      theme: "plain",
-      startY: doc.lastAutoTable.finalY + 5,
-      margin: { top: 2, right: 5, left: 5, bottom: 2 },
-      tableWidth: "95",
-      styles: {
-        cellPadding: 0.1,
-        fontSize: 12,
-        halign: "left",
-        valign: "top",
-      },
-      body: [
-        [{ content: "List Resi: ", styles: { fontStyle: "bold" } }],
-        [
-          {
-            content: data.dataResi.map((d) => d.noResi).join(", "),
-          },
-        ],
+      [
+        {
+          content: data.jumlahResi,
+          styles: { fontStyle: "bold" },
+        },
+        {
+          content: data.jumlahPaket,
+          styles: { fontStyle: "bold" },
+        },
+        {
+          content: data.jumlahBerat.toLocaleString("id-ID", { maximumFragmentDigits: 2 }) + " Kg",
+          styles: { fontStyle: "bold" },
+        },
+        {
+          content: data.jumlahVolume.toLocaleString("id-ID", { maximumFragmentDigits: 2 }) + " CbM",
+          styles: { fontStyle: "bold" },
+        },
       ],
-    });
+    ],
+  });
 
-    // footer
-    doc.autoTable({
-      theme: "plain",
-      startY: 138,
-      margin: { top: 5, right: 5, left: 5, bottom: 0 },
-      tableWidth: "95",
-      styles: {
-        cellPadding: 0.1,
-        fontSize: 10,
-        fontStyle: "italic",
-      },
-      body: [
-        [{ content: "Tgl Manifest: " + getDate(data.tglManifest) }],
-        [{ content: "Created by: " + data.petugasInput }],
+  //   Detail List No Resi
+  doc.autoTable({
+    theme: "plain",
+    startY: doc.lastAutoTable.finalY + 5,
+    margin: { top: 2, right: 5, left: 5, bottom: 2 },
+    tableWidth: "95",
+    styles: {
+      cellPadding: 0.1,
+      fontSize: 12,
+      halign: "left",
+      valign: "top",
+    },
+    body: [
+      [{ content: "List Resi: ", styles: { fontStyle: "bold" } }],
+      [
+        {
+          content: data.dataResi.map((d) => d.noResi).join(", "),
+        },
       ],
-    });
+    ],
+  });
 
-    doc.setDrawColor("555");
-    doc.line(5, 136, 100, 136, "S");
-  } else {
-    for (let i = 1; i <= data.konsolidasi; i++) {
-      i > 1 ? doc.addPage([105, 148], "p") : null;
-      i > 1 ? doc.setPage(i) : null;
-      doc.addImage(imglogo, "PNG", 5, 5, 38.4, 7.36);
-      doc.addImage(imgbarcode, "PNG", 7.5, 28, 90, 30);
+  // footer
+  doc.autoTable({
+    theme: "plain",
+    startY: 138,
+    margin: { top: 5, right: 5, left: 5, bottom: 0 },
+    tableWidth: "95",
+    styles: {
+      cellPadding: 0.1,
+      fontSize: 10,
+      fontStyle: "italic",
+    },
+    body: [
+      [{ content: "Tgl Manifest: " + getDate(data.tglManifest) }],
+      [{ content: "Created by: " + data.petugasInput }],
+    ],
+  });
 
-      // Koli ke dari Jlh Koli
-      doc.autoTable({
-        theme: "plain",
-        startY: 5,
-        margin: { top: 2, right: 5, left: 2, bottom: 2 },
-        tableWidth: "95",
-        styles: {
-          cellPadding: 0.1,
-          fontSize: 16,
-          halign: "right",
-          valign: "top",
-        },
-        body: [[{ content: 1 + " of " + data.konsolidasi, styles: { fontStyle: "bold" } }]],
-      });
+  doc.setDrawColor("555");
+  doc.line(5, 136, 100, 136, "S");
+  // } else {
+  //   for (let i = 1; i <= data.konsolidasi; i++) {
+  //     i > 1 ? doc.addPage([105, 148], "p") : null;
+  //     i > 1 ? doc.setPage(i) : null;
+  //     doc.addImage(imglogo, "PNG", 5, 5, 38.4, 7.36);
+  //     doc.addImage(imgbarcode, "PNG", 7.5, 28, 90, 30);
 
-      // title
-      doc.autoTable({
-        theme: "plain",
-        startY: 15,
-        margin: { top: 2, right: 2, left: 2, bottom: 0 },
-        tableWidth: "95",
-        styles: {
-          cellPadding: 0.5,
-          fontSize: 8,
-          halign: "center",
-          valign: "center",
-        },
-        body: [
-          [
-            {
-              content: "MANIFEST PEMBERANGKATAN",
-              styles: { fontStyle: "bold" },
-            },
-          ],
-        ],
-      });
+  //     // Koli ke dari Jlh Koli
+  //     doc.autoTable({
+  //       theme: "plain",
+  //       startY: 5,
+  //       margin: { top: 2, right: 5, left: 2, bottom: 2 },
+  //       tableWidth: "95",
+  //       styles: {
+  //         cellPadding: 0.1,
+  //         fontSize: 16,
+  //         halign: "right",
+  //         valign: "top",
+  //       },
+  //       body: [[{ content: 1 + " of " + data.konsolidasi, styles: { fontStyle: "bold" } }]],
+  //     });
 
-      // asal dan tujuan
-      doc.autoTable({
-        theme: "plain",
-        startY: doc.lastAutoTable.finalY,
-        margin: { top: 2, right: 2, left: 2, bottom: 2 },
-        tableWidth: "95",
-        styles: {
-          cellPadding: 0.5,
-          fontSize: 16,
-          halign: "center",
-          valign: "center",
-        },
-        body: [
-          [
-            {
-              content: data.cabangAsal.toUpperCase() + " - " + data.cabangTujuan.toUpperCase(),
-              styles: { fontStyle: "bold" },
-            },
-          ],
-        ],
-      });
+  //     // title
+  //     doc.autoTable({
+  //       theme: "plain",
+  //       startY: 15,
+  //       margin: { top: 2, right: 2, left: 2, bottom: 0 },
+  //       tableWidth: "95",
+  //       styles: {
+  //         cellPadding: 0.5,
+  //         fontSize: 8,
+  //         halign: "center",
+  //         valign: "center",
+  //       },
+  //       body: [
+  //         [
+  //           {
+  //             content: "MANIFEST PEMBERANGKATAN",
+  //             styles: { fontStyle: "bold" },
+  //           },
+  //         ],
+  //       ],
+  //     });
 
-      // BOX JLH RESI DAN BERAT
-      doc.autoTable({
-        theme: "grid",
-        startY: 60,
-        margin: { top: 2, right: 5, left: 5, bottom: 2 },
-        tableWidth: "95",
-        styles: {
-          cellPadding: 1,
-          fontSize: 12,
-          halign: "center",
-          valign: "top",
-          fillColor: "eaeaea",
-        },
-        body: [
-          [
-            {
-              content: "Total Resi: " + data.dataResi.length,
-              styles: { fontStyle: "bold" },
-            },
-            {
-              content: "Total Berat: " + data.jumlahBerat + " Kg",
-              styles: { fontStyle: "bold" },
-            },
-          ],
-        ],
-      });
+  //     // asal dan tujuan
+  //     doc.autoTable({
+  //       theme: "plain",
+  //       startY: doc.lastAutoTable.finalY,
+  //       margin: { top: 2, right: 2, left: 2, bottom: 2 },
+  //       tableWidth: "95",
+  //       styles: {
+  //         cellPadding: 0.5,
+  //         fontSize: 16,
+  //         halign: "center",
+  //         valign: "center",
+  //       },
+  //       body: [
+  //         [
+  //           {
+  //             content: data.cabangAsal.toUpperCase() + " - " + data.cabangTujuan.toUpperCase(),
+  //             styles: { fontStyle: "bold" },
+  //           },
+  //         ],
+  //       ],
+  //     });
 
-      //   Detail List No Resi
-      doc.autoTable({
-        theme: "plain",
-        startY: doc.lastAutoTable.finalY + 5,
-        margin: { top: 2, right: 5, left: 5, bottom: 2 },
-        tableWidth: "95",
-        styles: {
-          cellPadding: 0.1,
-          fontSize: 12,
-          halign: "left",
-          valign: "top",
-        },
-        body: [
-          [{ content: "List Resi: ", styles: { fontStyle: "bold" } }],
-          [
-            {
-              content: data.dataResi.map((d) => d.noResi).join(", "),
-            },
-          ],
-        ],
-      });
+  //     // BOX JLH RESI DAN BERAT
+  //     doc.autoTable({
+  //       theme: "grid",
+  //       startY: 60,
+  //       margin: { top: 2, right: 5, left: 5, bottom: 2 },
+  //       tableWidth: "95",
+  //       styles: {
+  //         cellPadding: 1,
+  //         fontSize: 12,
+  //         halign: "center",
+  //         valign: "top",
+  //         fillColor: "eaeaea",
+  //       },
+  //       body: [
+  //         [
+  //           {
+  //             content: "Total Resi: " + data.dataResi.length,
+  //             styles: { fontStyle: "bold" },
+  //           },
+  //           {
+  //             content: "Total Berat: " + data.jumlahBerat + " Kg",
+  //             styles: { fontStyle: "bold" },
+  //           },
+  //         ],
+  //       ],
+  //     });
 
-      // footer
-      doc.autoTable({
-        theme: "plain",
-        startY: 138,
-        margin: { top: 5, right: 5, left: 5, bottom: 0 },
-        tableWidth: "95",
-        styles: {
-          cellPadding: 0.1,
-          fontSize: 10,
-          fontStyle: "italic",
-        },
-        body: [
-          [{ content: "Tgl Manifest: " + getDate(data.tglManifest) }],
-          [{ content: "Created by: " + data.petugasInput }],
-        ],
-      });
+  //     //   Detail List No Resi
+  //     doc.autoTable({
+  //       theme: "plain",
+  //       startY: doc.lastAutoTable.finalY + 5,
+  //       margin: { top: 2, right: 5, left: 5, bottom: 2 },
+  //       tableWidth: "95",
+  //       styles: {
+  //         cellPadding: 0.1,
+  //         fontSize: 12,
+  //         halign: "left",
+  //         valign: "top",
+  //       },
+  //       body: [
+  //         [{ content: "List Resi: ", styles: { fontStyle: "bold" } }],
+  //         [
+  //           {
+  //             content: data.dataResi.map((d) => d.noResi).join(", "),
+  //           },
+  //         ],
+  //       ],
+  //     });
 
-      doc.setDrawColor("555");
-      doc.line(5, 136, 100, 136, "S");
-    }
-  }
+  //     // footer
+  //     doc.autoTable({
+  //       theme: "plain",
+  //       startY: 138,
+  //       margin: { top: 5, right: 5, left: 5, bottom: 0 },
+  //       tableWidth: "95",
+  //       styles: {
+  //         cellPadding: 0.1,
+  //         fontSize: 10,
+  //         fontStyle: "italic",
+  //       },
+  //       body: [
+  //         [{ content: "Tgl Manifest: " + getDate(data.tglManifest) }],
+  //         [{ content: "Created by: " + data.petugasInput }],
+  //       ],
+  //     });
+
+  //     doc.setDrawColor("555");
+  //     doc.line(5, 136, 100, 136, "S");
+  //   }
+  // }
 
   window.open(doc.output("bloburl"), "_blank");
 };

@@ -50,13 +50,18 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
       coveranArea: dataCabang.coveran,
       coveranAreaTlc: dataCabang.coveranTlc,
       jumlahResi: dataResi.length,
-      jumlahPaket: dataResi.map((d) => d.paket).length,
+      jumlahPaket: dataResi.map((d) => d.paket.length).reduce((total, obj) => total + Number(obj), 0),
       jumlahBerat: dataResi
         .map((d) => d.paket.map((d) => d.beratAktual).reduce((a, b) => a + Number(b), 0))
         .reduce((a, b) => a + Number(b), 0),
       jumlahVolume: dataResi
-        .map((d) => d.paket.map((x) => x.volume.berat).reduce((a, b) => a + b, 0))
-        .reduce((a, b) => a + b, 0),
+        .map((d) =>
+          d.paket
+            .map((d) => d.volume)
+            .map((d) => (Number(d.panjang) * Number(d.lebar) * Number(d.tinggi)) / 1000000)
+            .reduce((total, obj) => total + Number(obj), 0)
+        )
+        .reduce((total, obj) => total + Number(obj), 0),
       konsolidasi: isKonsol,
       petugasInput: data.nama,
       dataResi: dataResi,

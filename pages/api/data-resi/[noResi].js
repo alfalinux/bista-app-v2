@@ -7,7 +7,7 @@ const handler = async (req, res) => {
     client = await connectToMongoDB();
   } catch (error) {
     client.close();
-    res.status(500).json({ message: "Gagal terhubung ke database" });
+    res.status(500).json({ status: res.statusCode, message: "Gagal terhubung ke database" });
     return;
   }
 
@@ -15,13 +15,17 @@ const handler = async (req, res) => {
   try {
     result = await findResi(client, "data-resi", noResi.toUpperCase());
   } catch (error) {
+    res.status(500).json({ status: res.statusCode, message: "Gagal terhubung ke client" });
     client.close();
-    res.status(500).json({ message: "Nomor Resi tidak ditemukan" });
     return;
   }
 
-  const response = result ? result : { message: "Nomor Resi tidak ditemukan" };
+  const response = result
+    ? { status: "201", message: "nomor resi ditemukan", result: result }
+    : { status: "404", message: "nomor resi tidak ditemukan", result: result };
+
   res.status(201).json(response);
+  client.close();
 };
 
 export default handler;

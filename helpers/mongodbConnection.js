@@ -29,3 +29,10 @@ export const findResiBelumManifest = async (client, collection, cabangAsal) => {
     .toArray();
   return result;
 };
+
+export const updateManyResiByManifest = async (client, collection, filter, update) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).updateMany({ noResi: { $in: filter } }, { $set: update });
+
+  return result;
+};

@@ -21,6 +21,12 @@ export const findResi = async (client, collection, noResi) => {
   return result;
 };
 
+export const findManifest = async (client, collection, noManifest) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).findOne({ noManifest: noManifest });
+  return result;
+};
+
 export const findResiBelumManifest = async (client, collection, cabangAsal) => {
   const db = client.db("bista-app-v2");
   const result = await db

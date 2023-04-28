@@ -2,6 +2,7 @@ import { DocumentCheckIcon, PencilSquareIcon } from "@heroicons/react/24/outline
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import generateNoResi from "../../helpers/generateNoResi";
+import generatePdfResi from "@/helpers/generatePdfResi";
 
 const ModalCreateOrder = (props) => {
   const router = useRouter();
@@ -75,29 +76,39 @@ const ModalCreateOrder = (props) => {
   const createResiHandler = () => {
     const tglTransaksi = new Date().toISOString();
     const noResi = generateNoResi("BKU", "CSO");
-    fetch("/api/data-resi/post-resi", {
-      method: "POST",
-      body: JSON.stringify({
-        ...data,
-        tglTransaksi: tglTransaksi,
-        noResi: noResi,
-      }),
-      headers: {
-        "Content-Type": "application/json",
+    const submitData = { ...data, tglTransaksi, noResi };
+    Swal.fire({
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+        fetch("/api/data-resi/post-resi", {
+          method: "POST",
+          body: JSON.stringify(submitData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            Swal.hideLoading();
+            Swal.fire({
+              allowOutsideClick: false,
+              position: "center",
+              icon: "success",
+              title: `${noResi}`,
+              text: `${data.message}`,
+              showConfirmButton: true,
+              confirmButtonText: "Cetak Resi",
+              confirmButtonColor: "#0ea5e9",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                generatePdfResi(submitData);
+                router.reload();
+              }
+            });
+          });
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: `${noResi}`,
-          text: `${data.message}`,
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        router.replace(`/reprint/reprint-resi?noResi=${noResi}`);
-      });
+    });
   };
 
   return (

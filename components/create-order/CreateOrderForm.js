@@ -25,6 +25,13 @@ const CreateOrderContainer = (props) => {
     setShowResi(true);
   };
 
+  const onReset = (e) => {
+    setInitialValues(props.initialValues);
+    setValidFields(props.validation);
+    setAllFieldIsValid(false);
+    setShowResi(false);
+  };
+
   useEffect(() => {
     Object.values(validFields).every((value) => value === "valid")
       ? setAllFieldIsValid(true)

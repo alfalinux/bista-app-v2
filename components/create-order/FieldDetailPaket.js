@@ -166,7 +166,7 @@ const FieldDetailPaket = (props) => {
               className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                 isValid.beratAktual
                   ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
-                  : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
+                  : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
               }`}
               disabled={verified}
             />
@@ -192,7 +192,7 @@ const FieldDetailPaket = (props) => {
                   className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                     isValid.panjang
                       ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
-                      : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
+                      : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
@@ -214,7 +214,7 @@ const FieldDetailPaket = (props) => {
                   className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                     isValid.lebar
                       ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
-                      : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
+                      : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
@@ -236,7 +236,7 @@ const FieldDetailPaket = (props) => {
                   className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                     isValid.tinggi
                       ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
-                      : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
+                      : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
@@ -287,11 +287,11 @@ const FieldDetailPaket = (props) => {
               value={detailPaket.keterangan}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 first-letter:${
+              className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                 touchedFields.keterangan
                   ? isValid.keterangan
                     ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
-                    : "bg-red-900 border-red-300 dark:border-red-600 focus:ring-red-300 dark:focus:ring-red-600"
+                    : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
                   : "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
               }`}
               placeholder="Ketik isi paket / jenis barang"

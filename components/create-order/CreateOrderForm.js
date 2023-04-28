@@ -13,8 +13,10 @@ import FieldSelectAsal from "./FieldSelectAsal";
 import FieldSelectKecamatan from "./FieldSelectKecamatan";
 import FieldSelectLayanan from "./FieldSelectLayanan";
 import ModalCreateOrder from "./ModalCreateOrder";
+import { useSession } from "next-auth/react";
 
 const CreateOrderContainer = (props) => {
+  const { data, status } = useSession();
   const [initialValues, setInitialValues] = useState(props.initialValues);
   const [validFields, setValidFields] = useState(props.validation);
   const [allFieldsIsValid, setAllFieldIsValid] = useState(false);
@@ -23,13 +25,6 @@ const CreateOrderContainer = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     setShowResi(true);
-  };
-
-  const onReset = (e) => {
-    setInitialValues(props.initialValues);
-    setValidFields(props.validation);
-    setAllFieldIsValid(false);
-    setShowResi(false);
   };
 
   useEffect(() => {
@@ -141,7 +136,11 @@ const CreateOrderContainer = (props) => {
             id="cabangAsal"
             name="cabangAsal"
             label="Cabang Asal"
-            options={cabangOptions()}
+            options={
+              data.posisiDesc == "direktur"
+                ? cabangOptions()
+                : cabangOptions().filter((d) => d.value == data.cabangDesc)
+            }
             meta={{ initialValues, setInitialValues, setValidFields }}
           />
 

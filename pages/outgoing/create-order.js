@@ -47,23 +47,9 @@ const CreateOrderPage = () => {
     biayaAsuransi: "error",
   };
 
-  const listLayanan = [
-    { key: "Cargo", value: "cargo" },
-    { key: "Express", value: "express" },
-  ];
-  const listCabangAsal = [
-    { key: "Jakarta", value: "jakarta" },
-    { key: "Surabaya", value: "surabaya" },
-  ];
-
   return (
     <Layout>
-      <CreateOrderForm
-        initialValues={initialValues}
-        validation={validation}
-        listLayanan={listLayanan}
-        listCabangAsal={listCabangAsal}
-      />
+      <CreateOrderForm initialValues={initialValues} validation={validation} />
     </Layout>
   );
 };

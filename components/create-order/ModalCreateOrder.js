@@ -3,8 +3,10 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import generateNoResi from "../../helpers/generateNoResi";
 import generatePdfResi from "@/helpers/generatePdfResi";
+import { useSession } from "next-auth/react";
 
 const ModalCreateOrder = (props) => {
+  const { data: userData } = useSession();
   const router = useRouter();
   const { data } = props;
   const detail = [
@@ -75,7 +77,7 @@ const ModalCreateOrder = (props) => {
 
   const createResiHandler = () => {
     const tglTransaksi = new Date().toISOString();
-    const noResi = generateNoResi("BKU", "CSO");
+    const noResi = generateNoResi(userData.cabang, userData.posisi);
     const submitData = { ...data, tglTransaksi, noResi };
     Swal.fire({
       allowOutsideClick: false,

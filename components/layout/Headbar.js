@@ -13,7 +13,7 @@ const Headbar = (props) => {
       <div className={`hidden lg:block ${props.showMenuDesktop ? "w-80" : "w-0"} duration-500 ease-in-out`}>
         <img
           className="h-8 ml-4"
-          src={theme === "dark" ? "/images/bista-header-white.png" : "/images/bista-header-color.png"}
+          src={theme === "dark" ? "/images/bista-header-border.png" : "/images/bista-header-color.png"}
           alt="logo bista cargo"
         />
       </div>

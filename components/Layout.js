@@ -3,12 +3,24 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Headbar from "./layout/Headbar";
 import LeftMenu from "./layout/LeftMenu";
+import Head from "next/head";
 
 const Layout = (props) => {
   const [showMenuDesktop, setShowMenuDesktop] = useState(true);
   const [showMenuMobile, setShowMenuMobile] = useState(false);
   const { data, status } = useSession();
   const router = useRouter();
+  const pathArray =
+    router.pathname === "/"
+      ? "Beranda"
+      : router.pathname
+          .split("/")
+          .slice(-1)
+          .join("")
+          .replaceAll("-", " ")
+          .split(" ")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
 
   useEffect(() => {
     if (status == "unauthenticated") {
@@ -25,6 +37,9 @@ const Layout = (props) => {
 
   return (
     <>
+      <Head>
+        <title>{pathArray}</title>
+      </Head>
       {status == "authenticated" ? (
         <div className="w-full h-[100dvh] flex flex-col bg-white ">
           <Headbar

@@ -88,7 +88,7 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
             return response.json();
           })
           .then((data) => {
-            return fetch("/api/data-manifest/post-manifest", {
+            return fetch("/api/data-manifest/post/create-manifest", {
               method: "POST",
               body: JSON.stringify(submitManifest),
               headers: { "Content-Type": "application/json" },

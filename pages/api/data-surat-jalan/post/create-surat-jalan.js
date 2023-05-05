@@ -1,5 +1,5 @@
 import validityCheck from "@/helpers/validityCheck";
-import { connectToMongoDB, insertDocument } from "../../../helpers/mongodbConnection";
+import { connectToMongoDB, insertDocument } from "../../../../helpers/mongodbConnection";
 
 const handler = async (req, res) => {
   if (validityCheck(req.body).length > 0) {
@@ -22,14 +22,14 @@ const handler = async (req, res) => {
   if (req.method === "POST") {
     let result;
     try {
-      result = await insertDocument(client, "data-manifest", req.body);
+      result = await insertDocument(client, "data-surat-jalan", req.body);
     } catch (error) {
-      res.status(500).json({ status: res.statusCode, message: "Gagal menyimpan manifest ke database" });
+      res.status(500).json({ status: res.statusCode, message: "Gagal menyimpan surat jalan ke database" });
       client.close();
       return;
     }
 
-    res.status(201).json({ status: res.statusCode, message: "Data Manifiest berhasil di upload" });
+    res.status(201).json({ status: res.statusCode, message: "Data Surat Jalan berhasil di upload" });
     client.close();
   } else {
     res.status(404).json({ status: res.statusCode, message: "Halaman tidak ditemukan" });

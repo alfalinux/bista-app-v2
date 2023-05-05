@@ -45,7 +45,7 @@ const CreateManifestForm = ({ dataResi, cabangAsal }) => {
   const tujuanSelectedHandler = (e) => setCabangTujuanSelected(e);
 
   return (
-    <div className="w-full overflow-scroll lg:overflow-hidden px-4">
+    <div className="w-full overflow-x-scroll md:overflow-x-hidden overflow-y-hidden px-4">
       <CabangSelect
         tujuan={cabangTujuan}
         onSelectedTujuan={tujuanSelectedHandler}

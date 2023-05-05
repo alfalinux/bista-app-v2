@@ -45,7 +45,7 @@ const CabangSelect = (props) => {
         >
           {data.posisiDesc === "direktur" ? (
             <>
-              <option value=""></option>
+              <option value="">-- Pilih Cabang Asal --</option>
               {listCabangAsal.map((data, index) => (
                 <option key={index} value={data.cab}>
                   {data.cab.toUpperCase()}
@@ -54,7 +54,7 @@ const CabangSelect = (props) => {
             </>
           ) : (
             <>
-              <option value=""></option>
+              <option value="">-- Pilih Cabang Asal --</option>
               <option value={data.cabangDesc}>{data.cabangDesc.toUpperCase()}</option>
             </>
           )}
@@ -73,7 +73,7 @@ const CabangSelect = (props) => {
           value={cabangTujuan}
           onChange={cabangTujuanChange}
         >
-          <option value=""></option>
+          <option value="">-- Pilih Cabang Tujuan --</option>
           {props.tujuan &&
             props.tujuan.map((data, index) => (
               <option value={data} key={index}>

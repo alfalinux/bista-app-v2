@@ -1,5 +1,5 @@
 import validityCheck from "@/helpers/validityCheck";
-import { connectToMongoDB, updateManyResi } from "../../../../helpers/mongodbConnection";
+import { connectToMongoDB, setSuratJalan } from "../../../../helpers/mongodbConnection";
 
 const handler = async (req, res) => {
   const { filter, update } = req.body;
@@ -24,7 +24,7 @@ const handler = async (req, res) => {
   if (req.method === "PATCH") {
     let result;
     try {
-      result = await updateManyResi(client, "data-resi", filter, update);
+      result = await setSuratJalan(client, "data-resi", filter, update);
     } catch (error) {
       res.status(500).json({ status: res.statusCode, message: "Gagal update Resi" });
       client.close();

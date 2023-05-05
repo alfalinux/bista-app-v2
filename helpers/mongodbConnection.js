@@ -8,22 +8,19 @@ export const connectToMongoDB = async () => {
   return client;
 };
 
+// POST TO DATABASE
 export const insertDocument = async (client, collection, document) => {
   const db = client.db("bista-app-v2");
   const result = await db.collection(collection).insertOne(document);
 
   return result;
 };
+// END POST TO DATABASE
 
+// FIND IN DATABASE
 export const findResi = async (client, collection, noResi) => {
   const db = client.db("bista-app-v2");
   const result = await db.collection(collection).findOne({ noResi: noResi });
-  return result;
-};
-
-export const findManifest = async (client, collection, noManifest) => {
-  const db = client.db("bista-app-v2");
-  const result = await db.collection(collection).findOne({ noManifest: noManifest });
   return result;
 };
 
@@ -36,9 +33,36 @@ export const findResiBelumManifest = async (client, collection, cabangAsal) => {
   return result;
 };
 
-export const updateManyResiByManifest = async (client, collection, filter, update) => {
+export const findManifest = async (client, collection, noManifest) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).findOne({ noManifest: noManifest });
+  return result;
+};
+
+export const findManifestBelumSuratJalan = async (client, collection, cabangAsal) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).find({ cabangAsal: cabangAsal, suratJalan: null }).toArray();
+
+  return result;
+};
+
+// END FIND IN DATABASE
+
+// UPDATE DATABASE
+export const setManifest = async (client, collection, filter, update) => {
   const db = client.db("bista-app-v2");
   const result = await db.collection(collection).updateMany({ noResi: { $in: filter } }, { $set: update });
 
   return result;
 };
+
+export const setSuratJalan = async (client, collection, filter, update) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .updateMany({ noManifest: { $in: filter } }, { $set: { suratJalan: [update] } });
+
+  return result;
+};
+
+// END UPDATE DATABASE

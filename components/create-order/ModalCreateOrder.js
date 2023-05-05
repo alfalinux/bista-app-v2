@@ -83,7 +83,7 @@ const ModalCreateOrder = (props) => {
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
-        fetch("/api/data-resi/post-resi", {
+        fetch("/api/data-resi/post/create-resi", {
           method: "POST",
           body: JSON.stringify(submitData),
           headers: {
@@ -163,55 +163,3 @@ const ModalCreateOrder = (props) => {
 };
 
 export default ModalCreateOrder;
-
-// const createResiHandler = () => {
-//   Swal.fire({
-//     title: "Pastikan data sudah sesuai",
-//     text: "Resi yang sudah di create tidak dapat dibatalkan!",
-//     icon: "warning",
-//     showCancelButton: true,
-//     confirmButtonColor: "#3085d6",
-//     cancelButtonColor: "#d33",
-//     confirmButtonText: "Create Resi!",
-//     cancelButtonText: "Batalkan",
-//     showLoaderOnConfirm: true,
-//     preConfirm: () => {
-//       const tglTransaksi = new Date().toISOString();
-//       const noResi = generateNoResi("BKU", "CSO");
-//       return fetch("/api/data-resi/post-resi", {
-//         method: "POST",
-//         body: JSON.stringify({
-//           ...data,
-//           tglTransaksi: tglTransaksi,
-//           noResi: noResi,
-//         }),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       })
-//         .then((response) => {
-//           if (!response.ok) {
-//             throw new Error(response.statusText);
-//           }
-//           return response.json();
-//         })
-//         .then((data) => setPostedData(noResi))
-//         .catch((error) => {
-//           Swal.showValidationMessage(`Request failed: ${error}`);
-//         });
-//     },
-//     allowOutsideClick: () => !Swal.isLoading(),
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       Swal.fire({
-//         title: "Sukses",
-//         text: `Resi berhasil di create dengan nomor ${postedData}`,
-//         icon: "success",
-//         showCancelButton: false,
-//         showConfirmButton: true,
-//         showCloseButton: false,
-//       });
-//       router.replace(`/reprint/reprint-resi?noResi=${postedData}`);
-//     }
-//   });
-// };

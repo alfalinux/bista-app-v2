@@ -1,9 +1,25 @@
 const listCabang = () => {
   return [
-    { cab: "jakarta", tcl: "JKT" },
-    { cab: "surabaya", tcl: "SBY" },
-    { cab: "semarang", tcl: "SMG" },
-    { cab: "bengkulu", tcl: "BKL" },
+    {
+      tlc: "JKT",
+      cab: "jakarta",
+    },
+    {
+      tlc: "BDG",
+      cab: "bandung",
+    },
+    {
+      tlc: "SOL",
+      cab: "solo",
+    },
+    {
+      tlc: "BKU",
+      cab: "bengkulu",
+    },
+    {
+      tlc: "SBY",
+      cab: "surabaya",
+    },
   ];
 };
 

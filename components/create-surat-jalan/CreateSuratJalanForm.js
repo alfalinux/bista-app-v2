@@ -2,16 +2,20 @@ import listCabang from "@/helpers/listCabang";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { checkSpecialChar } from "../utils/use-validate";
 
-const removeNonAlphaChar = (val) => val.replace(/[^0-9a-zA-Z\s@'_,.:&\/()\-]/g, "");
-
-const CreateSuratJalanForm = ({ initValues, setInitValues, dataManifest, onLoading }) => {
+const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
   const { data } = useSession();
   const router = useRouter();
   const [cabangAsal, setCabangAsal] = useState("");
   const [cabangTujuan, setCabangTujuan] = useState("");
   const [namaDriver, setNamaDriver] = useState("");
   const [nopolDriver, setNopolDriver] = useState("");
+  const [isValid, setIsValid] = useState({
+    namaDriver: { check: false, message: "wajib diisi / tidak boleh kosong" },
+    nopolDriver: { check: false, message: "wajib diisi / tidak boleh kosong" },
+  });
+  const [isTouched, setIsTouched] = useState({ namaDriver: false, nopolDriver: false });
 
   const cabangAsalChange = (e) => {
     onLoading(true);
@@ -41,18 +45,20 @@ const CreateSuratJalanForm = ({ initValues, setInitValues, dataManifest, onLoadi
     }));
   };
   const namaDriverChange = (e) => {
-    setNamaDriver(removeNonAlphaChar(e.target.value));
+    setNamaDriver(e.target.value);
     setInitValues((prevState) => ({
       ...prevState,
-      namaDriver: e.target.value,
+      namaDriver: checkSpecialChar(e.target.value, 30).check ? e.target.value : "",
     }));
+    setIsValid((prevState) => ({ ...prevState, namaDriver: checkSpecialChar(e.target.value, 30) }));
   };
   const nopolDriverChange = (e) => {
-    setNopolDriver(removeNonAlphaChar(e.target.value));
+    setNopolDriver(e.target.value);
     setInitValues((prevState) => ({
       ...prevState,
-      nopolDriver: e.target.value,
+      nopolDriver: checkSpecialChar(e.target.value, 30).check ? e.target.value : "",
     }));
+    setIsValid((prevState) => ({ ...prevState, nopolDriver: checkSpecialChar(e.target.value, 30) }));
   };
 
   useEffect(() => {
@@ -121,37 +127,71 @@ const CreateSuratJalanForm = ({ initValues, setInitValues, dataManifest, onLoadi
       </div>
 
       {/* Input Nama Driver */}
-      <div className="w-full flex flex-col sm:flex-row gap-2 items-start sm:items-center">
-        <label className="w-80 text-sm text-gray-800 dark:text-gray-200" htmlFor="namaDriver">
-          Nama Driver / Vendor
-        </label>
-        <input
-          type="text"
-          className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md"
-          name="namaDriver"
-          id="namaDriver"
-          value={namaDriver}
-          onChange={namaDriverChange}
-          placeholder="Ketik nama driver / vendor..."
-          autoComplete="off"
-        />
+      <div>
+        <div className="w-full flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+          <label className="w-80 text-sm text-gray-800 dark:text-gray-200" htmlFor="namaDriver">
+            Nama Driver / Vendor
+          </label>
+          <input
+            type="text"
+            className={`w-full p-2 text-sm text-gray-800 dark:text-gray-200 rounded-md ${
+              isTouched.namaDriver && !isValid.namaDriver.check
+                ? "bg-red-800 dark:bg-red-800"
+                : "bg-gray-100 dark:bg-gray-700"
+            }`}
+            name="namaDriver"
+            id="namaDriver"
+            value={namaDriver}
+            onChange={namaDriverChange}
+            onBlur={() => {
+              setIsTouched((prevState) => ({ ...prevState, namaDriver: true }));
+            }}
+            placeholder="Ketik nama driver / vendor..."
+            autoComplete="off"
+          />
+        </div>
+        {isTouched.namaDriver ? (
+          <div className="w-full flex-row sm:flex">
+            <section className="w-80 text-sm text-gray-800 dark:text-gray-200"></section>
+            <section className="w-full px-2 text-[10px] text-red-600">
+              {isValid.namaDriver.check ? "" : "* " + isValid.namaDriver.message}
+            </section>
+          </div>
+        ) : null}
       </div>
 
       {/* Input Nopol Driver */}
-      <div className="w-full flex flex-col sm:flex-row gap-2 items-start sm:items-center">
-        <label className="w-80 text-sm text-gray-800 dark:text-gray-200" htmlFor="nopolDriver">
-          Nopol Driver / No AWB Vendor
-        </label>
-        <input
-          type="text"
-          className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md"
-          name="nopolDriver"
-          id="nopolDriver"
-          value={nopolDriver}
-          onChange={nopolDriverChange}
-          placeholder="Ketik nopol driver / no awb vendor..."
-          autoComplete="off"
-        />
+      <div>
+        <div className="w-full flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+          <label className="w-80 text-sm text-gray-800 dark:text-gray-200" htmlFor="nopolDriver">
+            Nopol Driver / No AWB Vendor
+          </label>
+          <input
+            type="text"
+            className={`w-full p-2 text-sm text-gray-800 dark:text-gray-200 rounded-md ${
+              isTouched.nopolDriver && !isValid.nopolDriver.check
+                ? "bg-red-800 dark:bg-red-800"
+                : "bg-gray-100 dark:bg-gray-700"
+            }`}
+            name="nopolDriver"
+            id="nopolDriver"
+            value={nopolDriver}
+            onChange={nopolDriverChange}
+            onBlur={() => {
+              setIsTouched((prevState) => ({ ...prevState, nopolDriver: true }));
+            }}
+            placeholder="Ketik nopol driver / no awb vendor..."
+            autoComplete="off"
+          />
+        </div>
+        {isTouched.nopolDriver ? (
+          <div className="w-full flex-row sm:flex">
+            <section className="w-80 text-sm text-gray-800 dark:text-gray-200"></section>
+            <section className="w-full px-2 text-[10px] text-red-600">
+              {isValid.nopolDriver.check ? "" : "* " + isValid.nopolDriver.message}
+            </section>
+          </div>
+        ) : null}
       </div>
     </form>
   );

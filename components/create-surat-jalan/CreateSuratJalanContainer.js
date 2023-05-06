@@ -193,11 +193,11 @@ const CreateSuratJalanContainer = (props) => {
     setIsLoading(false);
   }, [props.dataManifest]);
 
+  console.log(initValues);
   return (
     <div className="w-full overflow-x-scroll md:overflow-x-hidden overflow-y-hidden px-4">
       <CreateSuratJalanForm
         dataManifest={props.dataManifest}
-        initValues={initValues}
         setInitValues={setInitValues}
         onLoading={loadingSpinnerHandler}
       />

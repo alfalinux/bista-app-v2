@@ -29,3 +29,24 @@ export function validasiPositiveNumber(input) {
 
   return regex.test(input);
 }
+
+export function checkSpecialChar(input, inputLength) {
+  const regex = /[^0-9a-zA-Z\s@'_,.:&\/()\\-]/g;
+  const invalidChars = input.match(regex);
+  const maxLength = inputLength;
+
+  if (!input.trim()) {
+    return { check: false, message: "Inputan tidak boleh kosong!" };
+  }
+
+  if (input.length > maxLength) {
+    return { check: false, message: `Inputan terlalu panjang! Maksimal ${maxLength} karakter.` };
+  }
+
+  if (invalidChars) {
+    const message = `Penggunaan karakter (${invalidChars.join(", ")}) tidak diizinkan!`;
+    return { check: false, message };
+  }
+
+  return { check: true, message: "inputan valid" };
+}

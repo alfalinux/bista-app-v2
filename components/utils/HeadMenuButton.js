@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BellAlertIcon, ChevronDownIcon, EnvelopeIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "next-themes";
@@ -6,14 +6,26 @@ import Swal from "sweetalert2";
 import { signOut } from "next-auth/react";
 
 const HeadMenuButton = (props) => {
-  const [darkmode, setDarkMode] = useState(false);
   const { theme, setTheme } = useTheme();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [darkmode, setDarkMode] = useState(() => {
+    if (theme == "system") {
+      return window.matchMedia("(prefers-color-scheme:dark)").matches;
+    } else if (theme == "dark") {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   const darkmodeHandler = (e) => {
     setDarkMode(!darkmode);
-    setTheme(darkmode ? "dark" : "light");
   };
+
+  useEffect(() => {
+    setTheme(darkmode ? "dark" : "light");
+  }, [darkmode]);
+
   const userMenuHandler = (e) => {
     setShowUserMenu(!showUserMenu);
   };

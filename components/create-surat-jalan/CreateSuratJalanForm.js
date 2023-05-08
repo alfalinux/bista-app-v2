@@ -2,7 +2,7 @@ import listCabang from "@/helpers/listCabang";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { checkSpecialChar } from "../utils/use-validate";
+import { validasiSpecialChar } from "../utils/use-validate";
 
 const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
   const { data } = useSession();
@@ -11,9 +11,9 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
   const [cabangTujuan, setCabangTujuan] = useState("");
   const [namaDriver, setNamaDriver] = useState("");
   const [nopolDriver, setNopolDriver] = useState("");
-  const [isValid, setIsValid] = useState({
-    namaDriver: { check: false, message: "wajib diisi / tidak boleh kosong" },
-    nopolDriver: { check: false, message: "wajib diisi / tidak boleh kosong" },
+  const [validasi, setValidasi] = useState({
+    namaDriver: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
+    nopolDriver: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
   });
   const [isTouched, setIsTouched] = useState({ namaDriver: false, nopolDriver: false });
 
@@ -48,17 +48,17 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
     setNamaDriver(e.target.value);
     setInitValues((prevState) => ({
       ...prevState,
-      namaDriver: checkSpecialChar(e.target.value, 30).check ? e.target.value : "",
+      namaDriver: validasiSpecialChar(e.target.value, 30).isValid ? e.target.value : "",
     }));
-    setIsValid((prevState) => ({ ...prevState, namaDriver: checkSpecialChar(e.target.value, 30) }));
+    setValidasi((prevState) => ({ ...prevState, namaDriver: validasiSpecialChar(e.target.value, 30) }));
   };
   const nopolDriverChange = (e) => {
     setNopolDriver(e.target.value);
     setInitValues((prevState) => ({
       ...prevState,
-      nopolDriver: checkSpecialChar(e.target.value, 30).check ? e.target.value : "",
+      nopolDriver: validasiSpecialChar(e.target.value, 30).isValid ? e.target.value : "",
     }));
-    setIsValid((prevState) => ({ ...prevState, nopolDriver: checkSpecialChar(e.target.value, 30) }));
+    setValidasi((prevState) => ({ ...prevState, nopolDriver: validasiSpecialChar(e.target.value, 30) }));
   };
 
   useEffect(() => {
@@ -135,7 +135,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
           <input
             type="text"
             className={`w-full p-2 text-sm text-gray-800 dark:text-gray-200 rounded-md ${
-              isTouched.namaDriver && !isValid.namaDriver.check
+              isTouched.namaDriver && !validasi.namaDriver.isValid
                 ? "bg-red-800 dark:bg-red-800"
                 : "bg-gray-100 dark:bg-gray-700"
             }`}
@@ -154,7 +154,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
           <div className="w-full flex-row sm:flex">
             <section className="w-80 text-sm text-gray-800 dark:text-gray-200"></section>
             <section className="w-full px-2 text-[10px] text-red-600">
-              {isValid.namaDriver.check ? "" : "* " + isValid.namaDriver.message}
+              {validasi.namaDriver.isValid ? "" : "* " + validasi.namaDriver.message}
             </section>
           </div>
         ) : null}
@@ -169,7 +169,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
           <input
             type="text"
             className={`w-full p-2 text-sm text-gray-800 dark:text-gray-200 rounded-md ${
-              isTouched.nopolDriver && !isValid.nopolDriver.check
+              isTouched.nopolDriver && !validasi.nopolDriver.isValid
                 ? "bg-red-800 dark:bg-red-800"
                 : "bg-gray-100 dark:bg-gray-700"
             }`}
@@ -188,7 +188,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
           <div className="w-full flex-row sm:flex">
             <section className="w-80 text-sm text-gray-800 dark:text-gray-200"></section>
             <section className="w-full px-2 text-[10px] text-red-600">
-              {isValid.nopolDriver.check ? "" : "* " + isValid.nopolDriver.message}
+              {validasi.nopolDriver.isValid ? "" : "* " + validasi.nopolDriver.message}
             </section>
           </div>
         ) : null}

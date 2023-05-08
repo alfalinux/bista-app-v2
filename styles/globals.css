@@ -11,18 +11,12 @@
   }
   .scrollbar::-webkit-scrollbar-track {
     @apply border-[3px] border-solid border-transparent bg-transparent;
-    /* border-radius: 100vh;
-    background-color: transparent;
-    border: solid 3px transparent; */
   }
   .scrollbar::-webkit-scrollbar-thumb {
     @apply bg-gray-300 border-2 border-solid border-white dark:border-gray-800 dark:bg-gray-500 dark:hover:bg-gray-600;
-    /* background-color: lightgray;
-    border: 2px solid white; */
   }
   .scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-500;
-    /* background-color: darkgray; */
   }
 
   .login__input {

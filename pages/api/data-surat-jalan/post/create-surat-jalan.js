@@ -1,4 +1,4 @@
-import validityCheck from "@/helpers/validityCheck";
+import { validityCheck } from "@/components/utils/use-validate";
 import { connectToMongoDB, insertDocument } from "../../../../helpers/mongodbConnection";
 
 const handler = async (req, res) => {

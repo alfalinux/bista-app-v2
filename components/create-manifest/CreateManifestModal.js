@@ -73,59 +73,52 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
       allowOutsideClick: () => !Swal.isLoading(),
       didOpen: () => {
         Swal.showLoading();
-        fetch("/api/data-resi/post/update-many-resi-by-manifest", {
+        fetch("/api/data-resi/post/update-many-resi-with-manifest", {
           method: "PATCH",
           body: JSON.stringify({
             filter: listNoResi,
-            update: { noManifest: noManifest, tglManifest: tgl, creatorManifest: data.nama },
+            update: { noManifest: noManifest, manifestCreatedAt: tgl, manifestCreatedBy: data.nama },
           }),
           headers: { "Content-Type": "application/json" },
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(response.statusText);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            return fetch("/api/data-manifest/post/create-manifest", {
-              method: "POST",
-              body: JSON.stringify(submitManifest),
-              headers: { "Content-Type": "application/json" },
-            });
-          })
-          .then((response) => {
-            Swal.hideLoading();
-            if (!response.ok) {
-              throw new Error(response.statusText);
-            }
-            return response.json();
-          })
+          .then((response) => response.json())
           .then((data) => {
             if (data.status == "201") {
-              router.push("/outgoing/create-manifest");
-              Swal.fire({
-                icon: "success",
-                title: "Berhasil",
-                text: data.status + "|" + data.message.toUpperCase(),
-                showConfirmButton: true,
-                confirmButtonColor: "red",
-                confirmButtonText: "Cetak Manifest",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  generatePdfManifest(submitManifest);
-                }
-              });
+              fetch("/api/data-manifest/post/create-manifest", {
+                method: "POST",
+                body: JSON.stringify(submitManifest),
+                headers: { "Content-Type": "application/json" },
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.status == "201") {
+                    Swal.hideLoading();
+                    router.push("/outgoing/create-manifest");
+                    Swal.fire({
+                      icon: "success",
+                      title: "Berhasil",
+                      text: data.status + "|" + data.message.toUpperCase(),
+                      showConfirmButton: true,
+                      confirmButtonColor: "red",
+                      confirmButtonText: "Cetak Manifest",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        generatePdfManifest(submitManifest);
+                      }
+                    });
+                  } else {
+                    Swal.hideLoading();
+                    Swal.showValidationMessage(
+                      `Post Data Manifest Failed: ${data.status} | ${data.message.toUpperCase()}`
+                    );
+                  }
+                });
             } else {
-              Swal.fire({
-                icon: "error",
-                title: "Gagal",
-                text: data.status + "|" + data.message.toUpperCase(),
-              });
+              Swal.hideLoading();
+              Swal.showValidationMessage(
+                `Post Data Manifest To Resi Failed: ${data.status} | ${data.message.toUpperCase()}`
+              );
             }
-          })
-          .catch((error) => {
-            Swal.showValidationMessage(`Update resi failed: ${error}`);
           });
       },
     });

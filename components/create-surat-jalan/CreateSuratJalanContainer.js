@@ -112,7 +112,7 @@ const CreateSuratJalanContainer = (props) => {
               .then((response) => response.json())
               .then((data) => {
                 if (data.status == "201") {
-                  fetch("/api/data-manifest/post/update-many-manifest-by-surat-jalan/", {
+                  fetch("/api/data-manifest/post/update-many-manifest-with-surat-jalan/", {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -193,7 +193,6 @@ const CreateSuratJalanContainer = (props) => {
     setIsLoading(false);
   }, [props.dataManifest]);
 
-  console.log(initValues);
   return (
     <div className="w-full overflow-x-scroll md:overflow-x-hidden overflow-y-hidden px-4">
       <CreateSuratJalanForm

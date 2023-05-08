@@ -7,7 +7,7 @@ import {
   CheckBadgeIcon,
   ArrowsRightLeftIcon,
 } from "@heroicons/react/24/outline";
-import { validasiKeterangan } from "../utils/use-validate";
+import { validasiSpecialChar } from "../utils/use-validate";
 import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import Swal from "sweetalert2";
 
@@ -32,12 +32,12 @@ const FieldDetailPaket = (props) => {
     keterangan: false,
   });
 
-  const isValid = {
+  const validasi = {
     beratAktual: Number(detailPaket.beratAktual) > 0,
     panjang: Number(detailPaket.volume.panjang) > 0,
     lebar: Number(detailPaket.volume.lebar) > 0,
     tinggi: Number(detailPaket.volume.tinggi) > 0,
-    keterangan: validasiKeterangan(detailPaket.keterangan),
+    keterangan: validasiSpecialChar(detailPaket.keterangan, 30).isValid,
   };
 
   const handleChange = (e) => {
@@ -164,13 +164,13 @@ const FieldDetailPaket = (props) => {
               onBlur={handleBlur}
               onWheel={(e) => e.target.blur()}
               className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
-                isValid.beratAktual
+                validasi.beratAktual
                   ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
                   : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
               }`}
               disabled={verified}
             />
-            {isValid.beratAktual ? null : (
+            {validasi.beratAktual ? null : (
               <p className="text-[10px] text-red-600">wajib diisi dengan nilai lebih besar dari nol</p>
             )}
           </section>
@@ -190,13 +190,13 @@ const FieldDetailPaket = (props) => {
                   onBlur={handleBlur}
                   onWheel={(e) => e.target.blur()}
                   className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
-                    isValid.panjang
+                    validasi.panjang
                       ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
                       : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
-                {isValid.panjang ? null : (
+                {validasi.panjang ? null : (
                   <p className="text-[10px] text-red-600">wajib diisi dengan nilai lebih besar dari nol</p>
                 )}
               </div>
@@ -212,13 +212,13 @@ const FieldDetailPaket = (props) => {
                   onBlur={handleBlur}
                   onWheel={(e) => e.target.blur()}
                   className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
-                    isValid.lebar
+                    validasi.lebar
                       ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
                       : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
-                {isValid.lebar ? null : (
+                {validasi.lebar ? null : (
                   <p className="text-[10px] text-red-600">wajib diisi dengan nilai lebih besar dari nol</p>
                 )}
               </div>
@@ -234,13 +234,13 @@ const FieldDetailPaket = (props) => {
                   onBlur={handleBlur}
                   onWheel={(e) => e.target.blur()}
                   className={`w-full px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
-                    isValid.tinggi
+                    validasi.tinggi
                       ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
                       : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
                   }`}
                   disabled={verified}
                 />
-                {isValid.tinggi ? null : (
+                {validasi.tinggi ? null : (
                   <p className="text-[10px] text-red-600">wajib diisi dengan nilai lebih besar dari nol</p>
                 )}
               </div>
@@ -289,7 +289,7 @@ const FieldDetailPaket = (props) => {
               onBlur={handleBlur}
               className={`px-2 py-1.5 text-sm rounded-md border-[1px] focus:outline-none focus:ring-1 dark:focus:ring-gray-200 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:text-gray-400 ${
                 touchedFields.keterangan
-                  ? isValid.keterangan
+                  ? validasi.keterangan
                     ? "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
                     : "bg-red-100 dark:bg-red-800 border-red-600 dark:border-red-600 focus:ring-red-600 dark:focus:ring-red-600"
                   : "bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-700 focus:ring-black"
@@ -299,9 +299,9 @@ const FieldDetailPaket = (props) => {
               disabled={verified}
             />
             {touchedFields.keterangan ? (
-              isValid.keterangan ? null : (
+              validasi.keterangan ? null : (
                 <p className="text-[10px] text-red-600">
-                  wajib diisi, tidak boleh kosong (maksimal 30 karakter)
+                  {validasiSpecialChar(detailPaket.keterangan, 30).message}
                 </p>
               )
             ) : null}
@@ -326,7 +326,7 @@ const FieldDetailPaket = (props) => {
               className={`w-[30%] sm:w-28 flex items-center justify-center gap-1 bg-green-500 hover:bg-green-600
               } font-semibold text-white px-4 py-2 rounded-md disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-100 dark:disabled:text-gray-600 disabled:cursor-not-allowed`}
               onClick={handleSimpan}
-              disabled={!Object.values(isValid).every((value) => value) || verified}
+              disabled={!Object.values(validasi).every((value) => value) || verified}
             >
               <CheckBadgeIcon className="h-5 hidden sm:block" />
               <p>Simpan</p>

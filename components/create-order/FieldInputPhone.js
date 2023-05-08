@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { validasiNoTelp } from "../utils/use-validate";
 
 const FieldInputPhone = (props) => {
   const { id, name, label } = props;
   const { setInitialValues, setValidFields } = props.meta;
   const [value, setValue] = useState("");
-  const [isValid, setIsValid] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
+  const [phoneValidation, setPhoneValidation] = useState({
+    isValid: false,
+    message: "Wajib diisi / tidak boleh kosong!",
+  });
 
   const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
 
   const handleChange = (e) => {
     setValue(removeNonNumeric(e.target.value));
-    e.target.value.length >= 5 && e.target.value.length <= 15 ? setIsValid(true) : setIsValid(false);
+    setPhoneValidation(() => validasiNoTelp(e.target.value));
   };
 
   const handleBlur = (e) => {
@@ -20,7 +24,7 @@ const FieldInputPhone = (props) => {
   };
 
   useEffect(() => {
-    if (isValid) {
+    if (phoneValidation.isValid) {
       setInitialValues((prevState) => ({ ...prevState, [name]: value }));
       setValidFields((prevState) => ({ ...prevState, [name]: "valid" }));
     } else {
@@ -42,7 +46,7 @@ const FieldInputPhone = (props) => {
         onChange={handleChange}
         onBlur={handleBlur}
         className={`px-2 py-1.5 text-sm text-gray-600 dark:text-gray-200 rounded-md border-[1px] focus:outline-none disabled:bg-gray-200 capitalize ${
-          isTouched && !isValid
+          isTouched && !phoneValidation.isValid
             ? "bg-red-100 dark:bg-red-900 focus:ring-1 focus:ring-red-600 border-red-600 "
             : "bg-white dark:bg-gray-700 focus:ring-1  focus:ring-black dark:focus:ring-gray-200 border-gray-200 dark:border-gray-700 focus:border-black dark:focus:border-gray-200"
         }`}
@@ -50,10 +54,10 @@ const FieldInputPhone = (props) => {
         autoComplete="off"
         placeholder="Ketik Nomor Telp/Hp yang aktif"
       />
-      {isTouched && !isValid ? (
+      {isTouched && !phoneValidation.isValid ? (
         <div className="flex gap-1 items-center text-[10px] text-red-600 mt-1">
           <ExclamationCircleIcon className="h-5" />
-          <p>Wajib diisi dengan nomor telp/hp yang valid</p>
+          <p>{phoneValidation.message}</p>
         </div>
       ) : null}
     </div>

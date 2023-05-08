@@ -1,5 +1,5 @@
-import validityCheck from "@/helpers/validityCheck";
-import { connectToMongoDB, updateManyResi } from "../../../../helpers/mongodbConnection";
+import { validityCheck } from "@/components/utils/use-validate";
+import { connectToMongoDB, setSuratJalan } from "../../../../helpers/mongodbConnection";
 
 const handler = async (req, res) => {
   const { filter, update } = req.body;
@@ -16,7 +16,7 @@ const handler = async (req, res) => {
   try {
     client = await connectToMongoDB();
   } catch (error) {
-    res.status(500).json({ status: res.statusCode, message: "Gagal terhubung ke database resi" });
+    res.status(500).json({ status: res.statusCode, message: "Gagal terhubung ke database" });
     client.close();
     return;
   }
@@ -24,14 +24,14 @@ const handler = async (req, res) => {
   if (req.method === "PATCH") {
     let result;
     try {
-      result = await updateManyResi(client, "data-resi", filter, update);
+      result = await setSuratJalan(client, "data-manifest", filter, update);
     } catch (error) {
-      res.status(500).json({ status: res.statusCode, message: "Gagal update Resi" });
+      res.status(500).json({ status: res.statusCode, message: "Gagal update manifest" });
       client.close();
       return;
     }
 
-    res.status(201).json({ status: res.statusCode, message: "Resi berhasil di update" });
+    res.status(201).json({ status: res.statusCode, message: "Manifest berhasil di update" });
     client.close();
   }
 };

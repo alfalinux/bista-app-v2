@@ -1,4 +1,4 @@
-import validityCheck from "@/helpers/validityCheck";
+import { validityCheck } from "@/components/utils/use-validate";
 import { connectToMongoDB, insertDocument } from "../../../../helpers/mongodbConnection";
 
 const handler = async (req, res) => {
@@ -29,7 +29,7 @@ const handler = async (req, res) => {
       return;
     }
 
-    res.status(201).json({ status: res.statusCode, message: "Data Manifiest berhasil di upload" });
+    res.status(201).json({ status: res.statusCode, message: "Data Manifest berhasil di upload" });
     client.close();
   } else {
     res.status(404).json({ status: res.statusCode, message: "Halaman tidak ditemukan" });

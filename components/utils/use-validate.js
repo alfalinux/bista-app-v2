@@ -1,52 +1,58 @@
-export function validasiTelp(input) {
-  const regex = /^[0-9]{1,15}$/;
-  const isValid = regex.test(input);
+export function validasiNoTelp(input) {
+  if (!input) {
+    return {
+      isValid: false,
+      message: "Nomor telepon harus diisi",
+    };
+  }
 
-  return { valid: isValid, message: "Wajib diisi, dengan nomor yang valid" };
+  if (/\s/.test(input)) {
+    return {
+      isValid: false,
+      message: "Nomor telepon tidak boleh mengandung spasi",
+    };
+  }
+
+  if (!/^\d{5,14}$/.test(input)) {
+    return {
+      isValid: false,
+      message: "Nomor telepon harus terdiri dari 5-14 digit angka",
+    };
+  }
+
+  return { isValid: true };
 }
 
-export function validasiNama(input) {
-  const regex = /^[a-zA-Z0-9\s\'\(\)\+\-\_\@\.\,\:]{1,50}$/;
-  const isValid = regex.test(input.trim());
-
-  return { valid: isValid, message: "Wajib diisi, maksimal 50 karakter tanpa karakter spesial" };
-}
-
-export function validasiAlamat(input) {
-  const regex = /^[a-zA-Z0-9\s\'\(\)\+\-\_\@\.\,\:]{1,150}$/;
-  const isValid = regex.test(input.trim());
-
-  return { valid: isValid, message: "Wajib diisi, maksimal 150 karakter tanpa karakter spesial" };
-}
-
-export function validasiKeterangan(input) {
-  const regex = /^[a-zA-Z0-9\s\'\(\)\+\-\_\@\.\,\:]{1,30}$/;
-  return regex.test(input.trim());
-}
-
-export function validasiPositiveNumber(input) {
-  const regex = /^0\.[1-9]\d*$|^[1-9]\d*(\.\d+)?$/; //bilangan positif lebih besar dari nol
-
-  return regex.test(input);
-}
-
-export function checkSpecialChar(input, inputLength) {
-  const regex = /[^0-9a-zA-Z\s@'_,.:&\/()\\-]/g;
+export function validasiSpecialChar(input, inputLength) {
+  const regex = /[^0-9a-zA-Z\s@'#+_,.:&\/()\\-]/g;
   const invalidChars = input.match(regex);
   const maxLength = inputLength;
 
   if (!input.trim()) {
-    return { check: false, message: "Inputan tidak boleh kosong!" };
+    return { isValid: false, message: "Inputan tidak boleh kosong!" };
   }
 
   if (input.length > maxLength) {
-    return { check: false, message: `Inputan terlalu panjang! Maksimal ${maxLength} karakter.` };
+    return { isValid: false, message: `Inputan terlalu panjang! Maksimal ${maxLength} karakter.` };
   }
 
   if (invalidChars) {
     const message = `Penggunaan karakter (${invalidChars.join(", ")}) tidak diizinkan!`;
-    return { check: false, message };
+    return { isValid: false, message };
   }
 
-  return { check: true, message: "inputan valid" };
+  return { isValid: true, message: "inputan valid" };
 }
+
+export const validityCheck = (obj) => {
+  const regex = /[^0-9a-zA-Z\s@'#+_,.:&\/()\\-]/;
+  let values = [];
+  Object.values(obj).forEach((value) => {
+    if (typeof value === "object") {
+      values = [...values, ...validityCheck(value)];
+    } else {
+      values.push(value);
+    }
+  });
+  return values.filter((d) => regex.test(d));
+};

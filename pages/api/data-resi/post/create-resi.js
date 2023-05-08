@@ -1,17 +1,5 @@
 import { connectToMongoDB, insertDocument } from "../../../../helpers/mongodbConnection";
-
-const validityCheck = (obj) => {
-  const regex = /[^0-9a-zA-Z\s@'_,.:&\/()-]/;
-  let values = [];
-  Object.values(obj).forEach((value) => {
-    if (typeof value === "object") {
-      values = [...values, ...validityCheck(value)];
-    } else {
-      values.push(value);
-    }
-  });
-  return values.filter((d) => regex.test(d));
-};
+import { validityCheck } from "@/components/utils/use-validate";
 
 const handler = async (req, res) => {
   if (validityCheck(req.body).length > 0) {

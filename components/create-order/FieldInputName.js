@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { validasiSpecialChar } from "../utils/use-validate";
 
 const FieldInputName = (props) => {
   const { id, name, label } = props;
   const { setInitialValues, setValidFields } = props.meta;
   const [value, setValue] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  const [nameValidation, setNameValidation] = useState({
+    isValid: false,
+    message: "Wajib diisi / tidak boleh kosong!",
+  });
   const [isTouched, setIsTouched] = useState(false);
 
-  const removeNonAlphaChar = (val) => val.replace(/[^0-9a-zA-Z\s@'_,.:&\/()\-]/g, "");
-
   const handleChange = (e) => {
-    setValue(removeNonAlphaChar(e.target.value));
-    e.target.value.length >= 2 && e.target.value.length <= 50 ? setIsValid(true) : setIsValid(false);
+    setValue(e.target.value);
+    setNameValidation(() => validasiSpecialChar(e.target.value, 50));
   };
 
   const handleBlur = (e) => {
@@ -20,7 +22,7 @@ const FieldInputName = (props) => {
   };
 
   useEffect(() => {
-    if (isValid) {
+    if (nameValidation.isValid) {
       setInitialValues((prevState) => ({ ...prevState, [name]: value }));
       setValidFields((prevState) => ({ ...prevState, [name]: "valid" }));
     } else {
@@ -41,8 +43,8 @@ const FieldInputName = (props) => {
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
-        className={`px-2 py-1.5 text-sm text-gray-600 dark:text-gray-200 rounded-md border-[1px] focus:outline-none disabled:bg-gray-200 capitalize ${
-          isTouched && !isValid
+        className={`px-2 py-1.5 text-sm text-gray-600 dark:text-gray-200 rounded-md border-[1px] focus:outline-none disabled:bg-gray-200 ${
+          isTouched && !nameValidation.isValid
             ? "bg-red-100 dark:bg-red-900 focus:ring-1 focus:ring-red-600 border-red-600 "
             : "bg-white dark:bg-gray-700 focus:ring-1  focus:ring-black dark:focus:ring-gray-200 border-gray-200 dark:border-gray-700 focus:border-black dark:focus:border-gray-200"
         }`}
@@ -50,10 +52,10 @@ const FieldInputName = (props) => {
         autoComplete="off"
         placeholder="Ketik Nama Lengkap"
       />
-      {isTouched && !isValid ? (
+      {isTouched && !nameValidation.isValid ? (
         <div className="flex gap-1 items-center text-[10px] text-red-600 mt-1">
           <ExclamationCircleIcon className="h-5" />
-          <p>Wajib diisi maksimal 50 karakter</p>
+          <p>{nameValidation.message}</p>
         </div>
       ) : null}
     </div>

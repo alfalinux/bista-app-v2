@@ -180,7 +180,7 @@ const generatePdfSuratJalan = (suratJalan) => {
       { content: d.noManifest, styles: { cellWidth: "wrap" } },
       { content: d.cabangAsal.toUpperCase(), styles: { cellWidth: "wrap" } },
       { content: d.cabangTujuan.toUpperCase(), styles: { cellWidth: "wrap" } },
-      { content: d.jumlahPaket + " Koli", styles: { cellWidth: "wrap" } },
+      { content: d.konsolidasi ? "1 Koli" : d.jumlahPaket + " Koli", styles: { cellWidth: "wrap" } },
       { content: d.jumlahBerat + " Kg", styles: { cellWidth: "wrap" } },
       {
         content: d.dataResi.map((d) => d.noResi + " [ " + d.paket.length + " ]").join(", "),

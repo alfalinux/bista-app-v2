@@ -39,9 +39,25 @@ export const findManifest = async (client, collection, noManifest) => {
   return result;
 };
 
+export const findSuratJalan = async (client, collection, noSuratJalan) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).findOne({ noSuratJalan: noSuratJalan });
+  return result;
+};
+
 export const findManifestBelumSuratJalan = async (client, collection, cabangAsal) => {
   const db = client.db("bista-app-v2");
   const result = await db.collection(collection).find({ cabangAsal: cabangAsal, suratJalan: null }).toArray();
+
+  return result;
+};
+
+export const findSuratJalanBelumReceive = async (client, collection, cabangTujuan) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .find({ cabangTujuan: cabangTujuan, suratJalanReceivedAt: null })
+    .toArray();
 
   return result;
 };
@@ -61,6 +77,32 @@ export const setSuratJalan = async (client, collection, filter, update) => {
   const result = await db
     .collection(collection)
     .updateMany({ noManifest: { $in: filter } }, { $set: { suratJalan: [update] } });
+
+  return result;
+};
+
+export const updateSuratJalan = async (client, collection, filter, update) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .updateMany({ noSuratJalan: { $in: filter } }, { $set: { ...update } });
+
+  return result;
+};
+
+export const pushManySuratJalan = async (client, collection, filter, update) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).updateMany(
+    {
+      "suratJalan.noSuratJalan": { $in: filter },
+    },
+    {
+      $set: {
+        "suratJalan.$.suratJalanReceivedAt": update.suratJalanReceivedAt,
+        "suratJalan.$.suratJalanReceivedBy": update.suratJalanReceivedBy,
+      },
+    }
+  );
 
   return result;
 };

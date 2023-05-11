@@ -18,13 +18,7 @@ const CreateSuratJalanTable = ({ dataManifest, cabangTujuan, onCheckedResi, onCh
   }, [isCheckedAll]);
 
   useEffect(() => {
-    setFilteredData(
-      dataManifest.length > 0
-        ? cabangTujuan
-          ? dataManifest.filter((d) => d.coveranArea === cabangTujuan)
-          : dataManifest
-        : []
-    );
+    setFilteredData(dataManifest.length > 0 ? dataManifest : []);
     for (let item of checkbox) {
       item.checked = false;
     }

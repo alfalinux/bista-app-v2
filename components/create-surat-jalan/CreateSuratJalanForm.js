@@ -72,7 +72,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
       {/* Select Cabang Asal */}
       <div className="w-full flex flex-col sm:flex-row gap-2 items-start sm:items-center">
         <label className="w-80 text-sm text-gray-800 dark:text-gray-200" htmlFor="cabangAsal">
-          Cabang Asal
+          Asal Keberangkatan
         </label>
         <select
           className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md capitalize"
@@ -104,7 +104,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
       {/* Select Cabang Tujuan */}
       <div className="w-full flex flex-col sm:flex-row gap-2 items-start sm:items-center">
         <label className="w-80 text-sm text-gray-800 dark:text-gray-200" htmlFor="cabangTujuan">
-          Cabang Coveran
+          Tujuan Keberangkatan
         </label>
         <select
           className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md capitalize"
@@ -113,16 +113,12 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
           value={cabangTujuan}
           onChange={cabangTujuanChange}
         >
-          <option value="">-- Pilih cabang coveran --</option>
-          {dataManifest.length > 0 ? (
-            [...new Set(dataManifest.map((d) => d.coveranArea))].map((data, index) => (
-              <option key={index} value={data} className="capitalize">
-                {data}
-              </option>
-            ))
-          ) : (
-            <option value="">Data tidak ditemukan</option>
-          )}
+          <option value="">-- Pilih cabang tujuan --</option>
+          {listCabang().map((data, index) => (
+            <option key={index} value={data.cab} className="capitalize">
+              {data.cab}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -136,7 +132,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
             type="text"
             className={`w-full p-2 text-sm text-gray-800 dark:text-gray-200 rounded-md ${
               isTouched.namaDriver && !validasi.namaDriver.isValid
-                ? "bg-red-800 dark:bg-red-800"
+                ? "bg-red-100 dark:bg-red-800"
                 : "bg-gray-100 dark:bg-gray-700"
             }`}
             name="namaDriver"
@@ -170,7 +166,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
             type="text"
             className={`w-full p-2 text-sm text-gray-800 dark:text-gray-200 rounded-md ${
               isTouched.nopolDriver && !validasi.nopolDriver.isValid
-                ? "bg-red-800 dark:bg-red-800"
+                ? "bg-red-100 dark:bg-red-800"
                 : "bg-gray-100 dark:bg-gray-700"
             }`}
             name="nopolDriver"

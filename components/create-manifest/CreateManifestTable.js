@@ -1,7 +1,9 @@
 import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const CreateManifestTable = ({ dataResi, tujuan, onCheckedResi, onCheckedAllResi }) => {
+  const router = useRouter();
   const [filteredData, setFilteredData] = useState([]);
   const [isCheckedAll, setIsCheckedAll] = useState(false);
   const checkbox = document.querySelectorAll("#checkbox");
@@ -29,7 +31,7 @@ const CreateManifestTable = ({ dataResi, tujuan, onCheckedResi, onCheckedAllResi
 
   return (
     <div className="w-full mt-4 mb-4 shadow-md">
-      {filteredData.length > 0 && (
+      {filteredData.length > 0 ? (
         <table className="w-full table-auto">
           <thead className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm border border-gray-300">
             <tr>
@@ -104,7 +106,11 @@ const CreateManifestTable = ({ dataResi, tujuan, onCheckedResi, onCheckedAllResi
             ))}
           </tbody>
         </table>
-      )}
+      ) : router.query.cabangAsal ? (
+        <p className="w-full p-2 text-sm text-center text-red-600 dark:text-red-100 bg-red-100 dark:bg-red-800">
+          Tidak ada data...
+        </p>
+      ) : null}
     </div>
   );
 };

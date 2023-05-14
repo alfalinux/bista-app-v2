@@ -3,14 +3,12 @@ import LoadingSpinner from "../utils/LoadingSpinner";
 import CabangSelect from "./CabangSelect";
 import CreateManifestFooter from "./CreateManifestFooter";
 import CreateManifestTable from "./CreateManifestTable";
-import { useSession } from "next-auth/react";
 
 const CreateManifestForm = ({ dataResi, cabangAsal }) => {
   const [cabangTujuanSelected, setCabangTujuanSelected] = useState("");
   const [listCabang, setListCabang] = useState([]);
   const [checkedResi, setCheckedResi] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { data, status } = useSession();
 
   useEffect(() => {
     fetch("/api/data-cabang")

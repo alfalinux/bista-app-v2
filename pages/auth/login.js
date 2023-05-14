@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 const LoginPage = () => {
-  const { data, status } = useSession();
+  const { status } = useSession();
   const [showPassword, setShowPassword] = useState(false);
   const [loginStatus, setLoginStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);

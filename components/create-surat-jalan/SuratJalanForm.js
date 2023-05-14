@@ -1,10 +1,10 @@
 import listCabang from "@/helpers/listCabang";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { validasiSpecialChar } from "../utils/use-validate";
 
-const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
+const SuratJalanForm = ({ setInitValues, setIsLoading }) => {
   const { data } = useSession();
   const router = useRouter();
   const [cabangAsal, setCabangAsal] = useState("");
@@ -12,52 +12,47 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
   const [namaDriver, setNamaDriver] = useState("");
   const [nopolDriver, setNopolDriver] = useState("");
   const [validasi, setValidasi] = useState({
+    cabangAsal: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
+    cabangTujuan: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
     namaDriver: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
     nopolDriver: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
   });
   const [isTouched, setIsTouched] = useState({ namaDriver: false, nopolDriver: false });
 
   const cabangAsalChange = (e) => {
-    onLoading(true);
+    setIsLoading(true);
     router.replace(`${router.pathname}?cabangAsal=${e.target.value}`);
     setCabangAsal(e.target.value);
     setCabangTujuan("");
     setNamaDriver("");
     setNopolDriver("");
-    setInitValues((prevState) => ({
-      ...prevState,
-      cabangAsal: e.target.value,
-      cabangTujuan: "",
-      namaDriver: "",
-      nopolDriver: "",
-    }));
+    setValidasi({
+      cabangAsal: validasiSpecialChar(e.target.value, 50),
+      cabangTujuan: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
+      namaDriver: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
+      nopolDriver: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
+    });
+    setIsTouched({ namaDriver: false, nopolDriver: false });
   };
 
   const cabangTujuanChange = (e) => {
     setCabangTujuan(e.target.value);
     setNamaDriver("");
     setNopolDriver("");
-    setInitValues((prevState) => ({
+    setValidasi((prevState) => ({
       ...prevState,
-      cabangTujuan: e.target.value,
-      namaDriver: "",
-      nopolDriver: "",
+      cabangTujuan: validasiSpecialChar(e.target.value, 30),
+      namaDriver: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
+      nopolDriver: { isValid: false, message: "wajib diisi / tidak boleh kosong" },
     }));
+    setIsTouched({ namaDriver: false, nopolDriver: false });
   };
   const namaDriverChange = (e) => {
     setNamaDriver(e.target.value);
-    setInitValues((prevState) => ({
-      ...prevState,
-      namaDriver: validasiSpecialChar(e.target.value, 30).isValid ? e.target.value : "",
-    }));
     setValidasi((prevState) => ({ ...prevState, namaDriver: validasiSpecialChar(e.target.value, 30) }));
   };
   const nopolDriverChange = (e) => {
     setNopolDriver(e.target.value);
-    setInitValues((prevState) => ({
-      ...prevState,
-      nopolDriver: validasiSpecialChar(e.target.value, 30).isValid ? e.target.value : "",
-    }));
     setValidasi((prevState) => ({ ...prevState, nopolDriver: validasiSpecialChar(e.target.value, 30) }));
   };
 
@@ -67,6 +62,22 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
     }
   }, [router]);
 
+  useEffect(() => {
+    setInitValues({
+      cabangAsal: cabangAsal,
+      cabangTujuan: cabangTujuan,
+      namaDriver: namaDriver,
+      nopolDriver: nopolDriver,
+      checkedManifest: [],
+      isValid: {
+        cabangAsal: validasi.cabangAsal.isValid,
+        cabangTujuan: validasi.cabangTujuan.isValid,
+        namaDriver: validasi.namaDriver.isValid,
+        nopolDriver: validasi.nopolDriver.isValid,
+      },
+    });
+  }, [cabangAsal, cabangTujuan, namaDriver, nopolDriver]);
+
   return (
     <form className="w-full p-4 bg-white dark:bg-gray-800 flex flex-col gap-4 border-[1px] border-gray-300 shadow-md rounded-lg whitespace-nowrap">
       {/* Select Cabang Asal */}
@@ -75,7 +86,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
           Asal Keberangkatan
         </label>
         <select
-          className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md capitalize"
+          className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md uppercase"
           name="cabangAsal"
           id="cabangAsal"
           value={cabangAsal}
@@ -107,7 +118,7 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
           Tujuan Keberangkatan
         </label>
         <select
-          className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md capitalize"
+          className="w-full p-2 text-sm text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md uppercase"
           name="cabangTujuan"
           id="cabangTujuan"
           value={cabangTujuan}
@@ -193,4 +204,4 @@ const CreateSuratJalanForm = ({ setInitValues, dataManifest, onLoading }) => {
   );
 };
 
-export default CreateSuratJalanForm;
+export default SuratJalanForm;

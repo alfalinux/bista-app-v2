@@ -23,10 +23,10 @@ const Layout = (props) => {
           .join(" ");
 
   useEffect(() => {
-    if (status == "unauthenticated") {
+    if (status === "unauthenticated") {
       router.push("/auth/login");
     }
-  }, [router]);
+  }, [status]);
 
   const showMenuDesktopHandler = (e) => {
     setShowMenuDesktop(!showMenuDesktop);

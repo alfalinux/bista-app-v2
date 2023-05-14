@@ -52,6 +52,21 @@ export const findManifestBelumSuratJalan = async (client, collection, cabangAsal
   return result;
 };
 
+export const findManifestTransit = async (client, collection, cabangTransit) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .find({
+      coveranArea: { $ne: cabangTransit },
+      "suratJalan.cabangTujuan": cabangTransit,
+      "suratJalan.suratJalanReceivedAt": { $exists: true },
+      suratJalan: { $not: { $elemMatch: { cabangAsal: cabangTransit } } },
+    })
+    .toArray();
+
+  return result;
+};
+
 export const findSuratJalanBelumReceive = async (client, collection, cabangTujuan) => {
   const db = client.db("bista-app-v2");
   const result = await db
@@ -74,9 +89,17 @@ export const setManifest = async (client, collection, filter, update) => {
 
 export const setSuratJalan = async (client, collection, filter, update) => {
   const db = client.db("bista-app-v2");
-  const result = await db
-    .collection(collection)
-    .updateMany({ noManifest: { $in: filter } }, { $set: { suratJalan: [update] } });
+  const result = await db.collection(collection).updateMany(
+    { noManifest: { $in: filter } },
+    {
+      $push: { suratJalan: update },
+      // $cond: {
+      //   if: { $exists: "$suratJalan" },
+      //   then: { $push: { suratJalan: update } },
+      //   else: { $set: { suratJalan: [update] } },
+      // },
+    }
+  );
 
   return result;
 };

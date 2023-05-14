@@ -36,7 +36,7 @@ const ReceiveSuratJalanForm = ({ dataSuratJalan }) => {
         >
           {data.posisiDesc === "direktur" ? (
             <>
-              <option value="">-- Pilih cabang asal --</option>
+              <option value="">-- Pilih cabang tujuan --</option>
               {listCabang().map((data, index) => (
                 <option key={index} value={data.cab} className="capitalize">
                   {data.cab}

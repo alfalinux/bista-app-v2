@@ -1,50 +1,14 @@
-import { useEffect, useState } from "react";
-import CreateSuratJalanForm from "./CreateSuratJalanForm";
-import CreateSuratJalanTable from "./CreateSuratJalanTable";
-import { useRouter } from "next/router";
-import LoadingSpinner from "../utils/LoadingSpinner";
-import Swal from "sweetalert2";
-import listCabang from "@/helpers/listCabang";
 import generateNoSuratJalan from "@/helpers/generateNoSuratJalan";
-import { useSession } from "next-auth/react";
 import generatePdfSuratJalan from "@/helpers/generatePdfSuratJalan";
+import listCabang from "@/helpers/listCabang";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
-const CreateSuratJalanContainer = (props) => {
-  const { data, status } = useSession();
-  const [initValues, setInitValues] = useState({
-    cabangAsal: "",
-    cabangTujuan: "",
-    namaDriver: "",
-    nopolDriver: "",
-    checkedManifest: [],
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-
+const CreateSuratJalanButton = ({ initValues }) => {
+  const { data } = useSession();
   const router = useRouter();
-
-  const checkedManifestHandler = (checked, data) => {
-    if (checked) {
-      setInitValues((prevState) => ({
-        ...prevState,
-        checkedManifest: [...prevState.checkedManifest, data],
-      }));
-    } else {
-      setInitValues((prevState) => ({
-        ...prevState,
-        checkedManifest: prevState.checkedManifest.filter((d) => d.noManifest !== data.noManifest),
-      }));
-    }
-  };
-
-  const checkedAllResiHandler = (data) => {
-    setInitValues((prevState) => ({ ...prevState, checkedManifest: data }));
-  };
-
-  const resetInitValues = () =>
-    setInitValues({ cabangAsal: "", cabangTujuan: "", namaDriver: "", nopolDriver: "", checkedManifest: [] });
-
-  const submitSuratJalanHandler = () => {
+  const submitHandler = () => {
     const dataCabangAsal = listCabang().find((d) => d.cab == initValues.cabangAsal);
     const dataCabangTujuan = listCabang().find((d) => d.cab == initValues.cabangTujuan);
     Swal.fire({
@@ -143,7 +107,6 @@ const CreateSuratJalanContainer = (props) => {
                             if (data.status == "201") {
                               Swal.hideLoading();
                               router.push("/outgoing/create-surat-jalan");
-                              resetInitValues();
                               Swal.fire({
                                 icon: "success",
                                 title: "Berhasil",
@@ -185,52 +148,20 @@ const CreateSuratJalanContainer = (props) => {
     });
   };
 
-  const loadingSpinnerHandler = (bool) => {
-    setIsLoading(bool);
-  };
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, [props.dataManifest]);
-
   return (
-    <div className="w-full overflow-x-scroll md:overflow-x-hidden overflow-y-hidden px-4">
-      <CreateSuratJalanForm
-        dataManifest={props.dataManifest}
-        setInitValues={setInitValues}
-        onLoading={loadingSpinnerHandler}
-      />
-      {isLoading ? (
-        <div className="w-full flex items-center justify-center mt-4">
-          <LoadingSpinner size="md" color="gray" />
-        </div>
-      ) : router.query.cabangAsal === undefined ? null : router.query.cabangAsal === "" ? (
-        <p className="text-center text-red-600 mt-4">Cabang Asal Belum Dipilih...</p>
-      ) : (
-        <CreateSuratJalanTable
-          dataManifest={props.dataManifest}
-          cabangTujuan={initValues.cabangTujuan}
-          onCheckedResi={checkedManifestHandler}
-          onCheckedAllResi={checkedAllResiHandler}
-        />
-      )}
-      <div className="w-full flex justify-end py-2">
-        <button
-          className={`font-semibold text-sm text-gray-100 bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 shadow-sm shadow-gray-400 dark:shadow-gray-800 disabled:bg-gray-300 disabled:text-gray-400 dark:disabled:bg-gray-800 dark:disabled:text-gray-700`}
-          disabled={
-            !initValues.cabangAsal ||
-            !initValues.cabangTujuan ||
-            !initValues.namaDriver ||
-            !initValues.nopolDriver ||
-            initValues.checkedManifest.length === 0
-          }
-          onClick={submitSuratJalanHandler}
-        >
-          Create Surat Jalan
-        </button>
-      </div>
+    <div className="w-full flex justify-end">
+      <button
+        className={`font-semibold text-sm text-gray-100 bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 shadow-md shadow-gray-300 dark:shadow-gray-700 disabled:bg-gray-300 disabled:text-gray-400 dark:disabled:bg-gray-800 dark:disabled:text-gray-700`}
+        disabled={
+          !Object.values(initValues.isValid).every((value) => value) ||
+          initValues.checkedManifest.length === 0
+        }
+        onClick={submitHandler}
+      >
+        Create Surat Jalan
+      </button>
     </div>
   );
 };
 
-export default CreateSuratJalanContainer;
+export default CreateSuratJalanButton;

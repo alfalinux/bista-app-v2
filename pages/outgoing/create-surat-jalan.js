@@ -1,10 +1,14 @@
 import Layout from "@/components/Layout";
 import CreateSuratJalanContainer from "@/components/create-surat-jalan/CreateSuratJalanContainer";
+import SuratJalanContainer from "@/components/create-surat-jalan/SuratJalanContainer";
 
 const createSuratJalanPage = (props) => {
   return (
     <Layout>
-      <CreateSuratJalanContainer dataManifest={props.data} />
+      <SuratJalanContainer
+        dataManifestOrigin={props.manifestOrigin}
+        dataManifestTransit={props.manifestTransit}
+      />
     </Layout>
   );
 };
@@ -15,10 +19,13 @@ export async function getServerSideProps(context) {
   const { cabangAsal } = context.query;
   const hostName = context.req.headers.host;
 
-  const response = await fetch(`http://${hostName}/api/data-manifest/belum-surat-jalan/${cabangAsal}`);
-  const data = await response.json();
+  const resOrigin = await fetch(`http://${hostName}/api/data-manifest/belum-surat-jalan/${cabangAsal}`);
+  const dataOrigin = await resOrigin.json();
+
+  const resTransit = await fetch(`http://${hostName}/api/data-manifest/transit/${cabangAsal}`);
+  const dataTransit = await resTransit.json();
 
   return {
-    props: { data: data },
+    props: { manifestOrigin: dataOrigin, manifestTransit: dataTransit },
   };
 }

@@ -1,11 +1,13 @@
-import { connectToMongoDB, findManifestBelumSuratJalan } from "../../../../helpers/mongodbConnection";
+import { connectToMongoDB, findManifestTransit } from "../../../../helpers/mongodbConnection";
 
 const handler = async (req, res) => {
-  const { cabangAsal } = req.query;
+  const { cabangTransit } = req.query;
 
   // validasi input
-  if (!cabangAsal || typeof cabangAsal !== "string" || !/^[a-zA-Z0-9]+$/.test(cabangAsal)) {
-    res.status(400).json({ message: "Input cabangAsal tidak valid. Harus terdiri dari huruf dan angka." });
+  if (!cabangTransit || typeof cabangTransit !== "string" || !/^[a-zA-Z0-9]+$/.test(cabangTransit)) {
+    res
+      .status(400)
+      .json({ message: "Input cabang transit tidak valid. Harus terdiri dari huruf dan angka." });
     return;
   }
 
@@ -19,7 +21,7 @@ const handler = async (req, res) => {
 
   let result;
   try {
-    result = await findManifestBelumSuratJalan(client, "data-manifest", cabangAsal);
+    result = await findManifestTransit(client, "data-manifest", cabangTransit);
   } catch (error) {
     res.status(500).json({ message: "Data cabang tidak ditemukan" });
     return;

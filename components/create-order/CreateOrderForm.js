@@ -16,7 +16,7 @@ import ModalCreateOrder from "./ModalCreateOrder";
 import { useSession } from "next-auth/react";
 
 const CreateOrderContainer = (props) => {
-  const { data, status } = useSession();
+  const { data } = useSession();
   const [initialValues, setInitialValues] = useState(props.initialValues);
   const [validFields, setValidFields] = useState(props.validation);
   const [allFieldsIsValid, setAllFieldIsValid] = useState(false);

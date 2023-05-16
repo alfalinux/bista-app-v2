@@ -45,7 +45,7 @@ const ReceiveSuratJalanForm = ({ dataSuratJalan }) => {
             </>
           ) : (
             <>
-              <option value="">-- Pilih cabang asal --</option>
+              <option value="">-- Pilih cabang tujuan --</option>
               <option value={data.cabangDesc} className="capitalize">
                 {data.cabangDesc}
               </option>

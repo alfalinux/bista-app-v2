@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import CreateSuratJalanContainer from "@/components/create-surat-jalan/CreateSuratJalanContainer";
+
 import SuratJalanContainer from "@/components/create-surat-jalan/SuratJalanContainer";
 
 const createSuratJalanPage = (props) => {

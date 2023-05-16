@@ -22,6 +22,7 @@ const LeftMenu = (props) => {
         { name: "Resi Aktif", link: "/monitoring/resi-aktif" },
         { name: "Manifest Aktif", link: "/monitoring/manifest-aktif" },
         { name: "Surat Jalan Aktif", link: "/monitoring/surat-jalan-aktif" },
+        { name: "Cek Resi", link: "/monitoring/cek-resi" },
       ],
     },
     {

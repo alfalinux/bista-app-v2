@@ -20,7 +20,32 @@ export function validasiNoTelp(input) {
     };
   }
 
-  return { isValid: true };
+  return { isValid: true, message: "inputan valid" };
+}
+
+export function validasiNoResi(input) {
+  if (!input) {
+    return {
+      isValid: false,
+      message: "Nomor resi harus diisi",
+    };
+  }
+
+  if (/\s/.test(input)) {
+    return {
+      isValid: false,
+      message: "Nomor resi tidak boleh mengandung spasi",
+    };
+  }
+
+  if (!/^[A-Z0-9]{18,20}$/.test(input)) {
+    return {
+      isValid: false,
+      message: "Nomor resi harus terdiri dari 18-20 kombinasi huruf & angka",
+    };
+  }
+
+  return { isValid: true, message: "inputan valid" };
 }
 
 export function validasiSpecialChar(input, inputLength) {

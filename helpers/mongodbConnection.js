@@ -39,6 +39,16 @@ export const findManifest = async (client, collection, noManifest) => {
   return result;
 };
 
+export const findManifestBelumReceive = async (client, collection, coveranArea) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .find({ coveranArea: coveranArea, manifestReceivedAt: null })
+    .toArray();
+
+  return result;
+};
+
 export const findSuratJalan = async (client, collection, noSuratJalan) => {
   const db = client.db("bista-app-v2");
   const result = await db.collection(collection).findOne({ noSuratJalan: noSuratJalan });
@@ -83,6 +93,15 @@ export const findSuratJalanBelumReceive = async (client, collection, cabangTujua
 export const setManifest = async (client, collection, filter, update) => {
   const db = client.db("bista-app-v2");
   const result = await db.collection(collection).updateMany({ noResi: { $in: filter } }, { $set: update });
+
+  return result;
+};
+
+export const updateManifest = async (client, collection, filter, update) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .updateMany({ noManifest: { $in: filter } }, { $set: update });
 
   return result;
 };

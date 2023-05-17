@@ -43,7 +43,7 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
 
     const submitManifest = {
       noManifest: noManifest,
-      tglManifest: tgl,
+      manifestCreatedAt: tgl,
       cabangAsal: dataCabang.asal,
       cabangAsalTlc: dataCabang.asalTlc,
       cabangTujuan: dataCabang.tujuan,
@@ -64,7 +64,7 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
         )
         .reduce((total, obj) => total + Number(obj), 0),
       konsolidasi: isKonsol,
-      petugasInput: data.nama,
+      manifestCreatedBy: data.nama,
       dataResi: dataResi,
     };
     onCloseModal();

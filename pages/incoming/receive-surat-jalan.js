@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import ReceiveSuratJalanForm from "@/components/receive-surat-jalan/ReceiveSuratJalanForm";
 
-const receiveSuratJalanPage = (props) => {
+const ReceiveSuratJalanPage = (props) => {
   return (
     <Layout>
       <ReceiveSuratJalanForm dataSuratJalan={props.data} />
@@ -9,7 +9,7 @@ const receiveSuratJalanPage = (props) => {
   );
 };
 
-export default receiveSuratJalanPage;
+export default ReceiveSuratJalanPage;
 
 export async function getServerSideProps(context) {
   const { cabangTujuan } = context.query;

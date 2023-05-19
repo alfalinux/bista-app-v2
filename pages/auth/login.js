@@ -95,10 +95,10 @@ const LoginPage = () => {
                 )}
               </div>
             </div>
-            <div className="text-center text-gray-100 flex justify-center items-center mb-4">
-              {isLoading ? <LoadingSpinner /> : loginStatus}
+            <div className="flex justify-center items-center mb-4">
+              {isLoading ? <LoadingSpinner color="gray" size="md" /> : loginStatus}
             </div>
-            <button className="w-full p-4 bg-white flex gap-1 align-center items-center justify-center rounded-lg hover:bg-gray-200">
+            <button className="w-full p-4 bg-white text-center text-gray-700 font-semibold flex gap-1 align-center items-center justify-center rounded-lg hover:bg-gray-200">
               <p>Login</p>
               <ArrowRightOnRectangleIcon className="h-5" />
             </button>

@@ -55,10 +55,10 @@ const HeadMenuButton = (props) => {
 
   const userMenu = (
     <ul className="flex flex-col gap-2 pt-2 select-none border-[1px] border-transparent border-t-red-800">
-      <li className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150">Profile</li>
-      <li className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150">Ganti Password</li>
+      <li className="text-gray-100 hover:text-gray-800 hover:cursor-pointer duration-150">Profile</li>
+      <li className="text-gray-100 hover:text-gray-800 hover:cursor-pointer duration-150">Ganti Password</li>
       <li
-        className="text-gray-100 hover:text-red-800 hover:cursor-pointer duration-150"
+        className="text-gray-100 hover:text-gray-800 hover:cursor-pointer duration-150"
         onClick={onLogoutHandler}
       >
         Logout
@@ -88,10 +88,14 @@ const HeadMenuButton = (props) => {
       <div
         className={`relative min-w-max px-4 bg-red-600 text-white text-sm font-semibold flex items-center justify-center gap-2 h-14 order-1 lg:order-2`}
       >
-        <UserCircleIcon className="h-10" />
-        <p>{props.user.nama}</p>
+        <UserCircleIcon className="h-10 hover:cursor-pointer" onClick={userMenuHandler} />
+        <p className="hover:cursor-pointer" onClick={userMenuHandler}>
+          {props.user.nama}
+        </p>
         <ChevronDownIcon
-          className={`h-4 ${showUserMenu ? "rotate-180" : ""} transition-transform duration-200`}
+          className={`h-4 ${
+            showUserMenu ? "rotate-180" : ""
+          } transition-transform duration-200 hover:cursor-pointer`}
           onClick={userMenuHandler}
         />
 

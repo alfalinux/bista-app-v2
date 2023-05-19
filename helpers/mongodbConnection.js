@@ -18,6 +18,12 @@ export const insertDocument = async (client, collection, document) => {
 // END POST TO DATABASE
 
 // FIND IN DATABASE
+export const findUserCabang = async (client, collection, cabang) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).find({ cabangDesc: cabang }).toArray();
+  return result;
+};
+
 export const findResi = async (client, collection, noResi) => {
   const db = client.db("bista-app-v2");
   const result = await db.collection(collection).findOne({ noResi: noResi });
@@ -29,6 +35,28 @@ export const findResiBelumManifest = async (client, collection, cabangAsal) => {
   const result = await db
     .collection(collection)
     .find({ cabangAsal: cabangAsal, "tujuan.cov": { $ne: cabangAsal }, noManifest: null })
+    .toArray();
+  return result;
+};
+
+export const findResiBelumDelivery = async (client, collection, cabang) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .find({
+      $or: [
+        {
+          cabangAsal: cabang,
+          cabangCoveran: cabang,
+          $or: [{ delivery: null }, { "delivery.statusDelivery": { $nin: ["pengantaran", "diterima"] } }],
+        },
+        {
+          cabangCoveran: cabang,
+          manifestReceivedAt: { $ne: null },
+          $or: [{ delivery: null }, { "delivery.statusDelivery": { $nin: ["pengantaran", "diterima"] } }],
+        },
+      ],
+    })
     .toArray();
   return result;
 };

@@ -22,6 +22,6 @@ export async function getServerSideProps(context) {
   const dataKurir = await responseDataKurir.json();
 
   return {
-    props: { dataResi: dataResi, dataKurir: dataKurir, cabang: cabang ? cabang : "" },
+    props: { dataResi, dataKurir: dataKurir, cabang: cabang ? cabang : "" },
   };
 }

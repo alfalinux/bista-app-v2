@@ -48,12 +48,18 @@ export const findResiBelumDelivery = async (client, collection, cabang) => {
         {
           cabangAsal: cabang,
           cabangCoveran: cabang,
-          $or: [{ delivery: null }, { "delivery.statusDelivery": { $nin: ["pengantaran", "diterima"] } }],
+          $or: [
+            { delivery: null },
+            { "delivery.deliveryStatus.proses": { $nin: ["pengantaran", "diterima"] } },
+          ],
         },
         {
           cabangCoveran: cabang,
           manifestReceivedAt: { $ne: null },
-          $or: [{ delivery: null }, { "delivery.statusDelivery": { $nin: ["pengantaran", "diterima"] } }],
+          $or: [
+            { delivery: null },
+            { "delivery.deliveryStatus.proses": { $nin: ["pengantaran", "diterima"] } },
+          ],
         },
       ],
     })
@@ -171,6 +177,20 @@ export const pushManySuratJalan = async (client, collection, filter, update) => 
         "suratJalan.$.suratJalanReceivedAt": update.suratJalanReceivedAt,
         "suratJalan.$.suratJalanReceivedBy": update.suratJalanReceivedBy,
       },
+    }
+  );
+
+  return result;
+};
+
+export const pushDelivery = async (client, collection, filter, update) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).updateMany(
+    {
+      noResi: { $in: filter },
+    },
+    {
+      $push: { delivery: update },
     }
   );
 

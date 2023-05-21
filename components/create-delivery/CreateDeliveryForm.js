@@ -5,11 +5,12 @@ import { useState, useEffect } from "react";
 import CreateDeliveryTable from "./CreateDeliveryTable";
 import LoadingSpinner from "../utils/LoadingSpinner";
 
-const CreateDeliveryForm = ({ dataResi, dataKurir, dataCabang }) => {
+const CreateDeliveryForm = ({ dataResi, dataKurir }) => {
   const { data } = useSession();
   const router = useRouter();
   const [cabang, setCabang] = useState("");
   const [namaKurir, setNamaKurir] = useState("");
+  const [dataKurirSelected, setDataKurirSelected] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const cabangChangeHandler = (e) => {
@@ -20,6 +21,17 @@ const CreateDeliveryForm = ({ dataResi, dataKurir, dataCabang }) => {
 
   const namaKurirChangeHandler = (e) => {
     setNamaKurir(e.target.value);
+    if (e.target.value === "") {
+      setDataKurirSelected({});
+    } else {
+      setDataKurirSelected(dataKurir.result.filter((d) => d.email === e.target.value)[0]);
+    }
+  };
+
+  const resetInput = () => {
+    setCabang("");
+    setNamaKurir("");
+    setDataKurirSelected({});
   };
 
   useEffect(() => {
@@ -73,7 +85,7 @@ const CreateDeliveryForm = ({ dataResi, dataKurir, dataCabang }) => {
             <option value="">-- Pilih Kurir --</option>
             {dataKurir.result.length > 0
               ? dataKurir.result.map((data, index) => (
-                  <option key={index} value={data.nama} className="">
+                  <option key={index} value={data.email} className="">
                     {data.nama} - {data.posisi + data.cabang + data.id}
                   </option>
                 ))
@@ -90,7 +102,11 @@ const CreateDeliveryForm = ({ dataResi, dataKurir, dataCabang }) => {
       {isLoading ? null : router.query.cabang === undefined ? null : !router.query.cabang ? (
         <p className="w-full p-4 text-sm text-red-600 text-center">Cabang belum dipilih...</p>
       ) : dataResi.result.length > 0 ? (
-        <CreateDeliveryTable dataResi={dataResi.result} />
+        <CreateDeliveryTable
+          dataResi={dataResi.result}
+          dataKurir={dataKurirSelected}
+          onResetInput={resetInput}
+        />
       ) : (
         <p className="w-full p-4 text-sm text-red-600 text-center">{dataResi.message}</p>
       )}

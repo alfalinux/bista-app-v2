@@ -1,17 +1,18 @@
-import generateDate from "@/helpers/generateDate";
 import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import CreateDeliveryButton from "./CreateDeliveryButton";
 
-const CreateDeliveryTable = ({ dataResi, resetCabangTujuan }) => {
+const CreateDeliveryTable = ({ dataResi, dataKurir, onResetInput }) => {
+  const [listDataResi, setListDataResi] = useState(dataResi);
   const [checkedResi, setCheckedResi] = useState([]);
   const [checkedAll, setCheckedAll] = useState(false);
   const checkbox = document.querySelectorAll("#checkbox");
 
-  const checkedHandler = (checked, checkedData) => {
+  const checkedResiHandler = (checked, data) => {
     if (checked) {
-      setCheckedResi((prevState) => [...prevState, checkedData]);
+      setCheckedResi((prevState) => [...prevState, data]);
     } else {
-      setCheckedResi((prevState) => prevState.filter((d) => d.noResi !== checkedData.noResi));
+      setCheckedResi((prevState) => prevState.filter((d) => d.noResi !== data.noResi));
     }
   };
 
@@ -24,7 +25,7 @@ const CreateDeliveryTable = ({ dataResi, resetCabangTujuan }) => {
       }
     } else {
       setCheckedAll(true);
-      setCheckedResi(dataResi);
+      setCheckedResi(listDataResi);
       for (let item of checkbox) {
         item.checked = true;
       }
@@ -32,7 +33,7 @@ const CreateDeliveryTable = ({ dataResi, resetCabangTujuan }) => {
   };
 
   useEffect(() => {
-    if (checkedResi.length === dataResi.length) {
+    if (checkedResi.length === listDataResi.length) {
       setCheckedAll(true);
     } else {
       setCheckedAll(false);
@@ -42,7 +43,7 @@ const CreateDeliveryTable = ({ dataResi, resetCabangTujuan }) => {
   useEffect(() => {
     setCheckedAll(false);
     setCheckedResi([]);
-  }, [dataResi]);
+  }, [listDataResi]);
 
   return (
     <div className="w-full mt-4 mb-4 bg-transparent">
@@ -56,7 +57,7 @@ const CreateDeliveryTable = ({ dataResi, resetCabangTujuan }) => {
             <th className="p-2 border border-gray-300">Kecamatan Tujuan</th>
             <th className="p-2 border border-gray-300">Jlh Paket</th>
             <th className="p-2 border border-gray-300">Berat Paket</th>
-            <th className="p-2 border border-gray-300 flex flex-wrap items-center justify-center gap-1">
+            <th className="p-2 flex flex-wrap items-center justify-center gap-1">
               <p>Pilih</p>
               <ClipboardDocumentCheckIcon
                 className="h-5 hover:animate-pulse hover:text-red-600 cursor-pointer"
@@ -66,7 +67,7 @@ const CreateDeliveryTable = ({ dataResi, resetCabangTujuan }) => {
           </tr>
         </thead>
         <tbody>
-          {dataResi.map((data, index) => (
+          {listDataResi.map((data, index) => (
             <tr key={index}>
               <td
                 className={`text-gray-900 dark:text-gray-200 text-sm text-center whitespace-nowrap border border-gray-300 px-2 py-1 ${
@@ -130,18 +131,18 @@ const CreateDeliveryTable = ({ dataResi, resetCabangTujuan }) => {
                 <input
                   type="checkbox"
                   id="checkbox"
-                  onChange={(e) => checkedHandler(e.target.checked, data)}
+                  onChange={(e) => checkedResiHandler(e.target.checked, data)}
                   className="hover:cursor-pointer"
-                  //   disabled={cabangTujuan ? false : true}
+                  disabled={!dataKurir}
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {/* <div className="w-full mt-8 flex justify-end items-center">
-        <ReceiveSuratJalanButton dataResi={checkedResi} resetCabangTujuan={resetCabangTujuan} />
-      </div> */}
+      <div className="w-full mt-8 flex justify-end items-center">
+        <CreateDeliveryButton dataResi={checkedResi} dataKurir={dataKurir} onResetInput={onResetInput} />
+      </div>
     </div>
   );
 };

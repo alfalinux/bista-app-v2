@@ -4,13 +4,11 @@ const handler = async (req, res) => {
   const { cabang } = req.query;
 
   if (!cabang || typeof cabang !== "string" || !/^[a-zA-Z0-9]+$/.test(cabang)) {
-    res
-      .status(400)
-      .json({
-        status: 400,
-        message: "Input cabang tidak valid. Harus terdiri dari huruf dan angka.",
-        result: [],
-      });
+    res.status(400).json({
+      status: 400,
+      message: "Input cabang tidak valid. Harus terdiri dari huruf dan angka.",
+      result: [],
+    });
     return;
   }
 
@@ -34,7 +32,19 @@ const handler = async (req, res) => {
 
   const response =
     result.length > 0
-      ? { status: "201", message: "Data user ditemukan", result: result }
+      ? {
+          status: "201",
+          message: "Data user ditemukan",
+          result: result.map((d) => ({
+            id: d.id,
+            nama: d.nama,
+            email: d.email,
+            posisi: d.posisi,
+            posisiDesc: d.posisiDesc,
+            cabang: d.cabang,
+            cabangDesc: d.cabangDesc,
+          })),
+        }
       : { status: "404", message: "Data user tidak ditemukan", result: result };
 
   res.status(201).json(response);

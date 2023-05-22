@@ -23,10 +23,9 @@ const generatePdfDelivery = (data) => {
         content: i + 1,
         rowSpan: 3,
         styles: {
-          cellWidth: "wrap",
+          cellWidth: "auto",
           halign: "center",
           valign: "top",
-          cellWidth: "wrap",
           cellPadding: { top: 1, right: 2, bottom: 1, left: 2 },
           lineWidth: { top: 0, right: 0.2, bottom: 0.2, left: 0.2 },
         },
@@ -37,7 +36,7 @@ const generatePdfDelivery = (data) => {
         styles: {
           halign: "center",
           valign: "top",
-          cellWidth: "wrap",
+          cellWidth: "auto",
           cellPadding: { top: 1, right: 2, bottom: 1, left: 2 },
           lineWidth: { top: 0, right: 0.2, bottom: 0.2, left: 0.2 },
         },
@@ -45,8 +44,10 @@ const generatePdfDelivery = (data) => {
       {
         content: d.namaPengirim,
         styles: {
-          cellWidth: "wrap",
+          cellWidth: "auto",
+          overflow: "ellipsize",
           halign: "left",
+          valign: "top",
           cellPadding: { top: 1, right: 2, bottom: 0, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0, left: 0.1 },
         },
@@ -54,8 +55,10 @@ const generatePdfDelivery = (data) => {
       {
         content: d.namaPenerima,
         styles: {
-          cellWidth: "wrap",
+          cellWidth: "auto",
+          overflow: "ellipsize",
           halign: "left",
+          valign: "top",
           cellPadding: { top: 1, right: 2, bottom: 0, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0, left: 0.1 },
         },
@@ -72,12 +75,14 @@ const generatePdfDelivery = (data) => {
           cellPadding: { top: 1, right: 2, bottom: 0, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0, left: 0.1 },
           halign: "left",
+          valign: "top",
         },
       },
       {
         content: d.pembayaran.toUpperCase(),
         styles: {
-          cellWidth: "wrap",
+          cellWidth: "auto",
+          valign: "top",
           lineWidth: { top: 0, right: 0.1, bottom: 0, left: 0.1 },
           cellPadding: { top: 1, right: 2, bottom: 0, left: 2 },
         },
@@ -87,10 +92,11 @@ const generatePdfDelivery = (data) => {
       {
         content: d.nohpPengirim,
         styles: {
-          cellWidth: "wrap",
+          cellWidth: "auto",
           fontSize: 8,
           fontStyle: "bold",
           halign: "left",
+          valign: "top",
           cellPadding: { top: 0, right: 2, bottom: 0, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0, left: 0.1 },
         },
@@ -98,10 +104,11 @@ const generatePdfDelivery = (data) => {
       {
         content: d.nohpPenerima,
         styles: {
-          cellWidth: "wrap",
+          cellWidth: "auto",
           fontSize: 8,
           fontStyle: "bold",
           halign: "left",
+          valign: "top",
           cellPadding: { top: 0, right: 2, bottom: 0, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0, left: 0.1 },
         },
@@ -110,7 +117,9 @@ const generatePdfDelivery = (data) => {
         content: d.paket.map((d) => d.keterangan).join(", "),
         rowSpan: 2,
         styles: {
+          cellWidth: 40,
           halign: "left",
+          valign: "top",
           fontSize: 8,
           cellPadding: { top: 1, right: 2, bottom: 0, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0.2, left: 0.1 },
@@ -120,7 +129,8 @@ const generatePdfDelivery = (data) => {
         content: "Rp. " + Number(d.grandTotal).toLocaleString("id-ID"),
         rowSpan: 2,
         styles: {
-          cellWidth: "wrap",
+          cellWidth: "auto",
+          valign: "top",
           cellPadding: { top: 1, right: 2, bottom: 0, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0.2, left: 0.1 },
         },
@@ -131,7 +141,9 @@ const generatePdfDelivery = (data) => {
         content: d.alamatPengirim,
         styles: {
           fontSize: 8,
+          cellWidth: 40,
           halign: "left",
+          valign: "top",
           cellPadding: { top: 0, right: 2, bottom: 2, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0.2, left: 0.1 },
         },
@@ -141,7 +153,10 @@ const generatePdfDelivery = (data) => {
 
         styles: {
           fontSize: 8,
+          overflow: "linebreak",
+          cellWidth: 40,
           halign: "left",
+          valign: "top",
           cellPadding: { top: 0, right: 2, bottom: 2, left: 2 },
           lineWidth: { top: 0, right: 0.1, bottom: 0.2, left: 0.1 },
         },
@@ -159,7 +174,7 @@ const generatePdfDelivery = (data) => {
     theme: "plain",
     startY: 30,
     margin: { top: 2, right: 2, left: 2, bottom: 0 },
-    tableWidth: "190",
+    tableWidth: 190,
     styles: {
       cellPadding: 0.5,
       fontSize: 16,
@@ -181,7 +196,7 @@ const generatePdfDelivery = (data) => {
     theme: "plain",
     startY: doc.lastAutoTable.finalY,
     margin: { top: 2, right: 10, left: 10, bottom: 2 },
-    tableWidth: "190",
+    tableWidth: 190,
     styles: {
       cellPadding: 0.5,
       fontSize: 10,
@@ -198,7 +213,7 @@ const generatePdfDelivery = (data) => {
     ],
   });
 
-  // NAMA SOPIR DAN NOPOL
+  // CABNAG DAN NAMA KUIRI
   doc.autoTable({
     theme: "plain",
     startY: doc.lastAutoTable.finalY + 5,
@@ -247,10 +262,10 @@ const generatePdfDelivery = (data) => {
     theme: "grid",
     startY: doc.lastAutoTable.finalY + 5,
     margin: { top: 2, right: 10, left: 10, bottom: 2 },
-    tableWidth: "auto",
+    tableWidth: 190,
     headStyles: {
       cellPadding: 2,
-      cellWidth: "wrap",
+      cellWidth: "auto",
       fontSize: 10,
       textColor: "#fff",
       fontStyle: "bold",
@@ -260,6 +275,7 @@ const generatePdfDelivery = (data) => {
     },
     styles: {
       cellPadding: 0,
+      cellWidth: "auto",
       lineWidth: 0.2,
       fontSize: 8,
       textColor: "#000",
@@ -275,7 +291,7 @@ const generatePdfDelivery = (data) => {
     theme: "plain",
     startY: doc.lastAutoTable.finalY + 15,
     margin: { top: 5, right: 10, left: 10, bottom: 0 },
-    tableWidth: "190",
+    tableWidth: 190,
     styles: {
       cellPadding: 0.1,
       fontSize: 10,

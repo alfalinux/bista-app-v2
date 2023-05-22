@@ -121,6 +121,12 @@ export const findSuratJalanBelumReceive = async (client, collection, cabangTujua
   return result;
 };
 
+export const findDelivery = async (client, collection, noDelivery) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).find({ "delivery.noDelivery": noDelivery }).toArray();
+  return result;
+};
+
 // END FIND IN DATABASE
 
 // UPDATE DATABASE

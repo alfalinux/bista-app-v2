@@ -153,7 +153,6 @@ const generatePdfDelivery = (data) => {
 
         styles: {
           fontSize: 8,
-          overflow: "linebreak",
           cellWidth: 40,
           halign: "left",
           valign: "top",
@@ -166,7 +165,7 @@ const generatePdfDelivery = (data) => {
 
   const doc = new jsPDF("p", "mm", [210, 297]);
 
-  doc.addImage(imglogo, "PNG", 10, 10, 75, 14.375);
+  doc.addImage(imglogo, "PNG", 10, 10, 60, 11.5);
   doc.addImage(imgbarcode, "PNG", 140, 7.5, 60, 20);
 
   // title
@@ -179,7 +178,7 @@ const generatePdfDelivery = (data) => {
       cellPadding: 0.5,
       fontSize: 16,
       halign: "center",
-      valign: "center",
+      valign: "middle",
     },
     body: [
       [
@@ -195,13 +194,13 @@ const generatePdfDelivery = (data) => {
   doc.autoTable({
     theme: "plain",
     startY: doc.lastAutoTable.finalY,
-    margin: { top: 2, right: 10, left: 10, bottom: 2 },
+    margin: { top: 2, right: 2, left: 2, bottom: 2 },
     tableWidth: 190,
     styles: {
       cellPadding: 0.5,
       fontSize: 10,
       halign: "center",
-      valign: "center",
+      valign: "middle",
     },
     body: [
       [

@@ -50,7 +50,7 @@ const LeftMenu = (props) => {
       icon: TruckIcon,
       submenu: [
         { name: "Create Delivery", link: "/delivery/create-delivery" },
-        { name: "Update Status Delivery", link: "/incoming/update-status-delivery" },
+        { name: "Update Status Delivery", link: "/delivery/update-status-delivery" },
       ],
     },
     {

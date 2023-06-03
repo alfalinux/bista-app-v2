@@ -127,6 +127,19 @@ export const findDelivery = async (client, collection, noDelivery) => {
   return result;
 };
 
+export const findDeliveryByCabang = async (client, collection, cabang) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .find({
+      "delivery.noDelivery": { $ne: null },
+      "delivery.dataKurir.cabangDesc": cabang,
+      delivery: { $elemMatch: { deliveryClosedAt: { $exists: false } } },
+    })
+    .toArray();
+  return result;
+};
+
 // END FIND IN DATABASE
 
 // UPDATE DATABASE
@@ -197,6 +210,37 @@ export const pushDelivery = async (client, collection, filter, update) => {
     },
     {
       $push: { delivery: update },
+    }
+  );
+
+  return result;
+};
+
+export const updateOneDeliveryStatus = async (client, collection, filter, update) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).updateOne(
+    { noResi: filter.noResi, "delivery.noDelivery": filter.noDelivery },
+    {
+      $set: {
+        "delivery.$.deliveryStatus.proses": update.proses,
+        "delivery.$.deliveryStatus.keterangan": update.keterangan,
+        "delivery.$.deliveryStatus.prosesAt": update.prosesAt,
+      },
+    }
+  );
+
+  return result;
+};
+
+export const setDeliveryClosed = async (client, collection, filter, update) => {
+  const db = client.db("bista-app-v2");
+  const result = await db.collection(collection).updateMany(
+    { "delivery.noDelivery": filter },
+    {
+      $set: {
+        "delivery.$.deliveryClosedAt": update.deliveryClosedAt,
+        "delivery.$.deliveryClosedBy": update.deliveryClosedBy,
+      },
     }
   );
 

@@ -3,12 +3,12 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../utils/LoadingSpinner";
-import generatePdfManifest from "@/helpers/generatePdfManifest";
+import generatePdfSuratJalan from "@/helpers/generatePdfSuratJalan";
 
-const ReprintManifestForm = (props) => {
+const ReprintSuratJalanForm = (props) => {
   const [data, setData] = useState();
   const router = useRouter();
-  const [inputNoManifest, setInputNoManifest] = useState("");
+  const [inputNoSuratJalan, setInputNoSuratJalan] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,18 +20,18 @@ const ReprintManifestForm = (props) => {
   };
 
   const changeHandler = (e) => {
-    setInputNoManifest(removeNonNumChar(e.target.value));
+    setInputNoSuratJalan(removeNonNumChar(e.target.value));
     e.target.value.length >= 18 && e.target.value.length <= 20 ? setIsValid(true) : setIsValid(false);
   };
 
-  const cariManifestHandler = (e) => {
+  const cariSuratJalanHandler = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    router.push(`${router.pathname}?noManifest=${inputNoManifest}`);
+    router.push(`${router.pathname}?noSuratJalan=${inputNoSuratJalan}`);
   };
 
   useEffect(() => {
-    setData(props.dataManifest);
+    setData(props.dataSuratJalan);
     setIsLoading(false);
   }, [router.query]);
 
@@ -39,16 +39,16 @@ const ReprintManifestForm = (props) => {
     <div className="w-full px-4 ">
       <form
         type="submit"
-        onSubmit={cariManifestHandler}
+        onSubmit={cariSuratJalanHandler}
         className="w-full p-4 bg-white dark:bg-gray-900 outline-none rounded-md shadow-md flex items-center gap-4 "
       >
         <input
           type="text"
-          id="reprintManifest"
-          name="reprintManifest"
+          id="reprintSuratJalan"
+          name="reprintSuratJalan"
           onChange={changeHandler}
           onBlur={blurHandler}
-          value={inputNoManifest}
+          value={inputNoSuratJalan}
           className={`w-full h-12 p-2 text-sm text-gray-700 dark:text-gray-400 font-semibold rounded-md border outline-none focus:ring-2 focus:border-transparent ${
             !isValid && isTouched
               ? "bg-red-100 dark:bg-red-800 ring-red-600 dark:ring-red-600 border-red-600 dark:border-red-600"
@@ -56,7 +56,7 @@ const ReprintManifestForm = (props) => {
           }`}
           autoComplete="off"
           spellCheck={false}
-          placeholder="Ketik nomor manifest..."
+          placeholder="Ketik nomor surat jalan..."
         />
         <button
           className={`w-fit sm:w-40 h-12 bg-red-600 hover:bg-red-700 px-2 flex items-center justify-center rounded-md text-sm font-semibold text-white disabled:bg-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed`}
@@ -68,7 +68,7 @@ const ReprintManifestForm = (props) => {
       </form>
 
       {!isValid && isTouched ? (
-        <p className="text-red-600 text-xs mt-2">* Nomor manifest tidak valid</p>
+        <p className="text-red-600 text-xs mt-2">* Nomor surat jalan tidak valid</p>
       ) : null}
 
       {isLoading ? (
@@ -81,18 +81,18 @@ const ReprintManifestForm = (props) => {
           <div className="w-full flex flex-col items-start justify-center">
             <div className="w-full flex justify-start">
               <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
-                Nomor Manifest
+                Nomor Surat Jalan
               </h3>
               <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2">
-                {data.result.noManifest}
+                {data.result.noSuratJalan}
               </p>
             </div>
             <div className="w-full flex justify-start">
               <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
-                Tgl Manifest
+                Tgl Surat Jalan
               </h3>
               <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2">
-                {generateDate(data.result.tglManifest)}
+                {generateDate(data.result.suratJalanCreatedAt)}
               </p>
             </div>
             <div className="w-full flex justify-start">
@@ -113,10 +113,18 @@ const ReprintManifestForm = (props) => {
             </div>
             <div className="w-full flex justify-start">
               <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
-                Coveran Area
+                Nama Driver / Vendor
               </h3>
               <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2 capitalize">
-                {data.result.coveranArea}
+                {data.result.namaDriver}
+              </p>
+            </div>
+            <div className="w-full flex justify-start">
+              <h3 className="w-1/3 font-semibold whitespace-nowrap text-sm text-gray-200 text-right p-2 bg-gray-800 dark:bg-gray-900 ">
+                Nopol Driver / AWB
+              </h3>
+              <p className="w-2/3 text-sm text-gray-800 dark:text-gray-200 text-left p-2 capitalize">
+                {data.result.nopolDriver}
               </p>
             </div>
             <div className="w-full h-36 sm:h-14 flex items-center">
@@ -124,19 +132,19 @@ const ReprintManifestForm = (props) => {
               <div className="w-2/3 h-full p-2 flex flex-col sm:flex-row gap-2 justify-start">
                 <button
                   className="p-2 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-md"
-                  onClick={() => generatePdfManifest(data.result)}
+                  onClick={() => generatePdfSuratJalan(data.result)}
                 >
-                  Reprint Manifest
+                  Reprint Surat Jalan
                 </button>
               </div>
             </div>
           </div>
         </div>
-      ) : !isLoading && isValid && router.query.noManifest ? (
+      ) : !isLoading && isValid && router.query.noSuratJalan ? (
         <p className="mt-2 text-xs text-red-600">* {data.message}</p>
       ) : null}
     </div>
   );
 };
 
-export default ReprintManifestForm;
+export default ReprintSuratJalanForm;

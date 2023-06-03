@@ -19,7 +19,7 @@ const generatePdfSuratJalan = (suratJalan) => {
 
   const doc = new jsPDF("p", "mm", [210, 297]);
 
-  doc.addImage(imglogo, "PNG", 10, 10, 75, 14.375);
+  doc.addImage(imglogo, "PNG", 10, 10, 60, 11.5);
   // doc.addImage(imgbarcode, "PNG", 156.875, 10, 43.125, 14.375);
   doc.addImage(imgbarcode, "PNG", 140, 7.5, 60, 20);
 
@@ -130,7 +130,7 @@ const generatePdfSuratJalan = (suratJalan) => {
       halign: "center",
       valign: "top",
     },
-    head: [["Pemberangkatan", "Tujuan", "Total Barang", "Total Paket"]],
+    head: [["Pemberangkatan", "Tujuan", "Total Paket", "Total Berat"]],
     body: [
       [
         {

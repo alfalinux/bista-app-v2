@@ -8,7 +8,6 @@ import {
   ClipboardDocumentListIcon,
 } from "@heroicons/react/24/outline";
 import LeftMenuButton from "../utils/LeftMenuButton";
-import React from "react";
 import HeadMenuButton from "../utils/HeadMenuButton";
 
 const LeftMenu = (props) => {
@@ -19,9 +18,8 @@ const LeftMenu = (props) => {
       link: "",
       icon: ComputerDesktopIcon,
       submenu: [
-        { name: "Resi Aktif", link: "/monitoring/resi-aktif" },
-        { name: "Manifest Aktif", link: "/monitoring/manifest-aktif" },
-        { name: "Surat Jalan Aktif", link: "/monitoring/surat-jalan-aktif" },
+        { name: "Transaksi Harian", link: "/monitoring/transaksi-harian" },
+        { name: "Transaksi Gantung", link: "/monitoring/manifest-belum-surat-jalan" },
         { name: "Cek Resi", link: "/monitoring/cek-resi" },
       ],
     },

@@ -30,6 +30,15 @@ export const findResi = async (client, collection, noResi) => {
   return result;
 };
 
+export const findResiCabangByDate = async (client, collection, cabang, tglTransaksi) => {
+  const db = client.db("bista-app-v2");
+  const result = await db
+    .collection(collection)
+    .find({ cabangAsal: cabang, tglTransaksi: { $regex: `${tglTransaksi}.*` } })
+    .toArray();
+  return result;
+};
+
 export const findResiBelumManifest = async (client, collection, cabangAsal) => {
   const db = client.db("bista-app-v2");
   const result = await db
@@ -165,11 +174,6 @@ export const setSuratJalan = async (client, collection, filter, update) => {
     { noManifest: { $in: filter } },
     {
       $push: { suratJalan: update },
-      // $cond: {
-      //   if: { $exists: "$suratJalan" },
-      //   then: { $push: { suratJalan: update } },
-      //   else: { $set: { suratJalan: [update] } },
-      // },
     }
   );
 

@@ -1,45 +1,7 @@
 import Layout from "@/components/Layout";
-import DetailResi from "@/components/cek-resi/DetailResi";
 import SearchForm from "@/components/cek-resi/SearchForm";
 import TableTracker from "@/components/cek-resi/TableTracker";
 import { useEffect, useState } from "react";
-
-// const trackingResult = [
-//   { at: dataResi.resiCreatedAt, in: dataResi.resiCreatedIn, is: `create resi` },
-
-//   dataResi.manifestCreatedAt
-//     ? { at: dataResi.manifestCreatedAt, in: dataResi.manifestCreatedIn, is: `create manifest` }
-//     : null,
-
-//   dataResi.listSuratJalan.length > 0
-//     ? dataResi.listSuratJalan.map((d) => [
-//         { at: d.suratJalanCreatedAt, in: d.suratJalanCreatedIn, is: `create surat jalan` },
-//         d.suratJalanReceivedAt
-//           ? { at: d.suratJalanReceivedAt, in: d.suratJalanReceivedIn, is: `receive surat jalan` }
-//           : null,
-//       ])
-//     : null,
-
-//   dataResi.manifestReceivedAt
-//     ? { at: dataResi.manifestReceivedAt, in: dataResi.manifestReceivedIn, is: `receive manifest` }
-//     : null,
-
-//   dataResi.listDelivery.length > 0
-//     ? dataResi.listDelivery.map((d) => [
-//         {
-//           at: d.deliveryCreatedAt,
-//           by: d.dataKurir.nama + " - " + d.dataKurir.posisi + d.dataKurir.cabang + d.dataKurir.id,
-//           is: `create delivery`,
-//         },
-//         d.deliveryStatus.prosesAt
-//           ? {
-//               at: d.deliveryStatus.prosesAt,
-//               is: `${d.deliveryStatus.proses.toUpperCase()} - ${d.deliveryStatus.keterangan}`,
-//             }
-//           : null,
-//       ])
-//     : null,
-// ].flat(Infinity);
 
 const CekResiPage = (data) => {
   const [dataResi, setDataResi] = useState([]);

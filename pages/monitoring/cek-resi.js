@@ -9,36 +9,73 @@ const CekResiPage = (data) => {
   useEffect(() => {
     setDataResi(
       [
-        { at: data.result.resiCreatedAt, in: data.result.resiCreatedIn, is: `create resi` },
-
-        data.result.manifestCreatedAt
-          ? { at: data.result.manifestCreatedAt, in: data.result.manifestCreatedIn, is: `create manifest` }
+        data.result.noResi
+          ? {
+              at: data.result.resiCreatedAt,
+              in: data.result.resiCreatedIn,
+              by: data.result.resiCreatedBy,
+              is: `create resi`,
+              ket: data.result.noResi,
+            }
           : null,
 
-        data.result.listSuratJalan.length > 0
+        data.result.manifestCreatedAt
+          ? {
+              at: data.result.manifestCreatedAt,
+              in: data.result.manifestCreatedIn,
+              by: data.result.manifestCreatedBy,
+              is: `create manifest`,
+              ket: data.result.noManifest,
+            }
+          : null,
+
+        data.result.listSuratJalan?.length > 0
           ? data.result.listSuratJalan.map((d) => [
-              { at: d.suratJalanCreatedAt, in: d.suratJalanCreatedIn, is: `create surat jalan` },
+              {
+                at: d.suratJalanCreatedAt,
+                in: d.suratJalanCreatedIn,
+                by: `${d.namaDriver} - ${d.nopolDriver}`,
+                is: `create surat jalan`,
+                ket: d.noSuratJalan,
+              },
               d.suratJalanReceivedAt
-                ? { at: d.suratJalanReceivedAt, in: d.suratJalanReceivedIn, is: `receive surat jalan` }
+                ? {
+                    at: d.suratJalanReceivedAt,
+                    in: d.suratJalanReceivedIn,
+                    by: d.suratJalanReceivedBy,
+                    is: `receive surat jalan`,
+                    ket: "",
+                  }
                 : null,
             ])
           : null,
 
         data.result.manifestReceivedAt
-          ? { at: data.result.manifestReceivedAt, in: data.result.manifestReceivedIn, is: `receive manifest` }
+          ? {
+              at: data.result.manifestReceivedAt,
+              in: data.result.manifestReceivedIn,
+              by: data.result.manifestReceivedBy,
+              is: `receive manifest`,
+              ket: "",
+            }
           : null,
 
-        data.result.listDelivery.length > 0
+        data.result.listDelivery?.length > 0
           ? data.result.listDelivery.map((d) => [
               {
                 at: d.deliveryCreatedAt,
-                by: d.dataKurir.nama + " - " + d.dataKurir.posisi + d.dataKurir.cabang + d.dataKurir.id,
+                in: d.dataKurir.cabangDesc,
+                by: `${d.dataKurir.nama} - ${d.dataKurir.posisi}${d.dataKurir.cabang}${d.dataKurir.id}`,
                 is: `create delivery`,
+                ket: d.noDelivery,
               },
               d.deliveryStatus.prosesAt
                 ? {
                     at: d.deliveryStatus.prosesAt,
-                    is: `${d.deliveryStatus.proses.toUpperCase()} - ${d.deliveryStatus.keterangan}`,
+                    in: "",
+                    by: "",
+                    is: d.deliveryStatus.proses,
+                    ket: d.deliveryStatus.keterangan,
                   }
                 : null,
             ])
@@ -50,7 +87,6 @@ const CekResiPage = (data) => {
     );
   }, [data]);
 
-  console.log(dataResi);
   return (
     <Layout>
       <div className="w-full p-4 flex flex-col gap-4">
@@ -67,8 +103,12 @@ export async function getServerSideProps(context) {
   const { noResi } = context.query;
   const hostName = context.req.headers.host;
 
+  let data;
+  if (!noResi) {
+    data = [];
+  }
   const result = await fetch(`http://${hostName}/api/cek-resi/${noResi}`);
-  const data = await result.json();
+  data = await result.json();
 
   return {
     props: data,

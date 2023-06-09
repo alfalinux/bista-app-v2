@@ -48,7 +48,7 @@ const CreateSuratJalanButton = ({ initValues }) => {
           jumlahPaket: initValues.checkedManifest
             .map((d) => (d.konsolidasi == "true" ? "1" : d.jumlahPaket))
             .reduce((total, value) => total + Number(value), 0),
-          suratJalanCreatedBy: data.nama,
+          suratJalanCreatedBy: `${data.nama} - ${data.posisi}${data.cabang}${data.id}`,
           dataManifest: initValues.checkedManifest,
         };
         Swal.fire({

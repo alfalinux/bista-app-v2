@@ -18,7 +18,6 @@ const UpdateStatusDeliveryContainer = ({ dataDelivery }) => {
     setCabang(e.target.value);
     setNamaKurir("");
     router.push(`/delivery/update-status-delivery?cabang=${e.target.value}`);
-    // console.log(e);
   };
   const namaKurirChangeHandler = (e) => {
     setNamaKurir(e.target.value);

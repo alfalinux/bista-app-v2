@@ -77,7 +77,11 @@ const CreateManifestModal = ({ onCloseModal, dataResi, cabangAsal, tujuan }) => 
           method: "PATCH",
           body: JSON.stringify({
             filter: listNoResi,
-            update: { noManifest: noManifest, manifestCreatedAt: tgl, manifestCreatedBy: data.nama },
+            update: {
+              noManifest: noManifest,
+              manifestCreatedAt: tgl,
+              manifestCreatedBy: `${data.nama} - ${data.posisi}${data.cabang}${data.id}`,
+            },
           }),
           headers: { "Content-Type": "application/json" },
         })

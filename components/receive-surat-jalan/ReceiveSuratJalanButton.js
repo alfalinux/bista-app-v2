@@ -19,7 +19,7 @@ const ReceiveSuratJalanButton = ({ dataSuratJalan, resetCabangTujuan }) => {
       if (result.isConfirmed) {
         const updateData = {
           suratJalanReceivedAt: new Date().toISOString(),
-          suratJalanReceivedBy: data.nama,
+          suratJalanReceivedBy: `${data.nama} - ${data.posisi}${data.cabang}${data.id}`,
         };
         const filterData = dataSuratJalan.map((d) => d.noSuratJalan);
         Swal.fire({

@@ -72,8 +72,8 @@ const CekResiPage = (data) => {
               d.deliveryStatus.prosesAt
                 ? {
                     at: d.deliveryStatus.prosesAt,
-                    in: "",
-                    by: "",
+                    in: d.deliveryStatus.prosesIn,
+                    by: d.deliveryStatus.prosesBy,
                     is: d.deliveryStatus.proses,
                     ket: d.deliveryStatus.keterangan,
                   }

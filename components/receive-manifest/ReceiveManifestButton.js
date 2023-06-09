@@ -19,7 +19,7 @@ const ReceiveManifestButton = ({ dataManifest, resetCabangTujuan }) => {
       if (result.isConfirmed) {
         const updateData = {
           manifestReceivedAt: new Date().toISOString(),
-          manifestReceivedBy: data.nama,
+          manifestReceivedBy: `${data.nama} - ${data.posisi}${data.cabang}${data.id}`,
         };
         const filterResi = dataManifest.flatMap((d) => d.dataResi).map((d) => d.noResi);
         const filterManifest = dataManifest.map((d) => d.noManifest);

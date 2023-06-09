@@ -23,11 +23,13 @@ const CreateDeliveryButton = ({ dataResi, dataKurir, onResetInput }) => {
           noDelivery: generateNoDelivery(dataKurir),
           dataKurir: dataKurir,
           deliveryCreatedAt: new Date().toISOString(),
-          deliveryCreatedBy: data.nama,
+          deliveryCreatedBy: `${data.nama} - ${data.posisi}${data.cabang}${data.id}`,
           deliveryStatus: {
             proses: "pengantaran",
             keterangan: "",
             prosesAt: "",
+            prosesBy: "",
+            prosesIn: "",
           },
         };
         const filterData = dataResi.map((d) => d.noResi);

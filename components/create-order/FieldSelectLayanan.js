@@ -44,7 +44,7 @@ const FieldSelectLayanan = (props) => {
         : "none",
       ":hover": { borderColor: state.isFocused ? "transparent" : "#94a3b8" },
     }),
-    menu: (styles) => console.log(styles),
+    // menu: (styles) => console.log(styles),
     option: (styles, state) => ({
       ...styles,
       backgroundColor: state.isFocused ? `${modeTheme === "dark" ? "#64748b" : "#e2e8f0"}` : "transparent",

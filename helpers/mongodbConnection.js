@@ -229,6 +229,8 @@ export const updateOneDeliveryStatus = async (client, collection, filter, update
         "delivery.$.deliveryStatus.proses": update.proses,
         "delivery.$.deliveryStatus.keterangan": update.keterangan,
         "delivery.$.deliveryStatus.prosesAt": update.prosesAt,
+        "delivery.$.deliveryStatus.prosesBy": update.prosesBy,
+        "delivery.$.deliveryStatus.prosesIn": update.prosesIn,
       },
     }
   );

@@ -1,4 +1,5 @@
 import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -12,6 +13,7 @@ const UpdateStatusDeliveryButton = ({
   onChangeCabang,
   onChangeKurir,
 }) => {
+  const { data } = useSession();
   const [modalOpen, setModalOpen] = useState(false);
   const [statusSelected, setStatusSelected] = useState("");
   const [inputKeterangan, setInputKeterangan] = useState("");
@@ -37,6 +39,8 @@ const UpdateStatusDeliveryButton = ({
   const updateStatusHandler = () => {
     const tgl = new Date().toISOString();
     const reason = namaPenerima ? `${namaPenerima} / ${inputKeterangan}` : inputKeterangan;
+    const user = `${data.nama} - ${data.posisi}${data.cabang}${data.id}`;
+    const cabangProses = cabang;
     Swal.fire({
       didOpen: () => {
         Swal.showLoading();
@@ -45,7 +49,13 @@ const UpdateStatusDeliveryButton = ({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             filter: { noResi: noResi, noDelivery: noDelivery },
-            update: { proses: statusSelected, keterangan: reason, prosesAt: tgl },
+            update: {
+              proses: statusSelected,
+              keterangan: reason,
+              prosesAt: tgl,
+              prosesBy: user,
+              prosesIn: cabangProses,
+            },
           }),
         }).then((response) =>
           response.json().then((data) => {

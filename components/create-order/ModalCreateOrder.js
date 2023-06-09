@@ -74,11 +74,11 @@ const ModalCreateOrder = (props) => {
       value: `Rp. ${Number(data.grandTotal).toLocaleString("id-ID", { maximumFractionDigits: 0 })} ,-`,
     },
   ];
-
   const createResiHandler = () => {
     const tglTransaksi = new Date().toISOString();
     const noResi = generateNoResi(userData.cabang, userData.posisi);
-    const submitData = { ...data, tglTransaksi, noResi };
+    const petugasInput = `${userData.nama} - ${userData.posisi}${userData.cabang}${userData.id}`;
+    const submitData = { ...data, tglTransaksi, noResi, petugasInput };
     Swal.fire({
       allowOutsideClick: false,
       didOpen: () => {
@@ -115,7 +115,7 @@ const ModalCreateOrder = (props) => {
 
   return (
     <div className="w-full h-[100dvh] fixed inset-0 p-4 z-20 bg-black/80 flex items-start justify-center">
-      <div className="w-96 h-full mx-auto p-4 rounded-md bg-gray-100 dark:bg-gray-700 overflow-y-scroll sm:scrollbar overflow-x-hidden text-sm">
+      <div className="w-96 h-full mx-auto p-4 rounded-md bg-gray-100 dark:bg-gray-700 overflow-scroll text-sm">
         <table className="table-auto border-separate border-spacing-y-1">
           <tbody>
             {detail.map((item, index) => (

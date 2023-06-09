@@ -2,6 +2,13 @@ import { connectToMongoDB } from "../../../helpers/mongodbConnection";
 
 const handler = async (req, res) => {
   const { noResi } = req.query;
+
+  // validasi input
+  if (!noResi || typeof noResi !== "string" || !/^[a-zA-Z0-9]+$/.test(noResi)) {
+    res.status(400).json({ status: res.statusCode, message: "Input nomor resi tidak valid" });
+    return;
+  }
+
   let client;
   try {
     client = await connectToMongoDB();
@@ -19,6 +26,15 @@ const handler = async (req, res) => {
       resi = await db.collection("data-resi").findOne({ noResi: noResi });
     } catch (error) {
       resi = null;
+    }
+
+    if (!resi) {
+      res.status(404).json({
+        status: res.statusCode,
+        message: "Data tidak ditemukan",
+      });
+      client.close();
+      return;
     }
 
     try {

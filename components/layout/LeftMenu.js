@@ -19,7 +19,6 @@ const LeftMenu = (props) => {
       icon: ComputerDesktopIcon,
       submenu: [
         { name: "Transaksi Harian", link: "/monitoring/transaksi-harian" },
-        { name: "Transaksi Gantung", link: "/monitoring/manifest-belum-surat-jalan" },
         { name: "Cek Resi", link: "/monitoring/cek-resi" },
       ],
     },
@@ -66,14 +65,7 @@ const LeftMenu = (props) => {
       name: "Report",
       link: "",
       icon: ClipboardDocumentListIcon,
-      submenu: [
-        { name: "Rincian Omset Cabang", link: "/report/rincian-omset-cabang" },
-        {
-          name: "Leadtime Achievement Based on Monthly Omset",
-          link: "/report/leadtime-achievement",
-        },
-        { name: "Test Formik", link: "/report/test-formik" },
-      ],
+      submenu: [{ name: "Rincian Omset Cabang", link: "/report/rincian-omset-cabang" }],
     },
   ];
 
